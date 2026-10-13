@@ -15,6 +15,9 @@ export interface StubSettings {
   metadataSlowMs?: number
   failFirst?: number
   resourceMismatch?: boolean
+  // Advertised resource: a path on the stub origin, or an absolute URL.
+  resource?: string
+  stream?: boolean
   issuerMismatch?: boolean
   redirect?: boolean
   invalidJson?: boolean
@@ -76,16 +79,17 @@ export async function stub(
         initialCount <= (settings.failFirst ?? 0)
           ? 503
           : (settings.status ?? 401)
-      res
-        .writeHead(
-          status,
-          settings.header === false
-            ? {}
-            : {
-                'WWW-Authenticate': `Bearer resource_metadata="${base}${resourcePath}"`,
-              },
-        )
-        .end()
+      res.writeHead(status, {
+        ...(settings.header === false
+          ? {}
+          : {
+              'WWW-Authenticate': `Bearer resource_metadata="${base}${resourcePath}"`,
+            }),
+        ...(settings.stream ? { 'Content-Type': 'text/event-stream' } : {}),
+      })
+      // An open event stream never ends on its own; the probe must cancel it.
+      if (settings.stream) res.write(': secret-vendor-body\n\n')
+      else res.end('secret-vendor-body')
     } else if (path === resourcePath && !settings.missingMetadata) {
       res.setHeader('Content-Type', 'application/json')
       res.flushHeaders()
@@ -96,7 +100,12 @@ export async function stub(
       }
       res.end(
         JSON.stringify({
-          resource: base + (settings.resourceMismatch ? '/wrong' : endpoint),
+          resource:
+            settings.resource === undefined
+              ? base + (settings.resourceMismatch ? '/wrong' : endpoint)
+              : settings.resource.startsWith('/') || settings.resource === ''
+                ? base + settings.resource
+                : settings.resource,
           authorization_servers: [
             settings.unsafeMetadata ? 'http://example.com/secret' : issuer,
           ],

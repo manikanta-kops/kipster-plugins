@@ -67,10 +67,11 @@ test('method changes and missing S256 are sign-in-changed', async (t) => {
     'sign-in-changed',
   )
 })
-test('no 401, missing metadata and invalid JSON are errors without vendor body in reasons', async (t) => {
+test('other statuses, missing metadata and invalid JSON are errors without vendor body in reasons', async (t) => {
   const { plugin } = await example(t)
   for (const settings of [
-    { status: 200 },
+    { status: 403 },
+    { status: 302 },
     { missingMetadata: true },
     { invalidJson: true },
   ]) {
@@ -98,6 +99,144 @@ test('resource and issuer mismatches and unsafe discovery URLs are errors', asyn
     )
   }
 })
+const signInPaths = (hits: { path: string }[]) =>
+  hits.filter((h) => /\/(register|authorize|token)\b/.test(h.path))
+test('origin and path-prefix resources are accepted as the SDK sign-in does', async (t) => {
+  const { plugin } = await example(t)
+  for (const resource of ['', '/']) {
+    const fixture = await stub(t, { resource })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      testOnlyBaseUrl: fixture.base,
+    })
+    assert.equal(probe.result, 'ok', `resource ${JSON.stringify(resource)}`)
+    assert.deepEqual(signInPaths(fixture.hits), [])
+  }
+})
+test('cross-origin and non-prefix resources stay errors', async (t) => {
+  const { plugin } = await example(t)
+  for (const resource of [
+    'https://mcpeu.example/mcp',
+    'http://127.0.0.1:1/mcp',
+    '/other',
+    '/mc',
+    '/mcp/extra',
+  ]) {
+    const fixture = await stub(t, { resource })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      testOnlyBaseUrl: fixture.base,
+    })
+    assert.equal(probe.result, 'error', resource)
+    assert.equal(
+      probe.reason,
+      'Protected resource metadata does not match the MCP endpoint',
+    )
+  }
+})
+test('anonymous 200 falls back to well-known discovery and applies the same checks', async (t) => {
+  const { plugin } = await example(t)
+  const fixture = await stub(t, { status: 200, header: false })
+  const probe = await probePlugin(plugin, {
+    ...fast,
+    testOnlyBaseUrl: fixture.base,
+  })
+  assert.equal(probe.result, 'ok')
+  assert.deepEqual(probe.signIn, ['dcr'])
+  assert.match(probe.reason, /^Anonymous access allowed; OAuth sign-in/)
+  assert.deepEqual(
+    fixture.hits.map((h) => `${h.method} ${h.path}`),
+    [
+      'POST /mcp',
+      'GET /.well-known/oauth-protected-resource/mcp',
+      'GET /.well-known/oauth-authorization-server',
+    ],
+  )
+  const root = await stub(t, {
+    status: 200,
+    resourceAtRoot: true,
+    resource: '',
+  })
+  assert.equal(
+    (await probePlugin(plugin, { ...fast, testOnlyBaseUrl: root.base })).result,
+    'ok',
+  )
+  assert.deepEqual(
+    root.hits.map((h) => h.path),
+    [
+      '/mcp',
+      '/.well-known/oauth-protected-resource/mcp',
+      '/.well-known/oauth-protected-resource',
+      '/.well-known/oauth-authorization-server',
+    ],
+  )
+  for (const settings of [
+    { resourceMismatch: true },
+    { issuerMismatch: true },
+  ]) {
+    const failed = await stub(t, { status: 200, ...settings })
+    assert.equal(
+      (await probePlugin(plugin, { ...fast, testOnlyBaseUrl: failed.base }))
+        .result,
+      'error',
+    )
+  }
+  const noPkce = await stub(t, { status: 200, pkce: false })
+  assert.equal(
+    (await probePlugin(plugin, { ...fast, testOnlyBaseUrl: noPkce.base }))
+      .result,
+    'sign-in-changed',
+  )
+  for (const f of [fixture, root, noPkce])
+    assert.deepEqual(signInPaths(f.hits), [])
+})
+test('anonymous 200 without OAuth metadata is an error', async (t) => {
+  const { plugin } = await example(t)
+  const fixture = await stub(t, { status: 200, missingMetadata: true })
+  const probe = await probePlugin(plugin, {
+    ...fast,
+    testOnlyBaseUrl: fixture.base,
+  })
+  assert.equal(probe.result, 'error')
+  assert.equal(
+    probe.reason,
+    'Service answered without sign-in and publishes no OAuth metadata',
+  )
+  assert.deepEqual(
+    fixture.hits.map((h) => h.path),
+    [
+      '/mcp',
+      '/.well-known/oauth-protected-resource/mcp',
+      '/.well-known/oauth-protected-resource',
+    ],
+  )
+})
+test(
+  'SSE probe cancels an open anonymous 200 event stream',
+  { timeout: 5_000 },
+  async (t) => {
+    const { plugin } = await example(t)
+    server(plugin).type = 'sse'
+    server(plugin).url = 'https://mcp.example/sse'
+    for (const missingMetadata of [false, true]) {
+      const fixture = await stub(t, {
+        endpoint: '/sse',
+        status: 200,
+        stream: true,
+        missingMetadata,
+      })
+      const probe = await probePlugin(plugin, {
+        timeoutMs: 2_000,
+        backoffMs: 1,
+        testOnlyBaseUrl: fixture.base,
+      })
+      assert.equal(probe.result, missingMetadata ? 'error' : 'ok')
+      assert.doesNotMatch(probe.reason, /secret-vendor-body/)
+      assert.equal(fixture.hits.filter((h) => h.path === '/sse').length, 1)
+      assert.equal(fixture.hits[0]!.method, 'GET')
+    }
+  },
+)
 test('protected resource fallbacks try endpoint-specific then root well-known paths', async (t) => {
   const { plugin } = await example(t)
   const fixture = await stub(t, { header: false, resourceAtRoot: true })

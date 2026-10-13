@@ -71,16 +71,20 @@ signs in or calls tools. Discovery follows the
 `resource_metadata` from the 401 header, or endpoint-specific then root protected
 resource well-known paths; RFC 8414 authorization metadata, then both OpenID
 forms for path issuers. It inspects the first advertised authorization server,
-checks resource/issuer identity, and requires S256.
+checks resource/issuer identity, and requires S256. A service may answer the
+anonymous initialize with 2xx and still offer OAuth; the probe then uses the
+well-known paths, never reads the body and applies the same checks. Like the MCP
+SDK sign-in, it accepts a resource on the endpoint's origin whose path is a
+prefix of the endpoint path, such as the origin itself.
 
 | Result                           | Meaning                                                                                                                                       |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ok`                             | 401, recorded methods and S256 confirmed. Sets verification to probe.                                                                         |
+| `ok`                             | 401 (or anonymous 2xx), recorded methods and S256 confirmed. Sets verification to probe.                                                      |
 | `sign-in-changed`                | Methods differ, or S256 is absent. Review the observed methods before updating signIn; original research remains intact.                      |
 | `needs-address`                  | Template URL; sends nothing. Available, because connecting will ask for the address.                                                          |
 | `needs-client-metadata-document` | CIMD only, with matching recorded methods; set `KIPSTER_PLUGINS_CLIENT_METADATA_URL` to an HTTPS client metadata document URL. Default unset. |
 | `unreachable`                    | Connection, DNS, TLS, timeout or HTTP 5xx after three attempts.                                                                               |
-| `error`                          | Unexpected HTTP response, missing/invalid metadata, identity mismatch or unsafe discovery URL.                                                |
+| `error`                          | Unexpected HTTP response, missing/invalid metadata (also after anonymous 2xx), identity mismatch or unsafe discovery URL.                     |
 
 Availability is derived: unprobed, `ok` and `needs-address` entries are available;
 all other probe results stay in the catalogue, unavailable with their reason.

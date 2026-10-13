@@ -1,5 +1,9 @@
 import { setTimeout as delay } from 'node:timers/promises'
 import {
+  checkResourceAllowed,
+  resourceUrlFromServerUrl,
+} from '@modelcontextprotocol/client'
+import {
   data,
   server,
   type Plugin,
@@ -154,6 +158,7 @@ function wellKnown(url: URL, kind: string): string {
 async function metadata(
   urls: string[],
   options: ProbeOptions,
+  missing = 'No discovery metadata was found',
 ): Promise<Record<string, unknown>> {
   for (const url of [...new Set(urls)]) {
     const result = await request(
@@ -169,7 +174,7 @@ async function metadata(
         `Discovery returned HTTP ${result.status}`,
       )
   }
-  throw new CheckFailure('error', 'No discovery metadata was found')
+  throw new CheckFailure('error', missing)
 }
 function methodsEqual(a: SignIn[], b: SignIn[]): boolean {
   return [...a].sort().join(',') === [...b].sort().join(',')
@@ -223,15 +228,18 @@ export async function probePlugin(
       false,
       options,
     )
-    if (initial.status !== 401)
+    // Like sign-in, a service may answer without a token and still offer OAuth.
+    const anonymous = initial.status >= 200 && initial.status < 300
+    if (initial.status !== 401 && !anonymous)
       return result(
         'error',
         `Expected HTTP 401; received HTTP ${initial.status}`,
       )
-    const advertised =
-      /\bresource_metadata\s*=\s*(?:"([^"]+)"|([^,\s]+))/i.exec(
-        initial.header ?? '',
-      )
+    const advertised = anonymous
+      ? null
+      : /\bresource_metadata\s*=\s*(?:"([^"]+)"|([^,\s]+))/i.exec(
+          initial.header ?? '',
+        )
     const resource = await metadata(
       advertised
         ? [advertised[1] ?? advertised[2]!]
@@ -240,10 +248,17 @@ export async function probePlugin(
             `${endpoint.origin}/.well-known/oauth-protected-resource`,
           ],
       options,
+      anonymous
+        ? 'Service answered without sign-in and publishes no OAuth metadata'
+        : undefined,
     )
+    // The SDK's auth() rule: same origin, and the resource path is a prefix of the endpoint path.
     if (
       typeof resource.resource !== 'string' ||
-      new URL(resource.resource).href !== endpoint.href
+      !checkResourceAllowed({
+        requestedResource: resourceUrlFromServerUrl(endpoint),
+        configuredResource: resource.resource,
+      })
     )
       return result(
         'error',
@@ -309,7 +324,9 @@ export async function probePlugin(
       )
     return result(
       'ok',
-      'HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested',
+      anonymous
+        ? 'Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested'
+        : 'HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested',
     )
   } catch (error) {
     if (error instanceof CheckFailure)

@@ -46,10 +46,13 @@ exist.
 The probe checks that every catalogue entry's MCP server is alive and still
 signs in the way the catalogue says. For each entry it:
 
-1. sends an MCP `initialize` request with no token and expects `401` with a
-   `WWW-Authenticate` header that points to resource metadata;
+1. sends an MCP `initialize` request with no token. A `401` usually points to
+   resource metadata in its `WWW-Authenticate` header. A service may instead
+   answer without sign-in (2xx); the probe then looks for metadata at the
+   well-known paths;
 2. reads the protected resource metadata and its authorization server's
-   metadata;
+   metadata. The resource may be the endpoint itself, its origin or a path
+   prefix on that origin, as the MCP SDK accepts;
 3. confirms the sign-in method: a `registration_endpoint` for DCR, or
    `client_id_metadata_document_supported` for CIMD, and S256 PKCE.
 
