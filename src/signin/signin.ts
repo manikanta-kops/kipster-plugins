@@ -32,6 +32,8 @@ export class SignInError extends Error {
     | 'denied'
     | 'invalid-address'
     | 'no-sign-in-method'
+    | 'invalid-return-address'
+    | 'loopback-only'
     | 'failed'
   constructor(code: SignInError['code'], message: string) {
     super(message)
@@ -169,6 +171,30 @@ class SessionProvider implements OAuthClientProvider {
   }
 }
 
+const loopbackHosts = new Set(['127.0.0.1', 'localhost', '[::1]'])
+const isLoopback = (url: URL) => loopbackHosts.has(url.hostname)
+// Where the service sends the browser back: HTTPS, or HTTP on this computer.
+// Whoever serves that address forwards the request's query to GET /callback.
+function validReturnAddress(value: string): string {
+  const url = URL.canParse(value) ? new URL(value) : undefined
+  if (
+    !url ||
+    url.hash ||
+    url.search ||
+    url.username ||
+    url.password ||
+    !(
+      url.protocol === 'https:' ||
+      (url.protocol === 'http:' && isLoopback(url))
+    )
+  )
+    throw new SignInError(
+      'invalid-return-address',
+      'The return address must be an HTTPS URL, or HTTP on 127.0.0.1 or localhost, with no query or fragment',
+    )
+  return url.href
+}
+
 const page = (title: string, text: string) =>
   `<!doctype html><meta charset="utf-8"><title>${title}</title><p>${text}</p>`
 const escape = (value: string) =>
@@ -214,10 +240,14 @@ export class SignInManager {
   // the client metadata URL is set. Returns the URL to open in the browser.
   async start(
     plugin: Plugin,
-    options: { address?: string } = {},
+    options: { address?: string; returnAddress?: string } = {},
   ): Promise<StartResult> {
     this.#sweep()
     const ext = data(plugin)
+    const redirectUrl =
+      options.returnAddress === undefined
+        ? this.redirectUrl
+        : validReturnAddress(options.returnAddress)
     let serverUrl = server(plugin).url
     if (ext.needsAddress) {
       if (!options.address)
@@ -249,6 +279,12 @@ export class SignInManager {
     else if (metadata.client_id_metadata_document_supported === true) {
       if (!this.#options.settings.clientMetadataUrl)
         return { status: 'needs-client-metadata-document' }
+      // The published client metadata document lists only loopback addresses.
+      if (!isLoopback(new URL(redirectUrl)))
+        throw new SignInError(
+          'loopback-only',
+          'This service accepts sign-in only on the computer running the plugin server',
+        )
       method = 'cimd'
     } else
       throw new SignInError(
@@ -257,7 +293,7 @@ export class SignInManager {
       )
     const state = randomBytes(32).toString('base64url')
     const provider = new SessionProvider({
-      redirectUrl: this.redirectUrl,
+      redirectUrl,
       state,
       discovery: info,
       ...(method === 'cimd'
@@ -265,7 +301,7 @@ export class SignInManager {
         : {
             registrations: {
               secrets: this.#options.secrets,
-              name: `client:${ext.id}:${metadata.issuer}:${this.redirectUrl}`,
+              name: `client:${ext.id}:${metadata.issuer}:${redirectUrl}`,
             },
           }),
     })

@@ -5,7 +5,13 @@ import { SignInError, type SignInManager } from '../signin/signin.ts'
 import { serverName, serverVersion } from './version.ts'
 
 // Flags for additive changes; clients check a flag before using a feature.
-export const capabilities = ['plugins', 'sign-in', 'accounts', 'mcp']
+export const capabilities = [
+  'plugins',
+  'sign-in',
+  'accounts',
+  'mcp',
+  'return-address',
+]
 
 export class ApiError extends Error {
   readonly status: number
@@ -61,6 +67,8 @@ const signInStatus: Record<SignInError['code'], number> = {
   denied: 403,
   'invalid-address': 400,
   'no-sign-in-method': 422,
+  'invalid-return-address': 400,
+  'loopback-only': 422,
   failed: 502,
 }
 export function apiError(error: unknown): ApiError {
@@ -169,10 +177,22 @@ const routes: [string, RegExp, Route][] = [
         )
       if (body.address !== undefined && typeof body.address !== 'string')
         throw new ApiError(400, 'invalid-request', 'address must be a string')
+      if (
+        body.returnAddress !== undefined &&
+        typeof body.returnAddress !== 'string'
+      )
+        throw new ApiError(
+          400,
+          'invalid-request',
+          'returnAddress must be a string',
+        )
       return [
         200,
         await ctx.signIn.start(found, {
           ...(body.address === undefined ? {} : { address: body.address }),
+          ...(body.returnAddress === undefined
+            ? {}
+            : { returnAddress: body.returnAddress }),
         }),
       ]
     },
