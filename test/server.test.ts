@@ -749,9 +749,13 @@ test("one plugin's failing upstream leaves the others listed", async (t) => {
   const plugin = (got.structuredContent as { plugin: any }).plugin
   assert.equal(plugin.toolsSource, 'reviewed')
   assert.equal(plugin.toolsError, 'The service could not list its tools')
+  // Unlisted tools are never forwarded: their read/write label is unknown.
   const failed = await client.callTool({ name: 'second__whoami' })
   assert.equal(failed.isError, true)
-  assert.match(texts(failed)[0]!, /could not run whoami/)
+  assert.match(texts(failed)[0]!, /could not list its tools, so whoami/)
+  assert.deepEqual(failed._meta?.['app.kipster/resolution'], {
+    result: 'tools-unavailable',
+  })
 })
 
 test('secrets at rest: no token appears in any home file, and the token file is 0600', async (t) => {

@@ -307,6 +307,12 @@ export class Gateway extends EventEmitter<{ toolsChanged: [] }> {
     const id = data(plugin).id
     const upstreamName = name.slice(split + 2)
     const listing = await this.#listing(plugin)
+    // A tool is called only after it was listed, so its read/write label is known.
+    if (listing && !listing.tools)
+      return failure(
+        `The ${data(plugin).name} service could not list its tools, so ${upstreamName} was not run. Try again shortly.`,
+        { result: 'tools-unavailable' },
+      )
     const upstreamTool = listing?.tools?.find((t) => t.name === upstreamName)
     if (listing?.tools) {
       if (!upstreamTool) return undefined
