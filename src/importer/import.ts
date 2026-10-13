@@ -40,15 +40,28 @@ export async function readResearch(
 }
 export function recordedMethods(row: Row): SignIn[] {
   const notes = row.notes
-  // Prefer discovery observations, including wording in the instance-service notes.
-  const dcr = /DCR\s+(yes|no|not advertised)/i.exec(notes)
-  const cimd = /CIMD\s+(yes|no|not advertised)/i.exec(notes)
-  if (dcr || cimd) {
-    const observed: SignIn[] = []
-    if (dcr?.[1]?.toLowerCase() === 'yes') observed.push('dcr')
-    if (cimd?.[1]?.toLowerCase() === 'yes') observed.push('cimd')
-    if (observed.length) return observed
-  }
+  // Prefer discovery observations: "DCR yes, CIMD no" or statements that start
+  // with a method, such as "advertises both CIMD and DCR", "advertises DCR, no
+  // CIMD", "advertises CIMD only (no DCR)" or "with DCR and S256". Guesses such
+  // as "suggests DCR" are not observations.
+  const statements = [
+    ...notes.matchAll(
+      /\b(?:advertises|with)\s+((?:both\s+)?(?:DCR|CIMD)\b.*?)(?:;|\.(?:\s|$)|$)/gi,
+    ),
+  ]
+    .map((m) => m[1])
+    .join(' ')
+  const observed = (['cimd', 'dcr'] as const).filter((method) => {
+    const name = method.toUpperCase()
+    return (
+      new RegExp(`\\b${name}\\s+yes\\b`, 'i').test(notes) ||
+      new RegExp(
+        `(?<!\\bno\\s+)\\b${name}\\b(?!\\s+(?:no|not|unconfirmed)\\b)`,
+        'i',
+      ).test(statements)
+    )
+  })
+  if (observed.length) return observed
   if (row.sign_in === 'oauth-dcr') return ['dcr']
   if (row.sign_in === 'oauth-cimd') return ['cimd']
   throw new Error(`Unknown sign-in method for ${row.name}`)

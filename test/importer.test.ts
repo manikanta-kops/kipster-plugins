@@ -7,6 +7,8 @@ import {
   importPlugins,
   documents,
   readResearch,
+  recordedMethods,
+  type Row,
 } from '../src/importer/import.ts'
 import { requireCatalogue } from '../src/catalogue/validate.ts'
 import { data, server } from '../src/catalogue/types.ts'
@@ -35,6 +37,56 @@ test('imports case-insensitive Linear and Notion as prettier-clean portable docu
       )
     }
   }
+})
+test('sign-in methods come from every discovery wording, else the sign_in column', () => {
+  const methods = (notes: string, sign_in = 'oauth-cimd') =>
+    recordedMethods({ name: 'Example', notes, sign_in } as Row)
+  for (const [notes, expected] of [
+    ['Discovery 2026-10-08: DCR yes, CIMD yes, S256.', ['cimd', 'dcr']],
+    ['Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.', ['dcr']],
+    [
+      'mcp.aircall.io answers with OAuth metadata (CIMD yes, DCR no).',
+      ['cimd'],
+    ],
+    ['Metadata advertises both CIMD and DCR, S256.', ['cimd', 'dcr']],
+    ['auth.atlassian.com advertises both DCR and CIMD, S256.', ['cimd', 'dcr']],
+    ['auth.descript.com advertises DCR and CIMD with S256.', ['cimd', 'dcr']],
+    ['Metadata advertises DCR, no CIMD, S256.', ['dcr']],
+    ['Metadata advertises CIMD only (no DCR), S256.', ['cimd']],
+    [
+      'Authorization server advertises CIMD (no DCR), token auth none, S256.',
+      ['cimd'],
+    ],
+    ['metadata advertises DCR, token auth none, S256.', ['dcr']],
+    ['Sign-in through Adobe IMS with DCR and S256, free account.', ['dcr']],
+    [
+      'mcp.upwork.com advertises CIMD yes and a registration_endpoint at www.upwork.com/register (DCR unconfirmed), S256.',
+      ['cimd'],
+    ],
+  ] as const)
+    assert.deepEqual(methods(notes, 'none'), expected, notes)
+  const guess =
+    'Connects with plain OAuth and no client credentials, which suggests DCR; the metadata could not be read, so DCR is not confirmed.'
+  assert.deepEqual(methods(guess, 'oauth-dcr'), ['dcr'])
+  assert.deepEqual(methods(guess, 'oauth-cimd'), ['cimd'])
+  assert.throws(() => methods(guess, 'none'), /Unknown sign-in method/)
+})
+test('imported discovery wordings give the advertised methods', async (t) => {
+  const dir = await temporary(t)
+  const expected = {
+    linear: ['cimd', 'dcr'],
+    notion: ['cimd', 'dcr'],
+    folk: ['cimd', 'dcr'],
+    sentry: ['cimd', 'dcr'],
+    unsplash: ['cimd'],
+    expensify: ['dcr'],
+  }
+  await importPlugins(Object.keys(expected), { output: dir })
+  const plugins = await requireCatalogue(dir)
+  assert.deepEqual(
+    Object.fromEntries(plugins.map((p) => [p.manifest.name, data(p).signIn])),
+    expected,
+  )
 })
 test('any Atlassian product imports all four rows into one plugin', async (t) => {
   const dir = await temporary(t)
