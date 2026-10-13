@@ -204,3 +204,21 @@ test('retained versions do not introduce cascading name conflicts', async (t) =>
   assert.deepEqual([...loader.plugins.keys()].sort(), ['linear', 'notion'])
   assert.equal(data(loader.plugins.get('notion')!).name, 'Notion')
 })
+
+test('periodic reconciliation recovers a catalogue root after its watch loses the directory', async (t) => {
+  const { dir } = await example(t)
+  const moved = await temporary(t)
+  const loader = new Catalogue(dir, 10, 50)
+  t.after(() => loader.close())
+  const errors: string[] = []
+  loader.on('invalid', (event) => errors.push(event.reason))
+  await loader.start()
+  // The native watch is now attached to the old inode, not the future root.
+  await rename(dir, join(moved, 'old-catalogue'))
+  await eventually(() => errors.length > 0)
+  await mkdir(dir)
+  await importPlugins(['Notion'], { output: dir })
+  await eventually(
+    () => loader.plugins.has('notion') && !loader.plugins.has('linear'),
+  )
+})

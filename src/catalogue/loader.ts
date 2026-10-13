@@ -1,4 +1,5 @@
 import { watch, type FSWatcher } from 'node:fs'
+import { stat } from 'node:fs/promises'
 import { EventEmitter } from 'node:events'
 import { readCatalogue, duplicateErrors } from './validate.ts'
 import { data, type Plugin } from './types.ts'
@@ -7,16 +8,20 @@ import { data, type Plugin } from './types.ts'
 export class Catalogue extends EventEmitter {
   readonly directory: string
   readonly debounceMs: number
+  readonly reconcileMs: number
   #current = new Map<string, Plugin>()
   #watchers = new Map<string, FSWatcher>()
+  #identities = new Map<string, string>()
   #timer?: NodeJS.Timeout
+  #reconcile?: NodeJS.Timeout
   #closed = false
   #loading = false
   #pending = false
-  constructor(directory: string, debounceMs = 50) {
+  constructor(directory: string, debounceMs = 50, reconcileMs = 1000) {
     super()
     this.directory = directory
     this.debounceMs = debounceMs
+    this.reconcileMs = reconcileMs
   }
   get plugins(): ReadonlyMap<string, Plugin> {
     return new Map(
@@ -26,6 +31,14 @@ export class Catalogue extends EventEmitter {
   async start(): Promise<this> {
     this.#watch(this.directory)
     await this.reload()
+    // Filesystem notifications can be coalesced or lost, especially on replacement.
+    // Reconcile periodically as well, so a missed event cannot leave stale plugins.
+    if (!this.#closed && !this.#reconcile) {
+      this.#reconcile = setInterval(() => {
+        void this.reload()
+      }, this.reconcileMs)
+      this.#reconcile.unref()
+    }
     return this
   }
   #watch(path: string): void {
@@ -84,14 +97,30 @@ export class Catalogue extends EventEmitter {
         conflicts = duplicateErrors([...next.values()])
       }
       this.#current = next
-      // Refresh directory watches as folders may have been atomically replaced.
+      // Keep watches unless a directory was removed or its inode changed.
+      // Replacing every watcher creates a gap that can lose atomic file updates.
+      const desired = new Set([this.directory, ...result.folders])
       for (const [path, watcher] of this.#watchers)
-        if (path !== this.directory) {
+        if (!desired.has(path)) {
           watcher.close()
           this.#watchers.delete(path)
+          this.#identities.delete(path)
         }
-      this.#watch(this.directory)
-      for (const path of result.folders) this.#watch(path)
+      for (const path of desired) {
+        try {
+          const info = await stat(path, { bigint: true })
+          const identity = `${info.dev}:${info.ino}`
+          const previous = this.#identities.get(path)
+          if (previous && previous !== identity) {
+            this.#watchers.get(path)?.close()
+            this.#watchers.delete(path)
+          }
+          this.#identities.set(path, identity)
+          this.#watch(path)
+        } catch {
+          this.#schedule()
+        }
+      }
       this.emit('change', this.plugins)
     } catch (error) {
       this.emit('invalid', {
@@ -110,7 +139,9 @@ export class Catalogue extends EventEmitter {
   close(): void {
     this.#closed = true
     clearTimeout(this.#timer)
+    clearInterval(this.#reconcile)
     for (const watcher of this.#watchers.values()) watcher.close()
     this.#watchers.clear()
+    this.#identities.clear()
   }
 }

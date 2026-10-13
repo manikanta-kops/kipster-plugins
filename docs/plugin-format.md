@@ -104,6 +104,8 @@ from `npm run check` and CI; no account testing is performed by the factory.
 `Catalogue` in `src/catalogue/loader.ts` exposes a copied `plugins` map, emits
 `change` snapshots and `invalid` diagnostics, and has `start`, `reload` and
 `close` methods. Directory watches are debounced; invalid updates keep the last
-good folder version, additions and removals need no restart. Invalid initial
+good folder version, additions and removals need no restart. A one-second
+reconciliation scan recovers missed filesystem notifications (configurable through
+the constructor). Invalid initial
 entries are reported and omitted. `requireCatalogue` is the strict variant for
 validation, import and probe commands.
