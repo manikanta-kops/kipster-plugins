@@ -1,0 +1,19 @@
+{
+  "name": "kipster-plugins",
+  "private": true,
+  "description": "Plugins that connect Kipster's kips to the services people use.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=26.10.0"
+  },
+  "scripts": {
+    "check": "npm run format:check && npm test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
+  }
+}

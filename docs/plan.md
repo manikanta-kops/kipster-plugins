@@ -10,7 +10,7 @@ accounts, with every sign-in kept on the person's own computer.
 
 ## Settled decisions
 
-- **Name.** These are *plugins*. A plugin connects kips to one service.
+- **Name.** These are _plugins_. A plugin connects kips to one service.
 - **Four parts.** A plugin can have skills, tools, listeners and accounts.
 - **Own repository, open source.** Kipster bundles and starts the plugin server.
   Anyone can also run it alone.
@@ -34,12 +34,12 @@ accounts, with every sign-in kept on the person's own computer.
 
 ## The four parts
 
-| Part | What it is | First version |
-| --- | --- | --- |
-| Skills | `SKILL.md` instructions for common jobs, such as "review my open PRs" | Supported; written for the most used plugins over time |
-| Tools | Actions a kip can call, served by the service's MCP server | Yes |
-| Listeners | Events that start a kip, such as "new comment on PR #12" | Shape only; first listener later (GitHub) |
-| Accounts | The person's signed-in accounts, several per plugin | Yes |
+| Part      | What it is                                                            | First version                                          |
+| --------- | --------------------------------------------------------------------- | ------------------------------------------------------ |
+| Skills    | `SKILL.md` instructions for common jobs, such as "review my open PRs" | Supported; written for the most used plugins over time |
+| Tools     | Actions a kip can call, served by the service's MCP server            | Yes                                                    |
+| Listeners | Events that start a kip, such as "new comment on PR #12"              | Shape only; first listener later (GitHub)              |
+| Accounts  | The person's signed-in accounts, several per plugin                   | Yes                                                    |
 
 ## Architecture
 
@@ -128,16 +128,16 @@ vendors change their MCP servers often.
 ## Sign-in
 
 - **Two ways Kipster introduces itself**, both handled by the official MCP SDK:
-  - *Self-registering (DCR):* Kipster registers itself with the service during
+  - _Self-registering (DCR):_ Kipster registers itself with the service during
     sign-in.
-  - *Client metadata document (CIMD):* the service reads a small public JSON
+  - _Client metadata document (CIMD):_ the service reads a small public JSON
     file that describes Kipster. This is one static file at a public address we
     own, not a server. Many services accept both; prefer DCR until the file
     exists.
 - **The return address is visited by the person's browser, not by the service.**
   So it never needs to be reachable from the internet:
-  - *On the same computer:* `http://127.0.0.1:<port>/callback`.
-  - *From another device:* the computer's Tailscale address, where the service
+  - _On the same computer:_ `http://127.0.0.1:<port>/callback`.
+  - _From another device:_ the computer's Tailscale address, where the service
     accepts it (DCR only). Atlassian allows only localhost by default; there,
     sign in on the computer itself.
 - **Tokens** are stored encrypted on disk, with the key in the operating
@@ -165,6 +165,7 @@ vendors change their MCP servers often.
 
   Otherwise the call returns "ambiguous" with the candidates, and the kip asks
   the person.
+
 - Every result says which account was used. One call uses one account.
 - **Adding a second account** when the browser is already signed in: ask the
   service to show its account picker where supported, otherwise open the
@@ -182,6 +183,7 @@ vendors change their MCP servers often.
   - `plugin_get` returns one plugin's accounts, skills and tool names.
 
   Kipster passes them through like any other tool.
+
 - Each tool can carry a hint telling Kipster whether to load it up front or
   leave it for the harness's tool search. Claude Code and Codex both support
   tool search. Loading hundreds of tools at once hurts accuracy.
