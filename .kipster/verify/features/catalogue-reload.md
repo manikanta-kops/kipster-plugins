@@ -16,7 +16,7 @@ the instance's catalogue copy at `/tmp/kipster-plugins-verify-<port>/catalogue`.
 
 | User action                 | Exact command                                                                                                                                                             | Observable result                                                                                               |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Watch for tool list changes | `npm run --silent mcp -- --url "$URL" --token "$TOKEN" watch --seconds 60 > "$EVIDENCE_DIR/watch.log" 2>&1 &`                                                             | `watch.log` starts with `{"event":"watching","seconds":60}`.                                                    |
+| Watch for tool list changes | `npm run --silent mcp -- --url "$URL" --token "$TOKEN" watch --seconds 60 > "$EVIDENCE_DIR/watch.log" 2>&1 & sleep 3; cat "$EVIDENCE_DIR/watch.log"`                      | `watch.log` starts with `{"event":"watching","seconds":60}`.                                                    |
 | Add a plugin                | `sh .kipster/verify/add-plugin.sh second Second; sleep 1; curl -sS -H "Authorization: Bearer $TOKEN" "$URL/v1/plugins"`                                                   | `Added .../second`, then plugins `fixture` and `second`; `watch.log` gains a `tools/list_changed` line.         |
 | See it in discovery         | `npm run --silent mcp -- --url "$URL" --token "$TOKEN" call plugin_list '{"include_unconnected":true}'`                                                                   | Plugins `fixture` and `second`.                                                                                 |
 | Connect it and list tools   | `sh .kipster/verify/sign-in.sh alice second; npm run --silent mcp -- --url "$URL" --token "$TOKEN" list`                                                                  | `second__whoami` (read) and `second__create_note` (write) are listed.                                           |
@@ -33,4 +33,5 @@ Prefix every command with the `export URL=... TOKEN=...;` line from
 are picked up within about a second (filesystem events, plus a rescan every
 second). Write folders atomically, as `add-plugin.sh` does; a half-written
 folder is reported invalid until it is complete. The watch runs in the
-background and exits after its seconds.
+background and exits after its seconds; start it before the first change, as
+its first row does, or that change is missed.
