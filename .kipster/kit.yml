@@ -1,0 +1,3 @@
+version: 1
+setup: npm ci
+check: npm run check

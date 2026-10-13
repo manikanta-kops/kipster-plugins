@@ -15,3 +15,6 @@
 .agents/
 node_modules/
 *.log
+
+# Local plugin server state
+.local/
