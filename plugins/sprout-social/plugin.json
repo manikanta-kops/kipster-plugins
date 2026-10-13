@@ -42,7 +42,7 @@
         "result": "error",
         "signIn": [],
         "checkedOn": "2026-10-13",
-        "reason": "Protected resource metadata does not match the MCP endpoint"
+        "reason": "Authorization metadata issuer does not match"
       }
     }
   }

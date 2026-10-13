@@ -38,11 +38,12 @@
       ],
       "tools": {},
       "probe": {
-        "result": "error",
-        "signIn": [],
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
         "checkedOn": "2026-10-13",
-        "reason": "Expected HTTP 401; received HTTP 200"
-      }
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
     }
   }
 }

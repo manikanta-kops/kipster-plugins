@@ -43,10 +43,10 @@
       ],
       "tools": {},
       "probe": {
-        "result": "error",
-        "signIn": [],
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
         "checkedOn": "2026-10-13",
-        "reason": "Expected HTTP 401; received HTTP 200"
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
       }
     }
   }

@@ -94,7 +94,8 @@ Use Node from `.nvmrc`, then `npm ci` to install locked dependencies.
 See [the plugin format](docs/plugin-format.md) for batch imports and probe
 results, [the control API and MCP endpoint](docs/control-api.md),
 [sign-in and accounts](docs/sign-in-and-accounts.md),
-[the fixture service](docs/fixture-service.md), and
+[the fixture service](docs/fixture-service.md),
+[the catalogue status](docs/catalogue-status.md), and
 [testing](.kipster/context/testing.md) for verification levels.
 
 ## Status
