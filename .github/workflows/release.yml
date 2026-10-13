@@ -1,0 +1,65 @@
+name: Release
+
+# Stable releases come from master; next builds are pre-releases on demand.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release
+    if: github.ref_name == 'master' || github.ref_name == 'next'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Choose the version
+        id: version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "$GITHUB_REF_NAME" = next ]; then
+            version="$version-next.$(date -u +%Y%m%d%H%M%S)"
+            npm version "$version" --no-git-tag-version
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=plugins-v$version" >> "$GITHUB_OUTPUT"
+      - name: Skip versions that are already released
+        id: exists
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+          GH_TOKEN: ${{ github.token }}
+      - name: Build release files
+        if: steps.exists.outputs.released != 'true'
+        run: |
+          mkdir release
+          npm pack --pack-destination release
+          node scripts/release-metadata.mjs release
+      - name: Publish
+        if: steps.exists.outputs.released != 'true'
+        run: |
+          prerelease=()
+          if [ "$GITHUB_REF_NAME" = next ]; then prerelease=(--prerelease); fi
+          gh release create "$TAG" release/* --target "$GITHUB_SHA" \
+            --title "@kipster/plugins $VERSION" \
+            --notes "Kipster Plugins $VERSION." "${prerelease[@]}"
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}

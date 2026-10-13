@@ -7,3 +7,4 @@
 - [Testing without real accounts](testing.md): read before planning, building or testing; the three test levels, the probe rules and isolation.
 - [Class A services](../../docs/research/class-a-services.csv): read when adding or changing plugin configurations; MCP URLs, sign-in methods and sources from the October 2026 research.
 - [CI](../../.github/workflows/ci.yml): read when changing the deterministic gate.
+- [Releasing](../../docs/releasing.md): read before changing the package, its build or the release workflow; Kipster installs the released tarball.

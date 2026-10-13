@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { KeychainKeyBackend } from '../secrets/store.ts'
