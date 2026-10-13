@@ -20,6 +20,19 @@ export function testOnlyOrigin(value: string): string {
 export function guardedFetch(
   options: { testOnlyBaseUrl?: string; fetch?: typeof fetch } = {},
 ): FetchLike {
+  return guard(options, 15_000)
+}
+// The same guard for upstream MCP connections, without the timeout: their
+// event streams stay open as long as the connection does.
+export function upstreamFetch(
+  options: { testOnlyBaseUrl?: string; fetch?: typeof fetch } = {},
+): FetchLike {
+  return guard(options)
+}
+function guard(
+  options: { testOnlyBaseUrl?: string; fetch?: typeof fetch },
+  timeoutMs?: number,
+): FetchLike {
   const origin = options.testOnlyBaseUrl
     ? testOnlyOrigin(options.testOnlyBaseUrl)
     : undefined
@@ -34,11 +47,15 @@ export function guardedFetch(
           ? 'Test sign-in attempted to leave its loopback origin'
           : 'Sign-in requires HTTPS',
       )
-    const timeout = AbortSignal.timeout(15_000)
+    const timeout =
+      timeoutMs === undefined ? undefined : AbortSignal.timeout(timeoutMs)
+    const signals = [init?.signal, timeout].filter(
+      (signal): signal is AbortSignal => Boolean(signal),
+    )
     return base(input, {
       ...init,
       redirect: 'error',
-      signal: init?.signal ? AbortSignal.any([init.signal, timeout]) : timeout,
+      ...(signals.length ? { signal: AbortSignal.any(signals) } : {}),
     })
   }
 }

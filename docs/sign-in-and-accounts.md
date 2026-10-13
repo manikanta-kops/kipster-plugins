@@ -102,6 +102,9 @@ keyed by plugin, authorization server issuer and a stable subject.
   set the status `reconnect-needed` until the account signs in again; other
   failures throw `refresh-failed` and keep the status.
 - **Status** is `working` or `reconnect-needed`.
+- **Changes.** `Accounts` emits `change` with `{ plugin, id, kind }` (`added`,
+  `reconnected`, `renamed`, `default`, `status` or `removed`); the MCP endpoint
+  uses it to refresh tool lists.
 
 ### Account resolution
 
@@ -122,5 +125,6 @@ accounts when `reachable` names two or more), or `no-account` when the plugin
 has none. An empty `reachable` adds no information. Successful
 results name the step in `reason`.
 
-`connectMcp(server, { token })` in `src/mcp/client.ts` opens an SDK client to a
-service MCP server with an account's token.
+`connectMcp(server, { token, onUnauthorized })` in `src/mcp/client.ts` opens an
+SDK client to a service MCP server with an account's token.
+[The control API](control-api.md) describes how the server exposes all of this.

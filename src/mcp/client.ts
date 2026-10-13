@@ -1,5 +1,6 @@
 import {
   Client,
+  type AuthProvider,
   SSEClientTransport,
   StreamableHTTPClientTransport,
   type FetchLike,
@@ -8,10 +9,20 @@ import {
 // An SDK client for one service MCP server, authenticated with one account's token.
 export async function connectMcp(
   server: { type: 'streamable-http' | 'sse'; url: string },
-  options: { token: () => Promise<string | undefined>; fetch?: FetchLike },
+  options: {
+    token: () => Promise<string | undefined>
+    // Called once on a 401 before the request is retried, to refresh the token.
+    onUnauthorized?: AuthProvider['onUnauthorized']
+    fetch?: FetchLike
+  },
 ): Promise<Client> {
   const transportOptions = {
-    authProvider: { token: options.token },
+    authProvider: {
+      token: options.token,
+      ...(options.onUnauthorized
+        ? { onUnauthorized: options.onUnauthorized }
+        : {}),
+    },
     ...(options.fetch ? { fetch: options.fetch } : {}),
   }
   const url = new URL(server.url)
