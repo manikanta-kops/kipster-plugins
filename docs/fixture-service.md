@@ -20,7 +20,8 @@ Loopback redirect URIs match any port. The MCP server has a read tool
 
 `startFixture(options)` binds `127.0.0.1` on `port` (default: a free port) and
 returns `url`, `mcpUrl`, live `settings`, request `stats`, `issuedTokens()`,
-`revokeUser(login)`, `notes(login)` and `close()`. Options:
+`revokeUser(login)`, `expireAccessTokens()`, `notes(login)` and `close()`.
+Options:
 
 | Option           | Default    | Meaning                                                                          |
 | ---------------- | ---------- | -------------------------------------------------------------------------------- |
@@ -28,6 +29,7 @@ returns `url`, `mcpUrl`, live `settings`, request `stats`, `issuedTokens()`,
 | `identity`       | `userinfo` | `userinfo`, `id-token` (unsigned id_token in token responses), `tool` or `none`. |
 | `accessTokenTtl` | `3600`     | Access token lifetime in seconds.                                                |
 | `clientMetadata` | none       | `(url) => document` for CIMD client IDs.                                         |
+| `extraTools`     | `false`    | Adds `echo`, which declares its own `account` argument, and an overlong name.    |
 
 ```sh
 npm run fixture -- --port 8765

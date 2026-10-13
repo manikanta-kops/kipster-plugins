@@ -86,16 +86,15 @@ all their tools count as write until reviewed.
   store, never the macOS keychain.
 - Bind servers to `127.0.0.1` on free ports, never fixed ports.
 
-## Factory instance (added with the plugin server)
+## Factory instance
 
-The kit has no `verify` block yet, so testers check changes in a disposable
-checkout. The task that adds the plugin server's `serve` command also adds:
-
-- a `verify` block that starts the fixture service on `{port2}` and the plugin
-  server on `{port}` with a fixture catalogue pointing at it. It uses a home
-  inside the checkout, no database, and a known bearer token. Readiness is
-  `http://127.0.0.1:{port}/health`;
-- `.kipster/verify/README.md` and feature maps for sign-in, accounts, tools,
-  discovery and catalogue reload.
+The kit's `verify` block runs `npm run instance`: the fixture service on
+`{port2}` and the plugin server on `{port}`, with a copy of the fixture
+catalogue (`test/fixtures/catalogue/`) pointing at it. Each start wipes its
+home and catalogue under `.local/verify/` in the checkout. It uses the file key
+backend, no database and the documented bearer token. Readiness is
+`http://127.0.0.1:{port}/health`. [The verify guide](../verify/README.md) and its
+feature maps for sign-in, accounts, tools, discovery and catalogue reload
+explain how to drive it.
 
 Kit changes always go to the owner for approval.

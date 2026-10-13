@@ -35,6 +35,9 @@ export interface FixtureSettings {
 }
 export interface FixtureOptions extends Partial<FixtureSettings> {
   port?: number
+  // Adds `echo`, which declares its own `account` argument, and a tool whose
+  // name is too long to proxy.
+  extraTools?: boolean
   // Resolves a CIMD client_id URL to its document. No default network fetch.
   clientMetadata?: (url: string) => Promise<unknown>
 }
@@ -69,6 +72,8 @@ export interface Fixture {
   revokeUser(login: string): void
   // Forgets every registered client, as if the service deleted them.
   forgetClients(): void
+  // Expires every access token issued so far; refresh tokens keep working.
+  expireAccessTokens(): void
   notes(login: string): string[]
   close(): Promise<void>
 }
@@ -273,6 +278,32 @@ export async function startFixture(
           }
         },
       )
+      if (options.extraTools) {
+        server.registerTool(
+          'echo',
+          {
+            description: 'Echo the account argument and the signed-in user.',
+            inputSchema: fromJsonSchema<{ account: string }>({
+              type: 'object',
+              properties: { account: { type: 'string' } },
+              required: ['account'],
+            }),
+          },
+          async ({ account }) => ({
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({ account, user: user.login }),
+              },
+            ],
+          }),
+        )
+        server.registerTool(
+          `report_${'x'.repeat(60)}`,
+          { description: 'A tool whose proxied name would be too long.' },
+          async () => ({ content: [{ type: 'text', text: 'long' }] }),
+        )
+      }
       return server
     }),
   )
@@ -519,6 +550,9 @@ export async function startFixture(
         if (grant.user.login === login) grant.revoked = true
     },
     forgetClients: () => clients.clear(),
+    expireAccessTokens() {
+      for (const entry of accessTokens.values()) entry.expires = 0
+    },
     notes: (login) => [...(notes.get(login) ?? [])],
     async close() {
       if (!server.listening) return

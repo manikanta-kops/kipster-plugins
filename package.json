@@ -16,7 +16,10 @@
     "validate": "node src/catalogue/validate-cli.ts",
     "import": "node src/importer/cli.ts",
     "probe": "node src/probe/cli.ts",
-    "fixture": "node src/fixture/cli.ts"
+    "fixture": "node src/fixture/cli.ts",
+    "serve": "node src/server/cli.ts",
+    "mcp": "node src/mcp/cli.ts",
+    "instance": "node src/dev/instance.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

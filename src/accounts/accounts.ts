@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto'
+import { EventEmitter } from 'node:events'
 import {
   OAuthError,
   refreshAuthorization,
@@ -90,7 +91,14 @@ export function checkLabel(label: string): string {
   return value
 }
 
-export class Accounts {
+export interface AccountChange {
+  plugin: string
+  // Empty when a plugin's default is cleared.
+  id: string
+  kind: 'added' | 'reconnected' | 'renamed' | 'default' | 'status' | 'removed'
+}
+// Emits 'change' after every change to a plugin's accounts.
+export class Accounts extends EventEmitter<{ change: [AccountChange] }> {
   readonly #home: Home
   readonly #fetch: FetchLike
   readonly #now: () => number
@@ -100,6 +108,7 @@ export class Accounts {
     home: Home,
     options: { fetch?: FetchLike; now?: () => number } = {},
   ) {
+    super()
     this.#home = home
     this.#fetch = options.fetch ?? guardedFetch()
     this.#now = options.now ?? Date.now
@@ -202,6 +211,7 @@ export class Accounts {
           this.#stamp(),
           existing.id,
         )
+        this.#changed(input.plugin, existing.id, 'reconnected')
         return { account: this.get(existing.id)!, duplicate: true }
       })
     const id = randomUUID()
@@ -227,6 +237,7 @@ export class Accounts {
       db.prepare('DELETE FROM accounts WHERE id = ?').run(id)
       throw error
     }
+    this.#changed(input.plugin, id, 'added')
     return { account: this.get(id)!, duplicate: false }
   }
   rename(id: string, label: string): Account {
@@ -241,6 +252,7 @@ export class Accounts {
     this.#home.db
       .prepare('UPDATE accounts SET label = ?, updated_at = ? WHERE id = ?')
       .run(value, this.#stamp(), id)
+    this.#changed(row.plugin, id, 'renamed')
     return this.get(id)!
   }
   // Sets (or with undefined clears) the plugin's default account.
@@ -252,6 +264,10 @@ export class Accounts {
         'INSERT INTO plugin_settings (plugin, default_account) VALUES (?, ?) ON CONFLICT (plugin) DO UPDATE SET default_account = excluded.default_account',
       )
       .run(plugin, id ?? null)
+    this.#changed(plugin, id ?? '', 'default')
+  }
+  #changed(plugin: string, id: string, kind: AccountChange['kind']) {
+    this.emit('change', { plugin, id, kind })
   }
   resolve(
     plugin: string,
@@ -273,9 +289,12 @@ export class Accounts {
     return JSON.parse(value) as Credentials
   }
   #mark(id: string, status: AccountStatus) {
+    const row = this.#row(id)
+    if (!row || row.status === status) return
     this.#home.db
       .prepare('UPDATE accounts SET status = ?, updated_at = ? WHERE id = ?')
       .run(status, this.#stamp(), id)
+    this.#changed(row.plugin, id, 'status')
   }
   // A usable access token, refreshed first when it has expired.
   async accessToken(id: string): Promise<string> {
@@ -392,6 +411,7 @@ export class Accounts {
     }
     await this.#home.secrets.delete(secretName(id))
     this.#home.db.prepare('DELETE FROM accounts WHERE id = ?').run(id)
+    this.#changed(row.plugin, id, 'removed')
     return { revoked }
   }
 }
