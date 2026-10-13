@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "kajabi",
+  "version": "0.1.0",
+  "description": "Connect to Kajabi through its official MCP server.",
+  "homepage": "https://kajabi.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "kajabi",
+      "name": "Kajabi",
+      "category": "ecommerce-platforms",
+      "website": "https://kajabi.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Kajabi",
+          "rank": 1520,
+          "category": "ecommerce-platforms",
+          "website": "https://kajabi.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Published in the MCP Registry as com.kajabi/kajabi and covered in Kajabi's help centre. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients.",
+            "sources": [
+              "https://registry.modelcontextprotocol.io/v0/servers?search=kajabi",
+              "https://help.kajabi.com/en/collections/19744918-ai-tools",
+              "https://mcp.kajabi.com/.well-known/oauth-protected-resource",
+              "https://mcp.kajabi.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

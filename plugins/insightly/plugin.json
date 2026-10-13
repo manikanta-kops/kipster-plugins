@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "insightly",
+  "version": "0.1.0",
+  "description": "Connect to Insightly through its official MCP server.",
+  "homepage": "https://www.insightly.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "insightly",
+      "name": "Insightly",
+      "category": "crm-and-sales",
+      "website": "https://www.insightly.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Insightly",
+          "rank": 1523,
+          "category": "crm-and-sales",
+          "website": "https://www.insightly.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Insightly runs a remote MCP whose metadata names login.insightly.com with an mcp scope; Insightly's pages returned 403 to plain GETs, so vendor documentation was not read. Metadata advertises DCR, no CIMD, S256 (also plain).",
+            "sources": [
+              "https://mcp.insightly.com/.well-known/oauth-protected-resource",
+              "https://login.insightly.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

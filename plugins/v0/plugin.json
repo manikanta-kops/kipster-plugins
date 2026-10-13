@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "v0",
+  "version": "0.1.0",
+  "description": "Connect to v0 through its official MCP server.",
+  "homepage": "https://v0.app",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "v0",
+      "name": "v0",
+      "category": "developer-tools",
+      "website": "https://v0.app",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "v0",
+          "rank": 1525,
+          "category": "developer-tools",
+          "website": "https://v0.app",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Vercel's v0 hosts an official MCP server with parity to the v0 API v2; generation draws on the person's v0 credits. Discovery 2026-10-08: DCR yes, no CIMD, S256.",
+            "sources": [
+              "https://v0.app/docs/api/v2/guides/mcp-server.md",
+              "https://v0.app/.well-known/oauth-protected-resource",
+              "https://v0.app/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

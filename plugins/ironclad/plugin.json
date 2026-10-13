@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ironclad",
+  "version": "0.1.0",
+  "description": "Connect to Ironclad through its official MCP server.",
+  "homepage": "https://ironcladapp.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "ironclad",
+      "name": "Ironclad",
+      "category": "legal-and-signatures",
+      "website": "https://ironcladapp.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Ironclad",
+          "rank": 1434,
+          "category": "legal-and-signatures",
+          "website": "https://ironcladapp.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Ironclad's official remote MCP (EU: mcp.eu1.ironcladapp.com/mcp) covers workflows, records, obligations and conversational search for Ironclad customers. Discovery 2026-10-09: DCR no, CIMD yes, S256, public clients allowed.",
+            "sources": [
+              "https://claude.com/marketplace/connectors/ironclad",
+              "https://mcp.na1.ironcladapp.com/.well-known/oauth-protected-resource",
+              "https://ironcladapp.com/.well-known/oauth-authorization-server",
+              "https://developer.ironcladapp.com/llms.txt"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

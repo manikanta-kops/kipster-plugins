@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "postman",
+  "version": "0.1.0",
+  "description": "Connect to Postman through its official MCP server.",
+  "homepage": "https://www.postman.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "postman",
+      "name": "Postman",
+      "category": "developer-tools",
+      "website": "https://www.postman.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Postman",
+          "rank": 1455,
+          "category": "developer-tools",
+          "website": "https://www.postman.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote MCP (also /minimal, /code and EU host) with OAuth or a Postman API key; tool calls count toward the plan's Postman API limits. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://www.postman.com/product/mcp-server",
+              "https://mcp.postman.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.postman.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Postman&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

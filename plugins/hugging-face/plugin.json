@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hugging-face",
+  "version": "0.1.0",
+  "description": "Connect to Hugging Face through its official MCP server.",
+  "homepage": "https://huggingface.co",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "hugging-face",
+      "name": "Hugging Face",
+      "category": "developer-tools",
+      "website": "https://huggingface.co",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Hugging Face",
+          "rank": 1509,
+          "category": "developer-tools",
+          "website": "https://huggingface.co",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote MCP for the Hub (models, datasets, Spaces, jobs) on the person's account. Discovery 2026-10-08: DCR yes, CIMD yes, S256; sign-in on huggingface.co.",
+            "sources": [
+              "https://huggingface.co/docs/hub/agents-mcp",
+              "https://huggingface.co/.well-known/oauth-protected-resource/mcp",
+              "https://huggingface.co/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=hugging&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 200"
+      }
+    }
+  }
+}

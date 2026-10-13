@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wordpress",
+  "version": "0.1.0",
+  "description": "Connect to WordPress through its official MCP server.",
+  "homepage": "https://wordpress.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "wordpress",
+      "name": "WordPress",
+      "category": "website-and-cms",
+      "website": "https://wordpress.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "WordPress",
+          "rank": 1419,
+          "category": "website-and-cms",
+          "website": "https://wordpress.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "WordPress.com MCP needs a paid plan (free sites get the first 30 days) and must be enabled in account settings; self-hosted sites use the WordPress MCP adapter instead. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://developer.wordpress.com/docs/mcp/",
+              "https://public-api.wordpress.com/.well-known/oauth-protected-resource/wpcom/v2/mcp/v1",
+              "https://public-api.wordpress.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "grafana",
+  "version": "0.1.0",
+  "description": "Connect to Grafana through its official MCP server.",
+  "homepage": "https://grafana.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "grafana",
+      "name": "Grafana",
+      "category": "developer-tools",
+      "website": "https://grafana.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Grafana",
+          "rank": 1438,
+          "category": "developer-tools",
+          "website": "https://grafana.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "The Grafana Cloud MCP server uses OAuth 2.1 with automatic client registration; it serves Grafana Cloud stacks only, needs Grafana Assistant on the stack, and MCP users count as active users for billing. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/cloud-mcp/",
+              "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/register-oauth-client.md",
+              "https://mcp.grafana.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.grafana.com/.well-known/oauth-authorization-server/mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

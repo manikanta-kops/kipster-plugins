@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "neon",
+  "version": "0.1.0",
+  "description": "Connect to Neon through its official MCP server.",
+  "homepage": "https://neon.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "neon",
+      "name": "Neon",
+      "category": "databases",
+      "website": "https://neon.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Neon",
+          "rank": 1482,
+          "category": "databases",
+          "website": "https://neon.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP with OAuth or a Neon API key, a read-only mode and project scoping. Discovery 2026-10-09: DCR yes, CIMD not advertised, S256, public clients allowed.",
+            "sources": [
+              "https://neon.com/docs/ai/neon-mcp-server",
+              "https://mcp.neon.tech/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.neon.tech/.well-known/oauth-authorization-server",
+              "https://github.com/neondatabase/mcp-server-neon"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

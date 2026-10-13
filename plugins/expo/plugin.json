@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "expo",
+  "version": "0.1.0",
+  "description": "Connect to Expo through its official MCP server.",
+  "homepage": "https://expo.dev",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "expo",
+      "name": "Expo",
+      "category": "developer-tools",
+      "website": "https://expo.dev",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Expo",
+          "rank": 1477,
+          "category": "developer-tools",
+          "website": "https://expo.dev",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Expo hosts an official remote MCP server signed in with the person's Expo account; some server tools need a paid EAS plan. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://docs.expo.dev/mcp/",
+              "https://mcp.expo.dev/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.expo.dev/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

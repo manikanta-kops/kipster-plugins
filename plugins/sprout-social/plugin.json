@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sprout-social",
+  "version": "0.1.0",
+  "description": "Connect to Sprout Social through its official MCP server.",
+  "homepage": "https://sproutsocial.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "sprout-social",
+      "name": "Sprout Social",
+      "category": "social-media-management",
+      "website": "https://sproutsocial.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Sprout Social",
+          "rank": 1487,
+          "category": "social-media-management",
+          "website": "https://sproutsocial.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "mcp.sproutsocial.com is live on Sprout's identity server but no Sprout documentation for it was found; Sprout's public API needs a plan with API access and acceptance of its API terms. Metadata advertises DCR, no CIMD, S256.",
+            "sources": [
+              "https://mcp.sproutsocial.com/mcp",
+              "https://mcp.sproutsocial.com/.well-known/oauth-protected-resource",
+              "https://mcp.sproutsocial.com/.well-known/oauth-authorization-server",
+              "https://api.sproutsocial.com/docs/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "plausible",
+  "version": "0.1.0",
+  "description": "Connect to Plausible through its official MCP server.",
+  "homepage": "https://plausible.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "plausible",
+      "name": "Plausible",
+      "category": "analytics-and-data",
+      "website": "https://plausible.io",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Plausible",
+          "rank": 1565,
+          "category": "analytics-and-data",
+          "website": "https://plausible.io",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "plausible.io serves an MCP endpoint (POST only) with a read-only sites:read scope; no Plausible documentation page for it was found. Metadata advertises CIMD only (no DCR), S256, public clients (none).",
+            "sources": [
+              "https://plausible.io/.well-known/oauth-protected-resource/mcp",
+              "https://plausible.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "unreachable",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Service returned HTTP 5xx after three attempts"
+      }
+    }
+  }
+}

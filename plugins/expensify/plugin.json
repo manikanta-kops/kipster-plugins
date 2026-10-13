@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "expensify",
+  "version": "0.1.0",
+  "description": "Connect to Expensify through its official MCP server.",
+  "homepage": "https://www.expensify.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "expensify",
+      "name": "Expensify",
+      "category": "accounting-and-invoicing",
+      "website": "https://www.expensify.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Expensify",
+          "rank": 1433,
+          "category": "accounting-and-invoicing",
+          "website": "https://www.expensify.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP for searching and analyzing the person's Expensify data; Expensify says any member with an account can connect. Metadata advertises DCR, no CIMD, S256, public clients (none) allowed.",
+            "sources": [
+              "https://help.expensify.com/articles/new-expensify/connections/connect-ai-assistants/Connect-Claude-to-Expensify-Using-MCP",
+              "https://mcp.expensify.com/.well-known/oauth-protected-resource/mcp",
+              "https://www.expensify.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/expensify"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 308"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lovable",
+  "version": "0.1.0",
+  "description": "Connect to Lovable through its official MCP server.",
+  "homepage": "https://lovable.dev",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "lovable",
+      "name": "Lovable",
+      "category": "developer-tools",
+      "website": "https://lovable.dev",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Lovable",
+          "rank": 1517,
+          "category": "developer-tools",
+          "website": "https://lovable.dev",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official MCP on all plans; Lovable says local clients with a loopback login address register automatically with no approval, and tool calls spend the person's credits. Metadata advertises both CIMD and DCR, S256.",
+            "sources": [
+              "https://docs.lovable.dev/integrations/lovable-mcp-server.md",
+              "https://mcp.lovable.dev/.well-known/oauth-protected-resource",
+              "https://lovable.dev/oauth/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}
