@@ -40,6 +40,9 @@ export interface FixtureOptions extends Partial<FixtureSettings> {
   extraTools?: boolean
   // Resolves a CIMD client_id URL to its document. No default network fetch.
   clientMetadata?: (url: string) => Promise<unknown>
+  // /mcp answers every request with this redirect to /mcp/, where the MCP
+  // server then answers, like services whose endpoint gained a slash.
+  mcpRedirect?: 307 | 308
 }
 export interface FixtureStats {
   registrations: number
@@ -47,6 +50,8 @@ export interface FixtureStats {
   authorizationCodeGrants: number
   refreshGrants: number
   revocations: number
+  // Requests answered with the mcpRedirect redirect.
+  mcpRedirects: number
   authorizeRequests: URLSearchParams[]
 }
 interface Client {
@@ -134,6 +139,7 @@ export async function startFixture(
     authorizationCodeGrants: 0,
     refreshGrants: 0,
     revocations: 0,
+    mcpRedirects: 0,
     authorizeRequests: [],
   }
   const clients = new Map<string, Client>()
@@ -501,7 +507,12 @@ export async function startFixture(
   const server = createServer(async (req, res) => {
     try {
       const url = new URL(req.url ?? '/', base)
-      if (url.pathname === '/mcp') {
+      if (options.mcpRedirect && url.pathname === '/mcp') {
+        stats.mcpRedirects++
+        res.writeHead(options.mcpRedirect, { Location: '/mcp/' }).end()
+        return
+      }
+      if (url.pathname === (options.mcpRedirect ? '/mcp/' : '/mcp')) {
         const auth = bearer(req)
         if (
           !auth ||

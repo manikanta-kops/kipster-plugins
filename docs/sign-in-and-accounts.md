@@ -66,10 +66,21 @@ signIn.callbackHandler() // node:http handler for GET /callback
 - When the plugin already has an account and the service advertises
   `select_account` in `prompt_values_supported`, the URL asks for its account
   picker.
-- Every request goes through `guardedFetch`: HTTPS without credentials, no
-  redirects, 15-second timeout. Tests pass `testOnlyBaseUrl`, an HTTP
-  `127.0.0.1` origin that replaces the plugin URL's origin and that requests
-  cannot leave. Committed plugins stay HTTPS-only.
+- Every request goes through `guardedFetch`: HTTPS without credentials and a
+  15-second timeout for the whole request, redirects included. Tests pass
+  `testOnlyBaseUrl`, an HTTP `127.0.0.1` origin that replaces the plugin URL's
+  origin and that requests cannot leave. Committed plugins stay HTTPS-only.
+- Redirects follow one rule, in `src/net/redirects.ts`, shared with upstream
+  MCP connections and the probe. At most five are followed, and every hop is
+  checked like the first request. A GET or HEAD without credentials, such as
+  metadata discovery, follows 301, 302, 303, 307 and 308 to any HTTPS origin.
+  Any other request, and any request with an `Authorization` header, follows
+  only 307 and 308 within its origin and re-sends the same method, headers and
+  body; so a token or client secret never leaves the origin it was meant for.
+  Other redirects, loops, a missing `Location` or a body that cannot be re-sent
+  fail with a clear error.
+- The resource is always derived from the plugin's configured URL, as the MCP
+  SDK does, even when its endpoint redirects (for example to a trailing slash).
 
 ## Accounts
 
