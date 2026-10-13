@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "remote",
+  "version": "0.1.0",
+  "description": "Connect to Remote through its official MCP server.",
+  "homepage": "https://remote.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "remote",
+      "name": "Remote",
+      "category": "hr-and-recruiting",
+      "website": "https://remote.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Remote",
+          "rank": 1543,
+          "category": "hr-and-recruiting",
+          "website": "https://remote.com",
+          "accounts": "business-only",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Remote hosts an official MCP server; discovery 2026-10-08: DCR yes, CIMD yes, S256. Employers, managers and their employees or contractors sign in with their Remote account; employers pay for Remote's services.",
+            "sources": [
+              "https://developer.remote.com/docs/introduction-to-remote-mcp",
+              "https://developer.remote.com/docs/quick-start-guide-2.md",
+              "https://mcp.remote.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.employ.remote.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

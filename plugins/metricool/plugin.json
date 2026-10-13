@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "metricool",
+  "version": "0.1.0",
+  "description": "Connect to Metricool through its official MCP server.",
+  "homepage": "https://metricool.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "metricool",
+      "name": "Metricool",
+      "category": "social-media-management",
+      "website": "https://metricool.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Metricool",
+          "rank": 1653,
+          "category": "social-media-management",
+          "website": "https://metricool.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official Metricool MCP works on any plan including Free, with plan limits applying. Discovery 2026-10-08: DCR yes, CIMD no, token auth none or client secret, S256 (plain also listed).",
+            "sources": [
+              "https://help.metricool.com/en/article/how-to-connect-metricools-mcp-1364s63/",
+              "https://ai.metricool.com/.well-known/oauth-protected-resource",
+              "https://ai.metricool.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

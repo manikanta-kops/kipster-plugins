@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "datacamp": {
+      "type": "streamable-http",
+      "url": "https://mcp.datacamp.com/v1/mcp"
+    }
+  }
+}

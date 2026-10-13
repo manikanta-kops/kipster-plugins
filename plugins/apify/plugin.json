@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "apify",
+  "version": "0.1.0",
+  "description": "Connect to Apify through its official MCP server.",
+  "homepage": "https://apify.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "apify",
+      "name": "Apify",
+      "category": "analytics-and-data",
+      "website": "https://apify.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Apify",
+          "rank": 1733,
+          "category": "analytics-and-data",
+          "website": "https://apify.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP (MCP Registry com.apify/apify-mcp-server) runs Actors and reads storages; authorization server advertises both CIMD and DCR, S256. Actor runs consume the account's usage credits. Store Actors fetch other websites' data in Apify's cloud and keep results in the account's storages; Actors that sign in to other services for the person, including Apify's MCP connectors to third-party servers, would route that data through Apify and are excluded.",
+            "sources": [
+              "https://docs.apify.com/integrations/mcp",
+              "https://console-backend.apify.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mixpanel",
+  "version": "0.1.0",
+  "description": "Connect to Mixpanel through its official MCP server.",
+  "homepage": "https://mixpanel.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "mixpanel",
+      "name": "Mixpanel",
+      "category": "analytics-and-data",
+      "website": "https://mixpanel.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Mixpanel",
+          "rank": 1489,
+          "category": "analytics-and-data",
+          "website": "https://mixpanel.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Mixpanel hosts official MCP servers per region (US, EU, IN); MCP is on by default for new free and Growth accounts, and organization admins can turn it off. Discovery 2026-10-08 (US): DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://docs.mixpanel.com/docs/mcp",
+              "https://mcp.mixpanel.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.mixpanel.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "timecamp",
+  "version": "0.1.0",
+  "description": "Connect to TimeCamp through its official MCP server.",
+  "homepage": "https://www.timecamp.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "timecamp",
+      "name": "TimeCamp",
+      "category": "productivity",
+      "website": "https://www.timecamp.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "TimeCamp",
+          "rank": 1392,
+          "category": "productivity",
+          "website": "https://www.timecamp.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "TimeCamp's official remote MCP works with any MCP client and is free for every TimeCamp user. Discovery 2026-10-09: DCR yes, CIMD no, public clients allowed, S256.",
+            "sources": [
+              "https://www.timecamp.com/time-tracking/mcp/",
+              "https://mcp.timecamp.com/.well-known/oauth-protected-resource",
+              "https://mcp-auth.timecamp.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

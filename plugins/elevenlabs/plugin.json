@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "elevenlabs",
+  "version": "0.1.0",
+  "description": "Connect to ElevenLabs through its official MCP server.",
+  "homepage": "https://elevenlabs.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "category": "design-and-creative",
+      "website": "https://elevenlabs.io",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "ElevenLabs",
+          "rank": 1563,
+          "category": "design-and-creative",
+          "website": "https://elevenlabs.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official hosted MCP (speech, voices, agents) replacing the deprecated local elevenlabs-mcp; free tier has 10k credits a month. Discovery 2026-10-08: DCR no, CIMD yes, S256; resource is api.us.elevenlabs.io with regional variants.",
+            "sources": [
+              "https://elevenlabs.io/docs/agents-platform/operate/hosted-mcp",
+              "https://github.com/elevenlabs/elevenlabs-mcp",
+              "https://api.elevenlabs.io/.well-known/oauth-protected-resource/v1/mcp",
+              "https://api.elevenlabs.io/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=elevenlabs&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

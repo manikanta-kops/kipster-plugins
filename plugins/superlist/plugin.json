@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "superlist",
+  "version": "0.1.0",
+  "description": "Connect to Superlist through its official MCP server.",
+  "homepage": "https://www.superlist.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "superlist",
+      "name": "Superlist",
+      "category": "tasks-and-reminders",
+      "website": "https://www.superlist.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Superlist",
+          "rank": 1108,
+          "category": "tasks-and-reminders",
+          "website": "https://www.superlist.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Superlist runs a remote MCP that works on every plan including Free, with OAuth sign-in on app.superlist.com. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients (auth method none) allowed.",
+            "sources": [
+              "https://help.superlist.com/en/articles/658028-superlist-mcp-server",
+              "https://app.superlist.com/.well-known/oauth-protected-resource",
+              "https://app.superlist.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

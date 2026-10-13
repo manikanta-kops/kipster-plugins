@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "algolia",
+  "version": "0.1.0",
+  "description": "Connect to Algolia through its official MCP server.",
+  "homepage": "https://www.algolia.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "algolia",
+      "name": "Algolia",
+      "category": "databases",
+      "website": "https://www.algolia.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Algolia",
+          "rank": 1729,
+          "category": "databases",
+          "website": "https://www.algolia.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Algolia hosts an official Productivity MCP (read-only search and analytics) that the account enables once in the dashboard; each person signs in with their Algolia permissions. Algolia has a free Build plan. Discovery 2026-10-08: DCR yes, no CIMD, S256.",
+            "sources": [
+              "https://www.algolia.com/doc/guides/model-context-protocol/productivity-mcp",
+              "https://mcp.algolia.com/.well-known/oauth-protected-resource/mcp",
+              "https://dashboard.algolia.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=algolia"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

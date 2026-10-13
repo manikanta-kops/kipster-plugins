@@ -1,0 +1,54 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "crowdstrike",
+  "version": "0.1.0",
+  "description": "Connect to CrowdStrike through its official MCP server.",
+  "homepage": "https://www.crowdstrike.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "crowdstrike",
+      "name": "CrowdStrike",
+      "category": "security-and-it",
+      "website": "https://www.crowdstrike.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "CrowdStrike",
+          "rank": 1610,
+          "category": "security-and-it",
+          "website": "https://www.crowdstrike.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "CrowdStrike hosts a remote MCP on its own domain, signed in through the Falcon API's OAuth server (US-1 host); it is not in public docs, and a user report of an MCP clients page in the Falcon console suggests an admin may need to allow the client. The local falcon-mcp (maintained by CrowdStrike, pre-1.0) is the documented fallback and uses an API client created in Support > API Clients and Keys. Falcon Go, Pro and Enterprise can be bought online per device (Go from $7.99 a month, up to 100 devices) or tried free for 15 days (the trial covers Falcon Prevent and Device Control); the pricing pages do not say which bundles include API access. Falcon is sold to businesses. Discovery 2026-10-08: DCR no, CIMD yes, S256 yes.",
+            "sources": [
+              "https://mcp.crowdstrike.com/.well-known/oauth-protected-resource",
+              "https://api.crowdstrike.com/.well-known/oauth-authorization-server",
+              "https://github.com/CrowdStrike/falcon-mcp",
+              "https://developer.crowdstrike.com/falcon-mcp/changelog/",
+              "https://github.com/lcleveland/falcon-mcp/issues/11",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=crowdstrike",
+              "https://www.crowdstrike.com/en-us/pricing/",
+              "https://www.crowdstrike.com/en-us/pricing/falcon-go/",
+              "https://developer.crowdstrike.com/falcon-mcp/getting-started/credentials/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "clerk",
+  "version": "0.1.0",
+  "description": "Connect to Clerk through its official MCP server.",
+  "homepage": "https://clerk.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "clerk",
+      "name": "Clerk",
+      "category": "security-and-it",
+      "website": "https://clerk.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Clerk",
+          "rank": 1681,
+          "category": "security-and-it",
+          "website": "https://clerk.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Clerk hosts an official MCP server in open beta with no access gate, but it serves SDK snippets and implementation guides rather than the person's Clerk users or settings. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://clerk.com/docs/guides/ai/mcp/clerk-mcp-server",
+              "https://mcp.clerk.com/.well-known/oauth-protected-resource/mcp",
+              "https://clerk.clerk.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

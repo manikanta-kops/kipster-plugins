@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "clickhouse",
+  "version": "0.1.0",
+  "description": "Connect to ClickHouse through its official MCP server.",
+  "homepage": "https://clickhouse.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "clickhouse",
+      "name": "ClickHouse",
+      "category": "databases",
+      "website": "https://clickhouse.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "ClickHouse",
+          "rank": 1707,
+          "category": "databases",
+          "website": "https://clickhouse.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "ClickHouse Cloud remote MCP (read-only queries) must be enabled per service in the console. Discovery 2026-10-08: DCR yes, CIMD no, token auth none, S256.",
+            "sources": [
+              "https://clickhouse.com/docs/products/cloud/features/ai-ml/remote-mcp",
+              "https://mcp.clickhouse.cloud/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.clickhouse.cloud/.well-known/oauth-authorization-server",
+              "https://github.com/ClickHouse/mcp-clickhouse"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

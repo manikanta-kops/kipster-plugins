@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "aircall",
+  "version": "0.1.0",
+  "description": "Connect to Aircall through its official MCP server.",
+  "homepage": "https://aircall.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "aircall",
+      "name": "Aircall",
+      "category": "customer-support",
+      "website": "https://aircall.io",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Aircall",
+          "rank": 1680,
+          "category": "customer-support",
+          "website": "https://aircall.io",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "mcp.aircall.io answers with OAuth metadata (CIMD yes, DCR no, S256, public clients), but no Aircall page documenting it could be opened; Aircall's developer docs cover registering third-party MCPs for Aircall AI.",
+            "sources": [
+              "https://mcp.aircall.io/.well-known/oauth-protected-resource",
+              "https://id.aircall.io/.well-known/oauth-authorization-server/auth/v2/authorization-server/mcp",
+              "https://developer.aircall.io/docs/how-to-register"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

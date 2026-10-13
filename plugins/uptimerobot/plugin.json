@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "uptimerobot",
+  "version": "0.1.0",
+  "description": "Connect to UptimeRobot through its official MCP server.",
+  "homepage": "https://uptimerobot.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "uptimerobot",
+      "name": "UptimeRobot",
+      "category": "developer-tools",
+      "website": "https://uptimerobot.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "UptimeRobot",
+          "rank": 1709,
+          "category": "developer-tools",
+          "website": "https://uptimerobot.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official hosted MCP (also in the MCP Registry as com.uptimerobot/uptimerobot) with sign-in or API key; metadata advertises DCR, S256, client_secret_post only.",
+            "sources": [
+              "https://uptimerobot.com/mcp/",
+              "https://mcp.uptimerobot.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

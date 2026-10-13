@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gorgias",
+  "version": "0.1.0",
+  "description": "Connect to Gorgias through its official MCP server.",
+  "homepage": "https://www.gorgias.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "gorgias",
+      "name": "Gorgias",
+      "category": "customer-support",
+      "website": "https://www.gorgias.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Gorgias",
+          "rank": 1514,
+          "category": "customer-support",
+          "website": "https://www.gorgias.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Gorgias documents its MCP (open beta) on all Helpdesk plans for any MCP-compatible client, and every user role can install it. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients. Gorgias is a paid helpdesk.",
+            "sources": [
+              "https://mcp.gorgias.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.gorgias.com/.well-known/oauth-authorization-server",
+              "https://docs.gorgias.com/en-US/connect-your-ai-assistant-to-the-gorgias-mcp-6310546.md"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

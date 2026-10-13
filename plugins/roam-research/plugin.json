@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "roam-research",
+  "version": "0.1.0",
+  "description": "Connect to Roam Research through its official MCP server.",
+  "homepage": "https://roamresearch.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "roam-research",
+      "name": "Roam Research",
+      "category": "notes",
+      "website": "https://roamresearch.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Roam Research",
+          "rank": 848,
+          "category": "notes",
+          "website": "https://roamresearch.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Roam Research hosts a remote MCP (in Claude's directory as made by Roam Research, at /mcp/claude) that signs in with the person's Roam account and reads and writes the graphs they pick; Roam is a paid subscription. The official local server github.com/Roam-Research/roam-tools is the fallback, using the desktop app's local API and a token. Discovery 2026-10-08: DCR yes, CIMD yes, S256 yes.",
+            "sources": [
+              "https://mcp.roamresearch.com/.well-known/oauth-protected-resource",
+              "https://mcp.roamresearch.com/.well-known/oauth-protected-resource/mcp",
+              "https://connect.roamresearch.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/roam-research",
+              "https://github.com/Roam-Research/roam-tools",
+              "https://roamresearch.com",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=roam"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

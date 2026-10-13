@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "airtable",
+  "version": "0.1.0",
+  "description": "Connect to Airtable through its official MCP server.",
+  "homepage": "https://www.airtable.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "airtable",
+      "name": "Airtable",
+      "category": "productivity",
+      "website": "https://www.airtable.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Airtable",
+          "rank": 1261,
+          "category": "productivity",
+          "website": "https://www.airtable.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Airtable hosts an official MCP server; discovery 2026-10-08: DCR yes, CIMD yes, S256, sign-in on airtable.com.",
+            "sources": [
+              "https://airtable.com/developers/agents/mcp/getting-started",
+              "https://mcp.airtable.com/.well-known/oauth-protected-resource/mcp",
+              "https://airtable.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

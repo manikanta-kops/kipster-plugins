@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "ironclad": {
+      "type": "streamable-http",
+      "url": "https://mcp.na1.ironcladapp.com/mcp"
+    }
+  }
+}

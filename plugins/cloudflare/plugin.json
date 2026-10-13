@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "cloudflare",
+  "version": "0.1.0",
+  "description": "Connect to Cloudflare through its official MCP server.",
+  "homepage": "https://www.cloudflare.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "category": "cloud-and-hosting",
+      "website": "https://www.cloudflare.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Cloudflare",
+          "rank": 1480,
+          "category": "cloud-and-hosting",
+          "website": "https://www.cloudflare.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Cloudflare's API MCP server covers the whole Cloudflare API through search and execute tools, signing in with OAuth (or a self-created API token); 16 product-specific MCP servers also exist. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/",
+              "https://mcp.cloudflare.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.cloudflare.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

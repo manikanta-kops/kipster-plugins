@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "customer-io",
+  "version": "0.1.0",
+  "description": "Connect to Customer.io through its official MCP server.",
+  "homepage": "https://customer.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "customer-io",
+      "name": "Customer.io",
+      "category": "marketing-and-email-marketing",
+      "website": "https://customer.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Customer.io",
+          "rank": 1577,
+          "category": "marketing-and-email-marketing",
+          "website": "https://customer.io",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP (EU region at mcp-eu.customer.io) reads workspace data and manages campaigns and segments; authorization server advertises DCR, token auth none, S256 (also plain).",
+            "sources": [
+              "https://docs.customer.io/ai/mcp-server",
+              "https://mcp.customer.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

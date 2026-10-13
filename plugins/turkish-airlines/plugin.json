@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "turkish-airlines",
+  "version": "0.1.0",
+  "description": "Connect to Turkish Airlines through its official MCP server.",
+  "homepage": "https://www.turkishairlines.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "turkish-airlines",
+      "name": "Turkish Airlines",
+      "category": "travel",
+      "website": "https://www.turkishairlines.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Turkish Airlines",
+          "rank": 657,
+          "category": "travel",
+          "website": "https://www.turkishairlines.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official Turkish Airlines MCP (Turkish Technology, read scopes profile, bookings, flight search) signed in with Miles&Smiles. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://mcp.turkishtechlab.com/.well-known/oauth-protected-resource",
+              "https://mcp.turkishtechlab.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.turkishtechlab.com/.well-known/oauth-authorization-server",
+              "https://glama.ai/mcp/connectors/com.turkishtechlab.mcp/turkish-airlines"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

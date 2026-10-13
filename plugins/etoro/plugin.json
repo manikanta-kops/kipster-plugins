@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "etoro",
+  "version": "0.1.0",
+  "description": "Connect to eToro through its official MCP server.",
+  "homepage": "https://www.etoro.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "etoro",
+      "name": "eToro",
+      "category": "investing-and-crypto",
+      "website": "https://www.etoro.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "eToro",
+          "rank": 787,
+          "category": "investing-and-crypto",
+          "website": "https://www.etoro.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "eToro hosts an official MCP server for its Public API, including trade execution; discovery 2026-10-08: DCR yes, CIMD yes, S256, public clients allowed. The registry entry io.github.gabrielcerutti/etoro-mcp-server is community-built.",
+            "sources": [
+              "https://mcp.public-api.etoro.com",
+              "https://mcp.public-api.etoro.com/.well-known/oauth-protected-resource",
+              "https://www.etoro.com/.well-known/oauth-authorization-server",
+              "https://api-portal.etoro.com/core/ai-agents/etoro-skill.md",
+              "https://api-portal.etoro.com/core/getting-started/authentication.md",
+              "https://api-portal.etoro.com/core/getting-started/sso-oauth.md",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=etoro"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

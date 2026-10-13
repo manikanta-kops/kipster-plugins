@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "runway",
+  "version": "0.1.0",
+  "description": "Connect to Runway through its official MCP server.",
+  "homepage": "https://runwayml.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "runway",
+      "name": "Runway",
+      "category": "design-and-creative",
+      "website": "https://runwayml.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Runway",
+          "rank": 1553,
+          "category": "design-and-creative",
+          "website": "https://runwayml.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP; Runway's own page says to add the URL as a custom connector in any MCP client. Generations use credits. Metadata advertises DCR, no CIMD, S256, public clients (none).",
+            "sources": [
+              "https://mcp.runwayml.com/",
+              "https://mcp.runwayml.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.runwayml.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "substack",
+  "version": "0.1.0",
+  "description": "Connect to Substack through its official MCP server.",
+  "homepage": "https://substack.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "substack",
+      "name": "Substack",
+      "category": "news-and-reading",
+      "website": "https://substack.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Substack",
+          "rank": 149,
+          "category": "news-and-reading",
+          "website": "https://substack.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Substack's official MCP is read-only publication analytics (subscribers, post performance, revenue, retention) and works only for an admin of a Bestseller publication; it cannot read the person's reading list, Notes or profile, so readers get nothing from it. Discovery 2026-10-09: DCR yes, CIMD no, S256, token auth none or client_secret_basic, authorization server substack.com, scopes mcp:read and mcp.user.read.",
+            "sources": [
+              "https://support.substack.com/api/v2/help_center/en-us/articles/50834026608916.json",
+              "https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp",
+              "https://substack.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

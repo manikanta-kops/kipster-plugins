@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tidycal",
+  "version": "0.1.0",
+  "description": "Connect to TidyCal through its official MCP server.",
+  "homepage": "https://tidycal.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "tidycal",
+      "name": "TidyCal",
+      "category": "scheduling",
+      "website": "https://tidycal.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "TidyCal",
+          "rank": 1362,
+          "category": "scheduling",
+          "website": "https://tidycal.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "TidyCal documents a read-only MCP (bookings, booking types, availability) with OAuth and dynamic registration and 'no pre-registration'; it needs a paid plan (the help centre says Individual, Pro or Agency, the MCP page says Pro). TidyCal's help says Claude and MCP clients running on your own computer can sign in, while other web-based assistants cannot. Discovery 2026-10-09: DCR yes, CIMD no, public clients only, S256.",
+            "sources": [
+              "https://tidycal.com/.well-known/oauth-protected-resource/mcp",
+              "https://tidycal.com/.well-known/oauth-authorization-server",
+              "https://tidycal.com/.well-known/oauth-authorization-server/mcp",
+              "https://tidycal.com/mcp-docs",
+              "https://help.tidycal.com/article/1060-connect-ai-assistants-to-tidycal-with-mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

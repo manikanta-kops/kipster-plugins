@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "amie",
+  "version": "0.1.0",
+  "description": "Connect to Amie through its official MCP server.",
+  "homepage": "https://amie.so",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "amie",
+      "name": "Amie",
+      "category": "calendar",
+      "website": "https://amie.so",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Amie",
+          "rank": 757,
+          "category": "calendar",
+          "website": "https://amie.so",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Amie hosts an official remote MCP server for meeting notes, todos, calendar and email; discovery 2026-10-09: DCR yes, CIMD not advertised, S256, public clients allowed, separate scopes notes:read, todos:read, todos:write, calendar:read, calendar:write, email:read and email:write. Its calendar and email tools reach the person's Gmail, Google Calendar and Outlook accounts through Amie's cloud, so the selected route requests only the notes and todo scopes (Amie's own meeting notes, transcripts, action items and todos) and leaves calendars and mail to the Google Calendar and Outlook plugins; the calendar and email scopes are excluded as proxying other services' data. Amie is paid (Pro or Business after a 7-day trial).",
+            "sources": [
+              "https://amie.so/mcp",
+              "https://amie.so/pricing",
+              "https://mcp.amie.so/.well-known/oauth-protected-resource",
+              "https://mcp.amie.so/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

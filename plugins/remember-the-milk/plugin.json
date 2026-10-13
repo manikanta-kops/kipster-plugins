@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "remember-the-milk",
+  "version": "0.1.0",
+  "description": "Connect to Remember The Milk through its official MCP server.",
+  "homepage": "https://www.rememberthemilk.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "remember-the-milk",
+      "name": "Remember The Milk",
+      "category": "tasks-and-reminders",
+      "website": "https://www.rememberthemilk.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Remember The Milk",
+          "rank": 510,
+          "category": "tasks-and-reminders",
+          "website": "https://www.rememberthemilk.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Remember The Milk's official MCP (58 tools, documented for Claude, ChatGPT, Cursor and other MCP clients) is for Pro members only. Discovery 2026-10-09: no protected-resource metadata; authorization-server metadata at rememberthemilk.com gives DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://www.rememberthemilk.com/services/mcp/",
+              "https://www.rememberthemilk.com/services/mcp/connect/",
+              "https://www.rememberthemilk.com/.well-known/oauth-authorization-server",
+              "https://www.rememberthemilk.com/services/api/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

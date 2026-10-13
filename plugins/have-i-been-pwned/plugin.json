@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "have-i-been-pwned",
+  "version": "0.1.0",
+  "description": "Connect to Have I Been Pwned through its official MCP server.",
+  "homepage": "https://haveibeenpwned.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "have-i-been-pwned",
+      "name": "Have I Been Pwned",
+      "category": "password-and-security",
+      "website": "https://haveibeenpwned.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Have I Been Pwned",
+          "rank": 1198,
+          "category": "password-and-security",
+          "website": "https://haveibeenpwned.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official HIBP MCP (registry io.github.troyhunt/hibp); public breach and Pwned Passwords tools work without sign-in, but email and domain searches need OAuth and an HIBP subscription. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://haveibeenpwned.com/Docs/MCP",
+              "https://haveibeenpwned.com/API/V3",
+              "https://haveibeenpwned.com/.well-known/oauth-protected-resource/mcp",
+              "https://haveibeenpwned.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=hibp&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

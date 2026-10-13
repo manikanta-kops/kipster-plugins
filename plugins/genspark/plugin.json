@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "genspark",
+  "version": "0.1.0",
+  "description": "Connect to Genspark through its official MCP server.",
+  "homepage": "https://www.genspark.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "genspark",
+      "name": "Genspark",
+      "category": "ai-assistants",
+      "website": "https://www.genspark.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Genspark",
+          "rank": 1061,
+          "category": "ai-assistants",
+          "website": "https://www.genspark.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Genspark's site advertises OAuth metadata for an MCP at /api/mcp, but no vendor documentation was found and the endpoint sat behind a Cloudflare challenge for plain GETs, so whether outside clients get through is unconfirmed. Discovery 2026-10-09: DCR yes, CIMD no, S256 (OpenID configuration only; no protected-resource metadata).",
+            "sources": [
+              "https://www.genspark.ai/.well-known/openid-configuration",
+              "https://apis.io/providers/genspark/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 403"
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "activecampaign",
+  "version": "0.1.0",
+  "description": "Connect to ActiveCampaign through its official MCP server.",
+  "homepage": "https://www.activecampaign.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "activecampaign",
+      "name": "ActiveCampaign",
+      "category": "marketing-and-email-marketing",
+      "website": "https://www.activecampaign.com",
+      "signIn": ["dcr"],
+      "needsAddress": true,
+      "addressPrompt": "What is your ActiveCampaign instance or account MCP address?",
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "ActiveCampaign",
+          "rank": 1516,
+          "category": "marketing-and-email-marketing",
+          "website": "https://www.activecampaign.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "ActiveCampaign's remote MCP has a per-account URL copied from Settings > Developer (template shown literally) and connects as a custom ChatGPT or Claude connector with plain OAuth and no client credentials, which suggests DCR; the account's discovery metadata could not be read without a real account subdomain, so DCR is not confirmed.",
+            "sources": [
+              "https://developers.activecampaign.com/page/mcp.md",
+              "https://developers.activecampaign.com/page/connect-claude.md",
+              "https://developers.activecampaign.com/page/connect-chatgpt.md",
+              "https://test.activehosted.com/api/agents/mcp/http"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-address",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "An instance or account MCP address is required when connecting"
+      }
+    }
+  }
+}

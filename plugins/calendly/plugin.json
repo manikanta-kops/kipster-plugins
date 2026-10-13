@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "calendly",
+  "version": "0.1.0",
+  "description": "Connect to Calendly through its official MCP server.",
+  "homepage": "https://calendly.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "calendly",
+      "name": "Calendly",
+      "category": "scheduling",
+      "website": "https://calendly.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Calendly",
+          "rank": 1259,
+          "category": "scheduling",
+          "website": "https://calendly.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Calendly hosts its MCP at mcp.calendly.com and documents DCR at calendly.com/oauth/register; personal access tokens are not accepted by the MCP. Discovery 2026-10-09: DCR yes, CIMD no, token auth none, S256.",
+            "sources": [
+              "https://developer.calendly.com/docs/mcp/calendly-mcp-server",
+              "https://mcp.calendly.com/.well-known/oauth-protected-resource",
+              "https://calendly.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

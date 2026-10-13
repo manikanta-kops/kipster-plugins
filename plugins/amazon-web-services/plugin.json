@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "amazon-web-services",
+  "version": "0.1.0",
+  "description": "Connect to Amazon Web Services through its official MCP server.",
+  "homepage": "https://aws.amazon.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "amazon-web-services",
+      "name": "Amazon Web Services",
+      "category": "cloud-and-hosting",
+      "website": "https://aws.amazon.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Amazon Web Services",
+          "rank": 1512,
+          "category": "cloud-and-hosting",
+          "website": "https://aws.amazon.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "The AWS MCP Server (Agent Toolkit for AWS) acts with the person's IAM roles and policies, via OAuth 2.1 through AWS Sign-in or SigV4 through the official MCP Proxy for AWS; awslabs also publishes local MCP servers. AWS resources the agent uses are billed to the account. Discovery 2026-10-09: DCR yes, CIMD not advertised, S256, public clients.",
+            "sources": [
+              "https://docs.aws.amazon.com/agent-toolkit/latest/userguide/what-is-agent-toolkit.html",
+              "https://aws-mcp.us-east-1.api.aws/.well-known/oauth-protected-resource/mcp",
+              "https://us-east-1.oauth.signin.aws/.well-known/oauth-authorization-server",
+              "https://github.com/aws/mcp-proxy-for-aws",
+              "https://github.com/awslabs/mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

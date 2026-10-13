@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tally",
+  "version": "0.1.0",
+  "description": "Connect to Tally through its official MCP server.",
+  "homepage": "https://tally.so",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "tally",
+      "name": "Tally",
+      "category": "forms-and-surveys",
+      "website": "https://tally.so",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Tally",
+          "rank": 1291,
+          "category": "forms-and-surveys",
+          "website": "https://tally.so",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Tally hosts an official MCP server (beta) for building forms and reading submissions; discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients allowed.",
+            "sources": [
+              "https://developers.tally.so/api-reference/mcp.md",
+              "https://api.tally.so/.well-known/oauth-protected-resource/mcp",
+              "https://api.tally.so/.well-known/oauth-authorization-server/mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

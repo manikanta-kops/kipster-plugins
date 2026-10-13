@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "typefully",
+  "version": "0.1.0",
+  "description": "Connect to Typefully through its official MCP server.",
+  "homepage": "https://typefully.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "typefully",
+      "name": "Typefully",
+      "category": "social-media-management",
+      "website": "https://typefully.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Typefully",
+          "rank": 1726,
+          "category": "social-media-management",
+          "website": "https://typefully.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Typefully documents one remote MCP URL for everyone with OAuth sign-in and no API key; no plan requirement is stated. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://support.typefully.com/en/articles/13128440-typefully-mcp-server",
+              "https://mcp.typefully.com/.well-known/oauth-protected-resource",
+              "https://api.typefully.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Typefully&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

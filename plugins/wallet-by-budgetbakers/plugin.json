@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wallet-by-budgetbakers",
+  "version": "0.1.0",
+  "description": "Connect to Wallet by BudgetBakers through its official MCP server.",
+  "homepage": "https://budgetbakers.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "wallet-by-budgetbakers",
+      "name": "Wallet by BudgetBakers",
+      "category": "budgeting-and-taxes",
+      "website": "https://budgetbakers.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Wallet by BudgetBakers",
+          "rank": 938,
+          "category": "budgeting-and-taxes",
+          "website": "https://budgetbakers.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote MCP with OAuth; discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients. The MCP page does not state a plan requirement, while the REST API is Premium-only.",
+            "sources": [
+              "https://budgetbakers.com/en/products/wallet/integrations/mcp/",
+              "https://budgetbakers.com/en/products/wallet/integrations/rest-api/",
+              "https://mcp.wallet.budgetbakers.com/.well-known/oauth-protected-resource",
+              "https://mcp.wallet.budgetbakers.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

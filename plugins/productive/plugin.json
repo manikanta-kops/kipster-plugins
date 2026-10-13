@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "productive",
+  "version": "0.1.0",
+  "description": "Connect to Productive through its official MCP server.",
+  "homepage": "https://productive.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "productive",
+      "name": "Productive",
+      "category": "project-management",
+      "website": "https://productive.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Productive",
+          "rank": 1390,
+          "category": "project-management",
+          "website": "https://productive.io",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Productive documents its MCP at mcp.productive.io for any MCP-capable AI app, on the Ultimate plan with Productive AI features turned on in the workspace; each user connects their own account. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://mcp.productive.io/.well-known/oauth-protected-resource",
+              "https://api.productive.io/.well-known/oauth-authorization-server",
+              "https://developer.productive.io/",
+              "https://help.productive.io/en/articles/14817386-mcp-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "deel",
+  "version": "0.1.0",
+  "description": "Connect to Deel through its official MCP server.",
+  "homepage": "https://www.deel.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "deel",
+      "name": "Deel",
+      "category": "hr-and-recruiting",
+      "website": "https://www.deel.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Deel",
+          "rank": 1528,
+          "category": "hr-and-recruiting",
+          "website": "https://www.deel.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Deel documents a remote MCP with OAuth and dynamic client registration, or a personal access token; the account needs API access enabled. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://developer.deel.com/mcp/introduction",
+              "https://developer.deel.com/mcp/authorization",
+              "https://api.letsdeel.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.letsdeel.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

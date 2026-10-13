@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "exa",
+  "version": "0.1.0",
+  "description": "Connect to Exa through its official MCP server.",
+  "homepage": "https://exa.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "exa",
+      "name": "Exa",
+      "category": "developer-tools",
+      "website": "https://exa.ai",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Exa",
+          "rank": 1650,
+          "category": "developer-tools",
+          "website": "https://exa.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Exa's hosted MCP works keyless (rate-limited), with OAuth sign-in or with an API key; new accounts get free credits. Metadata: CIMD yes and DCR yes, S256, public clients.",
+            "sources": [
+              "https://exa.ai/docs/get-started/exa-mcp",
+              "https://mcp.exa.ai/.well-known/oauth-protected-resource",
+              "https://auth.exa.ai/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tradingview",
+  "version": "0.1.0",
+  "description": "Connect to TradingView through its official MCP server.",
+  "homepage": "https://www.tradingview.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "tradingview",
+      "name": "TradingView",
+      "category": "investing-and-crypto",
+      "website": "https://www.tradingview.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "TradingView",
+          "rank": 336,
+          "category": "investing-and-crypto",
+          "website": "https://www.tradingview.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "TradingView's official MCP Server (beta) documents one URL for Claude, ChatGPT, Codex and any MCP client with OAuth 2.1 sign-in; it covers watchlists (read and write), market data, screener, news, fundamentals, calendars and alerts, needs an Essential or higher plan (trials excluded) and is limited to about 100 tool calls per minute. Discovery 2026-10-09: protected-resource metadata only at the path-suffixed URL (root returns 404), authorization server www.tradingview.com, DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://www.tradingview.com/mcp/docs",
+              "https://mcp.tradingview.com/.well-known/oauth-protected-resource/mcp",
+              "https://www.tradingview.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

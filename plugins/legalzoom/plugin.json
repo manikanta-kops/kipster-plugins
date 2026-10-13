@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "legalzoom",
+  "version": "0.1.0",
+  "description": "Connect to LegalZoom through its official MCP server.",
+  "homepage": "https://www.legalzoom.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "legalzoom",
+      "name": "LegalZoom",
+      "category": "legal-and-signatures",
+      "website": "https://www.legalzoom.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "LegalZoom",
+          "rank": 1545,
+          "category": "legal-and-signatures",
+          "website": "https://www.legalzoom.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official MCP (named in LegalZoom's catalog) for products, formation and attorney access; account tools sign in through LegalZoom and some actions need a paid plan. Discovery 2026-10-08: DCR yes, CIMD no, S256 on auth.apigw.legalzoom.com; a plain GET to the MCP URL returns a JSON-RPC 406 asking for an MCP client.",
+            "sources": [
+              "https://www.legalzoom.com/tools/mcp-docs",
+              "https://www.legalzoom.com/mcp/catalog.txt",
+              "https://www.legalzoom.com/.well-known/oauth-protected-resource",
+              "https://auth.apigw.legalzoom.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Authorization metadata issuer does not match"
+      }
+    }
+  }
+}

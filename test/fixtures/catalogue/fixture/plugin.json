@@ -1,0 +1,38 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fixture",
+  "version": "0.1.0",
+  "description": "Local fixture service for tests and the verify instance. Not a real service.",
+  "homepage": "https://fixture.kipster.test",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "fixture",
+      "name": "Fixture",
+      "category": "testing",
+      "website": "https://fixture.kipster.test",
+      "signIn": ["dcr", "cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Fixture",
+          "rank": 1,
+          "category": "testing",
+          "website": "https://fixture.kipster.test",
+          "accounts": "personal",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-13",
+            "notes": "The local fixture service in src/fixture/service.ts. Reached only through --test-only-base-url.",
+            "sources": ["https://fixture.kipster.test/mcp"]
+          }
+        }
+      ],
+      "tools": { "whoami": "read" }
+    }
+  }
+}

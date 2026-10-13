@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "podia",
+  "version": "0.1.0",
+  "description": "Connect to Podia through its official MCP server.",
+  "homepage": "https://www.podia.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "podia",
+      "name": "Podia",
+      "category": "ecommerce-platforms",
+      "website": "https://www.podia.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Podia",
+          "rank": 1572,
+          "category": "ecommerce-platforms",
+          "website": "https://www.podia.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Podia lists MCP as a built-in integration for Claude, ChatGPT, Cursor and other MCP tools (drafting emails, building courses, sales numbers); Podia has paid plans with a free trial. Discovery 2026-10-09: DCR yes, CIMD not advertised, S256, public clients allowed.",
+            "sources": [
+              "https://www.podia.com/integrations",
+              "https://app.podia.com/.well-known/oauth-protected-resource/mcp",
+              "https://app.podia.com/.well-known/oauth-authorization-server",
+              "https://www.podia.com/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

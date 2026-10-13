@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "postscript",
+  "version": "0.1.0",
+  "description": "Connect to Postscript through its official MCP server.",
+  "homepage": "https://postscript.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "postscript",
+      "name": "Postscript",
+      "category": "marketing-and-email-marketing",
+      "website": "https://postscript.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Postscript",
+          "rank": 1628,
+          "category": "marketing-and-email-marketing",
+          "website": "https://postscript.io",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Postscript hosts an OAuth MCP on its own domain with a read-only analytics scope (mcp:analytics.read); it is not yet in the public developer docs. Postscript serves Shopify merchants. Community server github.com/mattcoatsworth/postscript-mcp-server, not official. Discovery 2026-10-08: DCR yes, CIMD no, S256 yes.",
+            "sources": [
+              "https://mcp.postscript.io/.well-known/oauth-protected-resource",
+              "https://auth.postscript.io/.well-known/oauth-authorization-server",
+              "https://developers.postscript.io/docs/api-authentication",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=postscript"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "kahoot",
+  "version": "0.1.0",
+  "description": "Connect to Kahoot! through its official MCP server.",
+  "homepage": "https://kahoot.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "kahoot",
+      "name": "Kahoot!",
+      "category": "learning",
+      "website": "https://kahoot.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Kahoot!",
+          "rank": 405,
+          "category": "learning",
+          "website": "https://kahoot.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Kahoot documents its own MCP server for creating and editing kahoots in the person's account (no reports or game data yet). Discovery 2026-10-08: DCR yes, CIMD no, S256; token endpoint advertises client_secret_post only.",
+            "sources": [
+              "https://support.kahoot.com/api/v2/help_center/en-us/articles/36770398743581.json",
+              "https://claude.com/marketplace/connectors/kahoot",
+              "https://mcp.kahoot.it/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.kahoot.it/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

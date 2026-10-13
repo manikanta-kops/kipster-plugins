@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hostinger",
+  "version": "0.1.0",
+  "description": "Connect to Hostinger through its official MCP server.",
+  "homepage": "https://www.hostinger.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "hostinger",
+      "name": "Hostinger",
+      "category": "website-and-cms",
+      "website": "https://www.hostinger.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Hostinger",
+          "rank": 1725,
+          "category": "website-and-cms",
+          "website": "https://www.hostinger.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Hostinger's hosted MCP covers hosting, domains, DNS, VPS, mail and billing over OAuth. Discovery 2026-10-08: DCR yes (auth.hostinger.com), CIMD no, token auth none, S256.",
+            "sources": [
+              "https://github.com/hostinger/api-mcp-server",
+              "https://mcp.hostinger.com/.well-known/oauth-protected-resource",
+              "https://auth.hostinger.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "rize",
+  "version": "0.1.0",
+  "description": "Connect to Rize through its official MCP server.",
+  "homepage": "https://rize.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "rize",
+      "name": "Rize",
+      "category": "productivity",
+      "website": "https://rize.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Rize",
+          "rank": 1396,
+          "category": "productivity",
+          "website": "https://rize.io",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Rize documents an official remote MCP using OAuth with PKCE and dynamic client registration; tools follow the person's workspace role. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://docs.rize.io/mcp",
+              "https://mcp.rize.io/.well-known/oauth-protected-resource",
+              "https://mcp.rize.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

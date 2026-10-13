@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "browserstack",
+  "version": "0.1.0",
+  "description": "Connect to BrowserStack through its official MCP server.",
+  "homepage": "https://www.browserstack.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "browserstack",
+      "name": "BrowserStack",
+      "category": "developer-tools",
+      "website": "https://www.browserstack.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "BrowserStack",
+          "rank": 1738,
+          "category": "developer-tools",
+          "website": "https://www.browserstack.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "BrowserStack documents a remote MCP that uses OAuth, alongside its local server; testing runs on the person's BrowserStack trial or paid plan. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://www.browserstack.com/docs/browserstack-mcp-server/overview",
+              "https://mcp.browserstack.com/.well-known/oauth-protected-resource",
+              "https://mcp.browserstack.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=BrowserStack&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

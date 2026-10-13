@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "philips-hue",
+  "version": "0.1.0",
+  "description": "Connect to Philips Hue through its official MCP server.",
+  "homepage": "https://www.philips-hue.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "philips-hue",
+      "name": "Philips Hue",
+      "category": "smart-home",
+      "website": "https://www.philips-hue.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Philips Hue",
+          "rank": 114,
+          "category": "smart-home",
+          "website": "https://www.philips-hue.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Signify runs a remote MCP on its meethue.com domain with open dynamic client registration, but no Hue developer or support page documents it yet, so tools and stability are unconfirmed; the documented routes are the local Bridge API and the Remote Hue API (free developer account). Community servers exist (e.g. github.com/m2ai-mcp-servers/mcp-philips-hue). Discovery 2026-10-09: DCR yes, CIMD no, S256, token endpoint auth none.",
+            "sources": [
+              "https://mcp.meethue.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.meethue.com/.well-known/oauth-authorization-server",
+              "https://developers.meethue.com/develop/get-started-2/",
+              "https://developers.meethue.com/develop/hue-api-v2/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wispr-flow",
+  "version": "0.1.0",
+  "description": "Connect to Wispr Flow through its official MCP server.",
+  "homepage": "https://wisprflow.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "wispr-flow",
+      "name": "Wispr Flow",
+      "category": "ai-assistants",
+      "website": "https://wisprflow.ai",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Wispr Flow",
+          "rank": 1218,
+          "category": "ai-assistants",
+          "website": "https://wisprflow.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Wispr Flow's own remote MCP (listed in Anthropic's directory) reads meetings, transcripts, notes, calendar events and tasks from the person's account and can add tasks. Metadata: CIMD yes, DCR yes, S256; auth server mcp-auth.wisprflow.com.",
+            "sources": [
+              "https://claude.com/marketplace/connectors/wispr-flow",
+              "https://api.wisprflow.ai/.well-known/oauth-protected-resource/connect/mcp",
+              "https://mcp-auth.wisprflow.com/.well-known/oauth-authorization-server",
+              "https://wisprflow.ai/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pcloud",
+  "version": "0.1.0",
+  "description": "Connect to pCloud through its official MCP server.",
+  "homepage": "https://www.pcloud.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "pcloud",
+      "name": "pCloud",
+      "category": "files-and-storage",
+      "website": "https://www.pcloud.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "pCloud",
+          "rank": 520,
+          "category": "files-and-storage",
+          "website": "https://www.pcloud.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "pCloud runs a remote MCP server on its own domain with OAuth; no vendor documentation page for it was found, so verified partly. Discovery 2026-10-08: DCR yes, CIMD yes, S256. Community server: github.com/fatherlinux/mcp-pcloud, not official.",
+            "sources": [
+              "https://mcp.pcloud.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.pcloud.com/.well-known/oauth-authorization-server",
+              "https://docs.pcloud.com/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

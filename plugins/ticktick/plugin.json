@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ticktick",
+  "version": "0.1.0",
+  "description": "Connect to TickTick through its official MCP server.",
+  "homepage": "https://ticktick.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "ticktick",
+      "name": "TickTick",
+      "category": "tasks-and-reminders",
+      "website": "https://ticktick.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "TickTick",
+          "rank": 177,
+          "category": "tasks-and-reminders",
+          "website": "https://ticktick.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "TickTick documents its own Streamable HTTP MCP at mcp.ticktick.com with OAuth or a personal API token, and Claude's directory lists it. Discovery 2026-10-08: DCR yes, CIMD no, S256 (plain also offered), token auth none or client_secret_basic, authorization on ticktick.com, scopes tasks:read and tasks:write.",
+            "sources": [
+              "https://help.ticktick.com/articles/7438129581631995904",
+              "https://mcp.ticktick.com/.well-known/oauth-protected-resource",
+              "https://mcp.ticktick.com/.well-known/oauth-authorization-server",
+              "https://ticktick.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/ticktick",
+              "https://developer.ticktick.com/",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=TickTick"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

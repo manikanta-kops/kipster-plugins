@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ourgroceries",
+  "version": "0.1.0",
+  "description": "Connect to OurGroceries through its official MCP server.",
+  "homepage": "https://www.ourgroceries.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "ourgroceries",
+      "name": "OurGroceries",
+      "category": "groceries",
+      "website": "https://www.ourgroceries.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "OurGroceries",
+          "rank": 1163,
+          "category": "groceries",
+          "website": "https://www.ourgroceries.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "OurGroceries' user guide documents its own MCP server for shopping lists and recipes, added to an AI client as a custom connector with no client settings. Metadata: DCR yes, CIMD yes, S256, token auth none; the app also exports all data as XLSX and JSON.",
+            "sources": [
+              "https://www.ourgroceries.com/user-guide",
+              "https://www.ourgroceries.com/.well-known/oauth-protected-resource",
+              "https://www.ourgroceries.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

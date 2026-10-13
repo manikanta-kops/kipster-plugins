@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "luma",
+  "version": "0.1.0",
+  "description": "Connect to Luma through its official MCP server.",
+  "homepage": "https://luma.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "luma",
+      "name": "Luma",
+      "category": "events-and-tickets",
+      "website": "https://luma.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Luma",
+          "rank": 879,
+          "category": "events-and-tickets",
+          "website": "https://luma.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official MCP at https://mcp.luma.com for any Luma account (no Luma Plus needed): event search, the person's events, and hosting tools. Discovery 2026-10-08: authorization server api.luma.com, DCR no, CIMD yes, S256; token auth none, client secret or private_key_jwt.",
+            "sources": [
+              "https://help.luma.com/p/mcp",
+              "https://help.luma.com/p/mcp.md",
+              "https://mcp.luma.com/.well-known/oauth-protected-resource",
+              "https://api.luma.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}
