@@ -1,0 +1,107 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "atlassian",
+  "version": "0.1.0",
+  "description": "Connect to Confluence, Jira, Loom, Bitbucket through its official MCP server.",
+  "homepage": "https://www.atlassian.com/software/confluence",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "atlassian",
+      "name": "Atlassian",
+      "category": "knowledge-base",
+      "website": "https://www.atlassian.com/software/confluence",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Confluence",
+          "rank": 1262,
+          "category": "knowledge-base",
+          "website": "https://www.atlassian.com/software/confluence",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Atlassian's Rovo MCP server covers Confluence and Jira (same sign-in as Trello on auth.atlassian.com). Discovery 2026-10-08: DCR yes, CIMD yes, S256; Confluence has a free plan.",
+            "sources": [
+              "https://claude.com/marketplace/connectors/atlassian",
+              "https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp",
+              "https://auth.atlassian.com/VCeDsk8ZHncYF1g234fKtc4lNipbBhu3/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=atlassian"
+            ]
+          }
+        },
+        {
+          "name": "Jira",
+          "rank": 1267,
+          "category": "project-management",
+          "website": "https://www.atlassian.com/software/jira",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Atlassian's official Rovo MCP server covers Jira, Confluence and Compass (v1 moves to v2 on 2027-03-01); discovery 2026-10-08 on auth.atlassian.com: DCR yes, CIMD yes, S256, public clients allowed. Site admins can restrict which AI clients connect.",
+            "sources": [
+              "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/",
+              "https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp",
+              "https://auth.atlassian.com/VCeDsk8ZHncYF1g234fKtc4lNipbBhu3/.well-known/oauth-authorization-server"
+            ]
+          }
+        },
+        {
+          "name": "Loom",
+          "rank": 1269,
+          "category": "productivity",
+          "website": "https://www.loom.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Loom tools (videos, transcripts, comments, action items) are served by the Atlassian Rovo MCP Server, but only for Loom workspaces linked to an Atlassian site; Loom has no standalone public REST API. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/supported-tools/",
+              "https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp",
+              "https://auth.atlassian.com/VCeDsk8ZHncYF1g234fKtc4lNipbBhu3/.well-known/oauth-authorization-server"
+            ]
+          }
+        },
+        {
+          "name": "Bitbucket",
+          "rank": 1424,
+          "category": "developer-tools",
+          "website": "https://bitbucket.org",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Bitbucket is covered by the Atlassian Rovo MCP server. Discovery 2026-10-08: auth.atlassian.com advertises both DCR and CIMD, S256; Rovo usage limits apply.",
+            "sources": [
+              "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/",
+              "https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp",
+              "https://auth.atlassian.com/.well-known/oauth-authorization-server/VCeDsk8ZHncYF1g234fKtc4lNipbBhu3"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

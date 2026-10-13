@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fireflies-ai",
+  "version": "0.1.0",
+  "description": "Connect to Fireflies.ai through its official MCP server.",
+  "homepage": "https://fireflies.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "fireflies-ai",
+      "name": "Fireflies.ai",
+      "category": "productivity",
+      "website": "https://fireflies.ai",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Fireflies.ai",
+          "rank": 1290,
+          "category": "productivity",
+          "website": "https://fireflies.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Fireflies documents an official MCP server (registry ai.fireflies/fireflies at api.fireflies.ai/mcp; mcp.fireflies.ai/mcp answers the same way) for meeting transcripts and summaries. Discovery 2026-10-09: DCR yes, CIMD yes, public clients allowed, S256.",
+            "sources": [
+              "https://docs.fireflies.ai/getting-started/mcp-configuration",
+              "https://mcp.fireflies.ai/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.fireflies.ai/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

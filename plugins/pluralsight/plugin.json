@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pluralsight",
+  "version": "0.1.0",
+  "description": "Connect to Pluralsight through its official MCP server.",
+  "homepage": "https://www.pluralsight.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "pluralsight",
+      "name": "Pluralsight",
+      "category": "learning",
+      "website": "https://www.pluralsight.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["unknown"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Pluralsight",
+          "rank": 1252,
+          "category": "learning",
+          "website": "https://www.pluralsight.com",
+          "accounts": "unknown",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Live Pluralsight MCP found by probe but not publicly documented: the help centre has no MCP article and the MCP Registry has no entry. Its scopes (leader, admin, employee, author) suggest it targets organisation (Skills team plan) accounts, but no vendor source says which plans include it, so whether an individual plan can use it is unknown. Team plans are sold self-serve (Buy now or a 14-day free trial) for teams of 2 to 20, and Enterprise is sold through sales, so there is no sales gate either way; the Skills APIs are also team-plan only. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://mcp.pluralsight.com/.well-known/oauth-protected-resource",
+              "https://mcp.pluralsight.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=pluralsight&limit=100",
+              "https://www.pluralsight.com/businesses/pricing",
+              "https://help.pluralsight.com/api/v2/help_center/en-us/articles/31499201424020.json",
+              "https://help.pluralsight.com/api/v2/help_center/en-us/articles/24420554286868.json"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

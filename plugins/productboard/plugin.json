@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "productboard",
+  "version": "0.1.0",
+  "description": "Connect to Productboard through its official MCP server.",
+  "homepage": "https://www.productboard.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "productboard",
+      "name": "Productboard",
+      "category": "project-management",
+      "website": "https://www.productboard.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Productboard",
+          "rank": 1346,
+          "category": "project-management",
+          "website": "https://www.productboard.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients allowed. A workspace admin must enable MCP and choose which roles may connect. The MCP server (beta) comes with Spark-enabled workspaces; Productboard's help centre lists self-serve Free, Plus and Business plans with prices and a 14-day free trial without a credit card, upgraded in-app. The marketing pricing page lists the MCP server on Business and Enterprise and shows only 'Request demo' and 'Contact sales', so the self-serve route rests on the help centre.",
+            "sources": [
+              "https://productboard.com/integrations/mcp-server",
+              "https://mcp.productboard.com/.well-known/oauth-protected-resource",
+              "https://mcp.productboard.com/.well-known/oauth-authorization-server",
+              "https://www.productboard.com/pricing/",
+              "https://support.productboard.com/hc/en-us/articles/52211546007443-Connect-a-coding-agent-to-Spark-via-MCP",
+              "https://support.productboard.com/hc/en-us/articles/48438638045459-Spark-pricing-and-billing-FAQ",
+              "https://support.productboard.com/hc/en-us/articles/360058212793-How-does-the-trial-work"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

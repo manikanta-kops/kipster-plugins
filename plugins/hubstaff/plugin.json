@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hubstaff",
+  "version": "0.1.0",
+  "description": "Connect to Hubstaff through its official MCP server.",
+  "homepage": "https://hubstaff.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "hubstaff",
+      "name": "Hubstaff",
+      "category": "productivity",
+      "website": "https://hubstaff.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Hubstaff",
+          "rank": 1389,
+          "category": "productivity",
+          "website": "https://hubstaff.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official read-only MCP for owners and managers of active Hubstaff organizations, connected by adding it to an MCP client and signing in; the page's invitation to contact support about 'early access' sets no documented gate. Hubstaff's pricing page offers a self-serve 14-day trial without a card, then paid Starter, Grow and Team plans that each have a 2-seat minimum, so the route needs a paid plan and consumer_accounts is business-only; an older support article describing a free plan for individual freelancers conflicts with the pricing page. The exact endpoint path is not in Hubstaff docs, the host comes from its protected resource metadata. Discovery 2026-10-08: DCR no, CIMD yes (account.hubstaff.com), S256.",
+            "sources": [
+              "https://support.hubstaff.com/hubstaff-mcp-server/",
+              "https://hubstaff.com/pricing",
+              "https://mcp.hubstaff.com/.well-known/oauth-protected-resource",
+              "https://account.hubstaff.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

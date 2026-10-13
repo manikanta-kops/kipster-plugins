@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ringcentral",
+  "version": "0.1.0",
+  "description": "Connect to RingCentral through its official MCP server.",
+  "homepage": "https://www.ringcentral.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "ringcentral",
+      "name": "RingCentral",
+      "category": "video-calls",
+      "website": "https://www.ringcentral.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "RingCentral",
+          "rank": 1301,
+          "category": "video-calls",
+          "website": "https://www.ringcentral.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "RingCentral's MCP Hub lists separate RingEX Phone, Chat and Admin servers on mcp.labs.ringcentral.com, marked Preview; the preview is open, and setup needs only a sign-in to a RingCentral RingEX account with no access request. RingEX is paid, but the Core plan (from $20 per user a month) is sold self-serve for 1 to 5 users with Buy now or a 14-day free trial that includes the full RingEX feature set, so one person can own and administer their own account; larger bundles go through sales. Sending SMS needs carrier (TCR) registration, and the pricing page does not say whether checkout asks for business details. Discovery 2026-10-09: DCR yes, CIMD no, token auth none, S256 (Chat server shown).",
+            "sources": [
+              "https://developers.ringcentral.com/mcp/",
+              "https://developers.ringcentral.com/mcp/servers/ringex-chat/",
+              "https://developers.ringcentral.com/mcp/servers/ringex-chat-setup/",
+              "https://mcp.labs.ringcentral.com/.well-known/oauth-protected-resource/ringex/v1.1.0/team-chat",
+              "https://mcp.labs.ringcentral.com/ringex/team-chat/.well-known/oauth-authorization-server",
+              "https://www.ringcentral.com/office/plansandpricing.html",
+              "https://developers.ringcentral.com/mcp/solutions/claude-small-business/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

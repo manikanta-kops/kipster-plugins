@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lucid",
+  "version": "0.1.0",
+  "description": "Connect to Lucid through its official MCP server.",
+  "homepage": "https://lucid.co",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "lucid",
+      "name": "Lucid",
+      "category": "productivity",
+      "website": "https://lucid.co",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Lucid",
+          "rank": 1298,
+          "category": "productivity",
+          "website": "https://lucid.co",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official Lucid MCP on Free, Individual, Team and Enterprise plans (read-only variant at /mcp/readonly). Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://help.lucid.co/hc/en-us/articles/42578801807508-Integrate-Lucid-with-AI-tools-using-the-Lucid-MCP-server",
+              "https://mcp.lucid.app/.well-known/oauth-protected-resource",
+              "https://mcp.lucid.app/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=lucid"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

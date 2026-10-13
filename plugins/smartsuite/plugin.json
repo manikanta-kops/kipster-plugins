@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "smartsuite",
+  "version": "0.1.0",
+  "description": "Connect to SmartSuite through its official MCP server.",
+  "homepage": "https://www.smartsuite.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "smartsuite",
+      "name": "SmartSuite",
+      "category": "productivity",
+      "website": "https://www.smartsuite.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "SmartSuite",
+          "rank": 1335,
+          "category": "productivity",
+          "website": "https://www.smartsuite.com",
+          "accounts": "business-only",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "SmartSuite hosts its MCP at app.smartsuite.com/v1/mcp with account sign-in and no API key. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://www.smartsuite.com/features/mcp-server",
+              "https://app.smartsuite.com/.well-known/oauth-protected-resource/v1/mcp",
+              "https://app.smartsuite.com/.well-known/oauth-authorization-server/authentication/oauth"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

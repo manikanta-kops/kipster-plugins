@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "whimsical",
+  "version": "0.1.0",
+  "description": "Connect to Whimsical through its official MCP server.",
+  "homepage": "https://whimsical.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "whimsical",
+      "name": "Whimsical",
+      "category": "productivity",
+      "website": "https://whimsical.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Whimsical",
+          "rank": 1303,
+          "category": "productivity",
+          "website": "https://whimsical.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Whimsical hosts an official remote MCP server for boards, diagrams and docs; discovery 2026-10-08: DCR yes, CIMD not advertised, PKCE S256 required, public clients allowed.",
+            "sources": [
+              "https://help.whimsical.com/integrations/remote-mcp",
+              "https://mcp.whimsical.com/.well-known/oauth-protected-resource",
+              "https://mcp.whimsical.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mattermost",
+  "version": "0.1.0",
+  "description": "Connect to Mattermost through its official MCP server.",
+  "homepage": "https://mattermost.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "mattermost",
+      "name": "Mattermost",
+      "category": "chat-and-messaging",
+      "website": "https://mattermost.com",
+      "signIn": ["dcr"],
+      "needsAddress": true,
+      "addressPrompt": "What is your Mattermost instance or account MCP address?",
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Mattermost",
+          "rank": 1293,
+          "category": "chat-and-messaging",
+          "website": "https://mattermost.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Mattermost's own endpoint template: the Agents plugin serves MCP on the person's own server (v11.2+) once a system admin enables the HTTP endpoint, signing in with OAuth (DCR if the admin enables it) or a personal access token. The plugin docs list remote and external MCP servers and write tools at the Enterprise licence level and above; Mattermost Enterprise Edition run without a licence applies the free Entry licence, which the plugin treats as Enterprise, so one person can self-host it at no cost and be its admin. Entry limits include 10,000 messages of viewable history and, in a future release, 250 agent queries a month. Paid Professional, Enterprise and Enterprise Advanced licences are sold through sales but are not needed, and the unlicensed (Free) level does not get the external endpoint. Discovery 2026-10-08 on community.mattermost.com: protected-resource metadata at the documented path, DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://mattermost.com/blog/mattermost-mcp-server/",
+              "https://github.com/mattermost/mattermost-plugin-agents/blob/master/docs/admin_guide.md",
+              "https://community.mattermost.com/plugins/mattermost-ai/mcp-server/.well-known/oauth-protected-resource",
+              "https://community.mattermost.com/.well-known/oauth-authorization-server",
+              "https://docs.mattermost.com/product-overview/editions-and-offerings",
+              "https://mattermost.com/pricing/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-address",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "An instance or account MCP address is required when connecting"
+      }
+    }
+  }
+}

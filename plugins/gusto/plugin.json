@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gusto",
+  "version": "0.1.0",
+  "description": "Connect to Gusto through its official MCP server.",
+  "homepage": "https://gusto.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "gusto",
+      "name": "Gusto",
+      "category": "hr-and-recruiting",
+      "website": "https://gusto.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Gusto",
+          "rank": 1410,
+          "category": "hr-and-recruiting",
+          "website": "https://gusto.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Gusto's official remote MCP reads (and with chosen scopes writes) the person's own company payroll, employee and contractor data; Gusto's docs name Claude, ChatGPT, Gemini and Cursor and warn against mixing it with other MCP servers in one session. Discovery 2026-10-09: DCR yes, CIMD not advertised, S256 (also plain), client-secret token auth only.",
+            "sources": [
+              "https://docs.gusto.com/app-integrations/docs/mcp",
+              "https://mcp.api.gusto.com/.well-known/oauth-protected-resource",
+              "https://mcp.api.gusto.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/gusto"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 200"
+      }
+    }
+  }
+}

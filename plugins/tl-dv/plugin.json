@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tl-dv",
+  "version": "0.1.0",
+  "description": "Connect to tl;dv through its official MCP server.",
+  "homepage": "https://tldv.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "tl-dv",
+      "name": "tl;dv",
+      "category": "productivity",
+      "website": "https://tldv.io",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "tl;dv",
+          "rank": 1311,
+          "category": "productivity",
+          "website": "https://tldv.io",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "tl;dv hosts its official MCP (OAuth, no API key) on the Pro plan and above; org admins can block it. Discovery 2026-10-08: DCR yes, CIMD yes, S256 (Keycloak realm keycloak.tldv.io).",
+            "sources": [
+              "https://github.com/tldv-public/tldv-mcp-server",
+              "https://mcp.tldv.io/.well-known/oauth-protected-resource",
+              "https://keycloak.tldv.io/realms/mcp.tldv.io/.well-known/openid-configuration"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 404"
+      }
+    }
+  }
+}

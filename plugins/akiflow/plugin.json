@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "akiflow",
+  "version": "0.1.0",
+  "description": "Connect to Akiflow through its official MCP server.",
+  "homepage": "https://akiflow.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "akiflow",
+      "name": "Akiflow",
+      "category": "productivity",
+      "website": "https://akiflow.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Akiflow",
+          "rank": 1354,
+          "category": "productivity",
+          "website": "https://akiflow.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Akiflow documents an official remote MCP with OAuth 2.1, available on all paid plans and during the free trial. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256. Akiflow's calendar tools read and RSVP on the person's connected Google or Outlook calendars, so that data reaches Kipster through Akiflow's cloud; kept because it is the person's own Akiflow account rather than an aggregator, and flagged as a third-party data flow.",
+            "sources": [
+              "https://product.akiflow.com/help/articles/4302815-akiflow-mcp",
+              "https://mcp.akiflow.com/.well-known/oauth-protected-resource/mcp",
+              "https://web.akiflow.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Akiflow"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

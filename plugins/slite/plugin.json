@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "slite",
+  "version": "0.1.0",
+  "description": "Connect to Slite through its official MCP server.",
+  "homepage": "https://slite.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "slite",
+      "name": "Slite",
+      "category": "knowledge-base",
+      "website": "https://slite.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Slite",
+          "rank": 1289,
+          "category": "knowledge-base",
+          "website": "https://slite.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Slite documents api.slite.com/mcp as a remote server with OAuth and the signed-in user's permissions. Discovery 2026-10-09: DCR yes, CIMD yes, S256 (authorization server slite.com/api/mcp/oauth).",
+            "sources": [
+              "https://slite.com/mcp",
+              "https://api.slite.com/.well-known/oauth-protected-resource",
+              "https://slite.com/.well-known/oauth-authorization-server/api/mcp/oauth"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "granola",
+  "version": "0.1.0",
+  "description": "Connect to Granola through its official MCP server.",
+  "homepage": "https://www.granola.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "granola",
+      "name": "Granola",
+      "category": "productivity",
+      "website": "https://www.granola.ai",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Granola",
+          "rank": 1295,
+          "category": "productivity",
+          "website": "https://www.granola.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Granola publishes mcp.granola.ai/mcp with browser OAuth; the free Basic plan only reaches personal notes from the last 30 days and some tools need a paid plan. Discovery 2026-10-09: DCR yes, CIMD yes, S256 on mcp-auth.granola.ai.",
+            "sources": [
+              "https://docs.granola.ai/help-center/sharing/integrations/mcp",
+              "https://mcp.granola.ai/.well-known/oauth-protected-resource/mcp",
+              "https://mcp-auth.granola.ai/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}
