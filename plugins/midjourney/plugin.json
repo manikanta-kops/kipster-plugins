@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "midjourney",
+  "version": "0.1.0",
+  "description": "Connect to Midjourney through its official MCP server.",
+  "homepage": "https://www.midjourney.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "category": "design-and-creative",
+      "website": "https://www.midjourney.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Midjourney",
+          "rank": 1199,
+          "category": "design-and-creative",
+          "website": "https://www.midjourney.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Midjourney runs an MCP server on its own domain whose metadata names scopes media:create and mcp:access (DCR yes, CIMD yes, S256, client-secret token auth); no Midjourney documentation page was reachable to confirm it. Midjourney requires a paid subscription and has no other public API.",
+            "sources": [
+              "https://mcp.midjourney.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.midjourney.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

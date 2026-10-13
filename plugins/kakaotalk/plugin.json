@@ -1,0 +1,55 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "kakaotalk",
+  "version": "0.1.0",
+  "description": "Connect to KakaoTalk through its official MCP server.",
+  "homepage": "https://www.kakaocorp.com/page/service/service/KakaoTalk",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "kakaotalk",
+      "name": "KakaoTalk",
+      "category": "chat-and-messaging",
+      "website": "https://www.kakaocorp.com/page/service/service/KakaoTalk",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "KakaoTalk",
+          "rank": 358,
+          "category": "chat-and-messaging",
+          "website": "https://www.kakaocorp.com/page/service/service/KakaoTalk",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Kakao runs the PlayMCP gateway, which serves the MCP servers the person adds to their PlayMCP toolbox (max 10), including Kakao's own KakaoTalk My Chatroom (send to me) server; it does not read the person's chats, and toolbox servers from third-party developers would see the data sent to them (flag). Discovery 2026-10-08: DCR yes, CIMD no, S256; token endpoint advertises only client-secret and key methods.",
+            "sources": [
+              "https://playmcp.kakao.com/mcp",
+              "https://playmcp.kakao.com/.well-known/oauth-protected-resource/mcp",
+              "https://playauth.kakao.com/.well-known/oauth-authorization-server/playmcp",
+              "https://playmcp.kakao.com/llms.txt",
+              "https://playmcp.kakao.com/llms/mcp-connection-guide.md",
+              "https://www.kakaocorp.com/page/detail/11674?lang=ENG",
+              "https://developers.kakao.com/docs/latest/en/kakaotalk-message/common",
+              "https://developers.kakao.com/docs/latest/en/kakaotalk-message/rest-api",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=kakao&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

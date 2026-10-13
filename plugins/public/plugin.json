@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "public",
+  "version": "0.1.0",
+  "description": "Connect to Public through its official MCP server.",
+  "homepage": "https://public.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "public",
+      "name": "Public",
+      "category": "investing-and-crypto",
+      "website": "https://public.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Public",
+          "rank": 472,
+          "category": "investing-and-crypto",
+          "website": "https://public.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Public runs an official MCP for trading, portfolio and market data, included with a Public account; its trading API is open to all members with no approval. Discovery 2026-10-08: DCR no, CIMD yes, S256.",
+            "sources": [
+              "https://public.com/mcp-trading",
+              "https://public.com/api",
+              "https://mcp.public.com/mcp",
+              "https://mcp.public.com/.well-known/oauth-protected-resource",
+              "https://prod-api.154310543964.hellopublic.com/userapiauthservice/oauth2/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

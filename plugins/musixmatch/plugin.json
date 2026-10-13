@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "musixmatch",
+  "version": "0.1.0",
+  "description": "Connect to Musixmatch through its official MCP server.",
+  "homepage": "https://www.musixmatch.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "musixmatch",
+      "name": "Musixmatch",
+      "category": "music-and-audio",
+      "website": "https://www.musixmatch.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Musixmatch",
+          "rank": 719,
+          "category": "music-and-audio",
+          "website": "https://www.musixmatch.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Musixmatch runs its own MCP (behind its ChatGPT app; its Claude integration is listed as coming soon) for catalog song search and licensed lyrics, signed in with a Musixmatch account; it does not reach a personal library, and the endpoint is not yet in public docs. Discovery 2026-10-09: DCR yes, CIMD no, S256 and plain.",
+            "sources": [
+              "https://mcp.musixmatch.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.musixmatch.com/.well-known/oauth-authorization-server",
+              "https://docs.musixmatch.com/integrations/chatgpt.md",
+              "https://docs.musixmatch.com/integrations/claude.md",
+              "https://www.musixmatch.com/pro/api/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

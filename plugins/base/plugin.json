@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "base",
+  "version": "0.1.0",
+  "description": "Connect to Base through its official MCP server.",
+  "homepage": "https://www.base.org",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "base",
+      "name": "Base",
+      "category": "investing-and-crypto",
+      "website": "https://www.base.org",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Base",
+          "rank": 1085,
+          "category": "investing-and-crypto",
+          "website": "https://www.base.org",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "The Base app is now Coinbase Wallet, and Base docs say Base MCP moved to Coinbase's Wallet MCP, a hosted server for balances, history, sends, swaps and contract calls in which every write needs approval in the wallet (the old base/base-mcp repository is archived). Authorization-server metadata on the MCP host: DCR yes, CIMD not advertised, S256; no protected-resource metadata found.",
+            "sources": [
+              "https://docs.base.org/sdks/migrated-products",
+              "https://docs.cdp.coinbase.com/ai-agents/coinbase-for-agents/wallet-mcp",
+              "https://wallet-mcp.coinbase.com/.well-known/oauth-authorization-server",
+              "https://github.com/base/base-mcp-legacy"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "No discovery metadata was found"
+      }
+    }
+  }
+}

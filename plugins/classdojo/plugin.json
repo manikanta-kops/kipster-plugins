@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "classdojo",
+  "version": "0.1.0",
+  "description": "Connect to ClassDojo through its official MCP server.",
+  "homepage": "https://www.classdojo.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "classdojo",
+      "name": "ClassDojo",
+      "category": "learning",
+      "website": "https://www.classdojo.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "ClassDojo",
+          "rank": 452,
+          "category": "learning",
+          "website": "https://www.classdojo.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "ClassDojo hosts its own MCP server and says to sign in with a ClassDojo account; scopes cover classroom read/write and messages read. Discovery 2026-10-08: DCR yes, CIMD yes, S256, public clients.",
+            "sources": [
+              "https://mcp.classdojo.com/",
+              "https://mcp.classdojo.com/.well-known/oauth-protected-resource",
+              "https://login.classdojo.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

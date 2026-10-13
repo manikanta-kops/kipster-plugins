@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "deepl",
+  "version": "0.1.0",
+  "description": "Connect to DeepL through its official MCP server.",
+  "homepage": "https://www.deepl.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "deepl",
+      "name": "DeepL",
+      "category": "language-learning",
+      "website": "https://www.deepl.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "DeepL",
+          "rank": 1115,
+          "category": "language-learning",
+          "website": "https://www.deepl.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "DeepL hosts an official remote MCP (listed in Anthropic's directory as made by DeepL) for translation and text improvement; it also publishes a local open-source server that uses an API key. Metadata: DCR yes, CIMD yes, S256, token auth none.",
+            "sources": [
+              "https://claude.com/marketplace/connectors/deepl",
+              "https://developers.deepl.com/docs/getting-started/deepl-mcp-server",
+              "https://mcp.deepl.com/.well-known/oauth-protected-resource",
+              "https://mcp.deepl.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

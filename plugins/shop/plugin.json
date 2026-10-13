@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "shop",
+  "version": "0.1.0",
+  "description": "Connect to Shop through its official MCP server.",
+  "homepage": "https://shop.app",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "shop",
+      "name": "Shop",
+      "category": "shopping",
+      "website": "https://shop.app",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Shop",
+          "rank": 289,
+          "category": "shopping",
+          "website": "https://shop.app",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Shopify hosts an official Shop MCP server (catalog search, carts, Shop Pay checkout, order tracking); search works anonymously and signing in adds addresses, orders and purchase approvals. Discovery 2026-10-08 on accounts.shop.app: no DCR, CIMD yes, S256, public clients allowed; Shop now also brands its site as shop.com; not in the MCP Registry.",
+            "sources": [
+              "https://shop.app/llms.txt",
+              "https://shop.com/SKILL.md",
+              "https://shop.com/references/http.md",
+              "https://shop.com/references/sign-in.md",
+              "https://mcp.shop.com/.well-known/oauth-protected-resource",
+              "https://accounts.shop.app/.well-known/oauth-authorization-server",
+              "https://accounts.shop.app/.well-known/openid-configuration",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=shop.app"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 200"
+      }
+    }
+  }
+}

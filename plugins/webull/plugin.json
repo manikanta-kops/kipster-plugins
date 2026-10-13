@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "webull",
+  "version": "0.1.0",
+  "description": "Connect to Webull through its official MCP server.",
+  "homepage": "https://www.webull.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "webull",
+      "name": "Webull",
+      "category": "investing-and-crypto",
+      "website": "https://www.webull.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Webull",
+          "rank": 251,
+          "category": "investing-and-crypto",
+          "website": "https://www.webull.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Webull Cloud MCP is a vendor-hosted server where the person signs in with OAuth and picks which accounts and capabilities to grant; orders become instructions the person confirms, and Webull documents use from Codex and other clients, not only its listed assistants. Discovery 2026-10-09: protected-resource metadata at the root and path-suffixed URLs, authorization server api.webull.com, DCR yes, CIMD no, token auth none, S256.",
+            "sources": [
+              "https://developer.webull.com/apis/docs/AI-friendly-Resources/mcp/",
+              "https://claude.com/marketplace/connectors/webull",
+              "https://api.webull.com/.well-known/oauth-protected-resource",
+              "https://api.webull.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.webull.com/.well-known/oauth-authorization-server",
+              "https://github.com/webull-inc/webull-openapi-mcp",
+              "https://developer.webull.com/apis/home/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

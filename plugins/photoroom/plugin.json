@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "photoroom",
+  "version": "0.1.0",
+  "description": "Connect to Photoroom through its official MCP server.",
+  "homepage": "https://www.photoroom.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "photoroom",
+      "name": "Photoroom",
+      "category": "design-and-creative",
+      "website": "https://www.photoroom.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Photoroom",
+          "rank": 747,
+          "category": "design-and-creative",
+          "website": "https://www.photoroom.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official Photoroom MCP edits images through the paid API (about $0.10 per edit, small free allowance) and does not reach saved app designs. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://registry.modelcontextprotocol.io/v0/servers?search=photoroom",
+              "https://www.photoroom.com/api/claude",
+              "https://www.photoroom.com/api/pricing",
+              "https://mcp.photoroom.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.photoroom.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

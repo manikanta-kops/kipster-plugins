@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "swiggy",
+  "version": "0.1.0",
+  "description": "Connect to Swiggy through its official MCP server.",
+  "homepage": "https://www.swiggy.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "swiggy",
+      "name": "Swiggy",
+      "category": "food-and-delivery",
+      "website": "https://www.swiggy.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Swiggy",
+          "rank": 468,
+          "category": "food-and-delivery",
+          "website": "https://www.swiggy.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Swiggy's official MCP servers (Food at /food, Instamart at /im, Dineout at /dineout) search, build carts and place cash-on-delivery orders for Swiggy accounts in India; redirect URIs are allowlisted but include http://localhost and 127.0.0.1, so a local Kipster can sign in. Discovery 2026-10-09: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://raw.githubusercontent.com/Swiggy/swiggy-mcp-server-manifest/HEAD/README.md",
+              "https://mcp.swiggy.com/.well-known/oauth-protected-resource",
+              "https://mcp.swiggy.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

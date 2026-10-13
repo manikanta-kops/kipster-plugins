@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "substack": {
+      "type": "streamable-http",
+      "url": "https://mcp.substack.com/api/v1/mcp"
+    }
+  }
+}

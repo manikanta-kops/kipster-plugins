@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "moomoo",
+  "version": "0.1.0",
+  "description": "Connect to moomoo through its official MCP server.",
+  "homepage": "https://www.moomoo.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "moomoo",
+      "name": "moomoo",
+      "category": "investing-and-crypto",
+      "website": "https://www.moomoo.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "moomoo",
+          "rank": 687,
+          "category": "investing-and-crypto",
+          "website": "https://www.moomoo.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official hosted moomoo MCP with OAuth 2.1 (quotes, account and trade scopes incl. trade:write); OpenAPI advertised at no extra charge. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://registry.modelcontextprotocol.io/v0/servers?search=moomoo",
+              "https://open.moomoo.com/mcp-docs/overview",
+              "https://open.moomoo.com",
+              "https://mcp.moomoo.com/.well-known/oauth-protected-resource",
+              "https://mcp.moomoo.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.moomoo.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

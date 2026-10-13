@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "have-i-been-pwned": {
+      "type": "streamable-http",
+      "url": "https://haveibeenpwned.com/mcp"
+    }
+  }
+}
