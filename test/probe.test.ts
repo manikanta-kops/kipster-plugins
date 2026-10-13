@@ -6,7 +6,10 @@ import { probePlugin, probeCatalogue } from '../src/probe/probe.ts'
 import { requireCatalogue } from '../src/catalogue/validate.ts'
 import { data, server } from '../src/catalogue/types.ts'
 import { writeJson } from '../src/json.ts'
-import { example, cli } from './helpers.ts'
+import { example, cli, temporary } from './helpers.ts'
+import { openHome, fileKeyBackend } from '../src/state/home.ts'
+import { Accounts } from '../src/accounts/accounts.ts'
+import { SignInManager, type SignInError } from '../src/signin/signin.ts'
 import { stub } from './probe-stub.ts'
 const fast = { timeoutMs: 300, backoffMs: 1 }
 
@@ -283,7 +286,7 @@ test('RFC 8414 and both OpenID fallback forms work for path issuers', async (t) 
       )
   }
 })
-test('SSE probe uses GET and never follows redirects to registration', async (t) => {
+test('SSE probe uses GET; an endpoint redirect never leaves the test-only origin', async (t) => {
   const { plugin } = await example(t)
   const fixture = await stub(t, { endpoint: '/sse' })
   server(plugin).type = 'sse'
@@ -295,14 +298,19 @@ test('SSE probe uses GET and never follows redirects to registration', async (t)
   )
   assert.equal(fixture.hits[0]!.method, 'GET')
   assert.equal(fixture.hits[0]!.path, '/sse')
-  const redirect = await stub(t, { redirect: true })
+  const redirect = await stub(t, {
+    redirects: {
+      '/mcp': { status: 307, location: 'http://127.0.0.1:1/register' },
+    },
+  })
   server(plugin).type = 'streamable-http'
   server(plugin).url = 'https://mcp.example/mcp'
-  assert.equal(
-    (await probePlugin(plugin, { ...fast, testOnlyBaseUrl: redirect.base }))
-      .result,
-    'error',
-  )
+  const probe = await probePlugin(plugin, {
+    ...fast,
+    testOnlyBaseUrl: redirect.base,
+  })
+  assert.equal(probe.result, 'error')
+  assert.equal(probe.reason, 'Redirect left the test-only loopback origin')
   assert.equal(redirect.hits.length, 1)
 })
 test('5xx has exactly three attempts, transient failure recovers', async (t) => {
@@ -444,4 +452,196 @@ test('later failures clear probe verification but keep an earlier account verifi
   data(plugin).verification = 'account'
   await probeCatalogue([plugin], { ...fast, testOnlyBaseUrl: fixture.base })
   assert.equal(data(plugin).verification, 'account')
+})
+// Routes HTTPS hosts to loopback stubs, so the probe runs its production
+// checks (HTTPS only, any origin) without the network.
+function route(hosts: Record<string, string>): typeof fetch {
+  return (input, init) => {
+    const url = new URL(String(input))
+    const base = hosts[url.origin]
+    if (!base) throw new TypeError(`No route to ${url.origin}`)
+    return fetch(base + url.pathname + url.search, init)
+  }
+}
+// No credentials, and nothing but initialize and discovery GETs.
+function readOnly(
+  hits: {
+    method: string
+    path: string
+    body: string
+    authorization?: string
+  }[],
+) {
+  for (const hit of hits) {
+    assert.equal(hit.authorization, undefined)
+    if (hit.method === 'POST')
+      assert.equal(JSON.parse(hit.body).method, 'initialize')
+    else assert.equal(hit.method, 'GET')
+  }
+  assert.deepEqual(signInPaths(hits), [])
+}
+test('a same-origin 308 endpoint redirect is followed and named in the reason', async (t) => {
+  const { plugin } = await example(t)
+  for (const status of [307, 308]) {
+    const fixture = await stub(t, {
+      redirects: { '/mcp': { status, location: '/mcp/' } },
+    })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      testOnlyBaseUrl: fixture.base,
+    })
+    assert.equal(probe.result, 'ok')
+    assert.equal(
+      probe.reason,
+      'HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested (endpoint redirects to /mcp/)',
+    )
+    assert.deepEqual(
+      fixture.hits.map((h) => `${h.method} ${h.path}`),
+      [
+        'POST /mcp',
+        'POST /mcp/',
+        'GET /.well-known/oauth-protected-resource/mcp',
+        'GET /.well-known/oauth-authorization-server',
+      ],
+    )
+    assert.equal(fixture.hits[1]!.body, fixture.hits[0]!.body)
+    readOnly(fixture.hits)
+  }
+})
+test('cross-origin endpoint redirects and 301/302/303 endpoint redirects stay errors', async (t) => {
+  const { plugin } = await example(t)
+  server(plugin).url = 'https://mcp.a.example/mcp'
+  const other = await stub(t, { origin: 'https://mcp.b.example' })
+  for (const [type, path] of [
+    ['streamable-http', '/mcp'],
+    ['sse', '/sse'],
+  ] as const) {
+    server(plugin).type = type
+    server(plugin).url = `https://mcp.a.example${path}`
+    const fixture = await stub(t, {
+      origin: 'https://mcp.a.example',
+      redirects: {
+        [path]: { status: 307, location: `https://mcp.b.example${path}` },
+      },
+    })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      fetch: route({
+        'https://mcp.a.example': fixture.base,
+        'https://mcp.b.example': other.base,
+      }),
+    })
+    assert.equal(probe.result, 'error')
+    assert.equal(
+      probe.reason,
+      'Redirect to another origin (https://mcp.b.example) refused for a request with credentials or a body',
+    )
+    assert.equal(fixture.hits.length, 1)
+    readOnly(fixture.hits)
+  }
+  assert.equal(other.hits.length, 0)
+  server(plugin).type = 'streamable-http'
+  server(plugin).url = 'https://mcp.a.example/mcp'
+  for (const status of [301, 302, 303]) {
+    const fixture = await stub(t, {
+      origin: 'https://mcp.a.example',
+      redirects: { '/mcp': { status, location: '/mcp/' } },
+    })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      fetch: route({ 'https://mcp.a.example': fixture.base }),
+    })
+    assert.equal(probe.result, 'error')
+    assert.match(probe.reason, new RegExp(`^HTTP ${status} redirect refused`))
+    assert.doesNotMatch(probe.reason, /secret-vendor-body/)
+  }
+})
+test('a discovery redirect to another host is followed; the issuer must still match', async (t) => {
+  const { plugin } = await example(t)
+  server(plugin).url = 'https://veed.example/mcp'
+  for (const issuer of ['https://veed.example', 'https://www.veed.example']) {
+    const apex = await stub(t, {
+      origin: 'https://veed.example',
+      redirects: {
+        '/.well-known/oauth-authorization-server': {
+          status: 301,
+          location:
+            'https://www.veed.example/.well-known/oauth-authorization-server',
+        },
+      },
+    })
+    const www = await stub(t, { origin: 'https://www.veed.example', issuer })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      fetch: route({
+        'https://veed.example': apex.base,
+        'https://www.veed.example': www.base,
+      }),
+    })
+    const suffix =
+      ' (authorization metadata redirects to https://www.veed.example/.well-known/oauth-authorization-server)'
+    if (issuer === 'https://veed.example') {
+      assert.equal(probe.result, 'ok')
+      assert.equal(
+        probe.reason,
+        `HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested${suffix}`,
+      )
+    } else {
+      assert.equal(probe.result, 'error')
+      assert.equal(
+        probe.reason,
+        `Authorization metadata issuer does not match${suffix}`,
+      )
+    }
+    assert.deepEqual(
+      www.hits.map((h) => `${h.method} ${h.path}`),
+      ['GET /.well-known/oauth-authorization-server'],
+    )
+    readOnly([...apex.hits, ...www.hits])
+  }
+})
+test('for a redirected endpoint, the probe verdict and the sign-in resource selection agree', async (t) => {
+  const { plugin } = await example(t)
+  const dir = join(await temporary(t), 'home')
+  const home = await openHome(dir, { keyBackend: fileKeyBackend(dir) })
+  t.after(async () => home.close())
+  // Both use the configured URL as the resource, as the SDK's auth() does,
+  // whatever the endpoint redirects to.
+  for (const [resource, agreed] of [
+    ['/mcp', 'ok'],
+    ['', 'ok'],
+    ['/mcp/', 'error'],
+  ] as const) {
+    const fixture = await stub(t, {
+      resource,
+      redirects: { '/mcp': { status: 308, location: '/mcp/' } },
+    })
+    const probe = await probePlugin(plugin, {
+      ...fast,
+      testOnlyBaseUrl: fixture.base,
+    })
+    assert.equal(probe.result, agreed, `probe, resource ${resource}`)
+    readOnly(fixture.hits)
+    const signIn = new SignInManager({
+      accounts: new Accounts(home),
+      secrets: home.secrets,
+      settings: {},
+      port: 45_871,
+      testOnlyBaseUrl: fixture.base,
+    })
+    const started = await signIn.start(plugin).then(
+      (result) => result.status,
+      (error: SignInError) => error.code,
+    )
+    assert.equal(
+      started,
+      agreed === 'ok' ? 'redirect' : 'failed',
+      `sign-in, resource ${resource}`,
+    )
+    // A mismatch stops the sign-in at resource selection, before registering.
+    assert.equal(
+      fixture.hits.some((h) => h.path === '/register'),
+      agreed === 'ok',
+    )
+  }
 })

@@ -19,9 +19,15 @@ export interface StubSettings {
   resource?: string
   stream?: boolean
   issuerMismatch?: boolean
-  redirect?: boolean
   invalidJson?: boolean
   unsafeMetadata?: boolean
+  // Origin used in the URLs the stub publishes, for tests that route HTTPS
+  // hosts to it; default its own loopback origin.
+  origin?: string
+  // Issuer published in authorization metadata; default the stub's issuer.
+  issuer?: string
+  // Redirects answered before anything else: path to status and Location.
+  redirects?: Record<string, { status: number; location?: string }>
 }
 export async function stub(
   t: { after: (fn: () => Promise<void>) => void },
@@ -34,7 +40,7 @@ export async function stub(
     authorization?: string
     userAgent?: string
   }[] = []
-  let base = ''
+  let own = ''
   let active = 0
   let peak = 0
   let initialCount = 0
@@ -54,6 +60,17 @@ export async function stub(
       authorization: req.headers.authorization,
       userAgent: req.headers['user-agent'],
     })
+    const redirect = settings.redirects?.[path]
+    if (redirect) {
+      res
+        .writeHead(
+          redirect.status,
+          redirect.location ? { Location: redirect.location } : {},
+        )
+        .end('secret-vendor-body')
+      return
+    }
+    const base = settings.origin ?? own
     const endpoint = settings.endpoint ?? '/mcp'
     const resourcePath =
       '/.well-known/oauth-protected-resource' +
@@ -68,13 +85,10 @@ export async function stub(
         : discovery === 'openid-insert'
           ? '/.well-known/openid-configuration' + issuerPath
           : issuerPath + '/.well-known/openid-configuration'
-    if (path === '/mcp' || path === '/sse') {
+    // The endpoint also answers with a trailing slash, as a redirect target.
+    if (['/mcp', '/sse', '/mcp/', '/sse/'].includes(path)) {
       initialCount++
       if (settings.slowMs) await delay(settings.slowMs)
-      if (settings.redirect) {
-        res.writeHead(307, { Location: base + '/register' }).end()
-        return
-      }
       const status =
         initialCount <= (settings.failFirst ?? 0)
           ? 503
@@ -115,7 +129,13 @@ export async function stub(
       res.setHeader('Content-Type', 'application/json')
       res.end(
         JSON.stringify({
-          issuer: settings.issuerMismatch ? base + '/wrong' : issuer,
+          issuer: settings.issuerMismatch
+            ? base + '/wrong'
+            : (settings.issuer ?? issuer),
+          // Enough for the MCP SDK's sign-in to start; the probe ignores them.
+          authorization_endpoint: base + '/authorize',
+          token_endpoint: base + '/token',
+          response_types_supported: ['code'],
           ...(methods.includes('dcr')
             ? { registration_endpoint: base + '/register' }
             : {}),
@@ -124,10 +144,14 @@ export async function stub(
             settings.pkce === false ? ['plain'] : ['S256'],
         }),
       )
+    } else if (path === '/register' && req.method === 'POST') {
+      // Only the sign-in in agreement tests registers; the probe never does.
+      res.writeHead(201, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify({ ...JSON.parse(body), client_id: 'stub-client' }))
     } else res.writeHead(404).end()
   })
   await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve))
-  base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`
+  own = `http://127.0.0.1:${(server.address() as AddressInfo).port}`
   async function close() {
     if (!server.listening) return
     server.closeAllConnections()
@@ -137,7 +161,7 @@ export async function stub(
   }
   t.after(close)
   return {
-    base,
+    base: own,
     hits,
     close,
     get peak() {

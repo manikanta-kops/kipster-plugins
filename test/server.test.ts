@@ -7,6 +7,8 @@ import { join } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
 import type { Tool } from '@modelcontextprotocol/client'
 import { startServer } from '../src/server/server.ts'
+import { requireCatalogue } from '../src/catalogue/validate.ts'
+import { probePlugin } from '../src/probe/probe.ts'
 import { fileKeyBackend } from '../src/state/home.ts'
 import { clientMetadataDocument } from '../src/state/settings.ts'
 import { cimdUrl } from './signin-helpers.ts'
@@ -693,6 +695,33 @@ test('live reload: an added plugin appears, a broken edit keeps the last good ve
   )
 })
 
+test('a same-origin 307 or 308 MCP endpoint: sign-in, proxied calls and the probe agree', async (t) => {
+  for (const status of [307, 308] as const) {
+    const s = await serve(t, { fixture: { mcpRedirect: status } })
+    const alice = (await s.signInAs('alice')).account
+    assert.equal(alice.label, 'alice@fixture.test')
+    const client = await s.mcp()
+    const who = await client.callTool({ name: 'fixture__whoami' })
+    assert.equal((who.structuredContent as { login: string }).login, 'alice')
+    const note = await client.callTool({
+      name: 'fixture__create_note',
+      arguments: { text: 'through the redirect' },
+    })
+    assert.notEqual(note.isError, true)
+    assert.deepEqual(s.fixture.notes('alice'), ['through the redirect'])
+    // Every upstream MCP request went through the redirect.
+    assert.ok(s.fixture.stats.mcpRedirects >= 2)
+    // The probe reads the same service the same way and finds it ok.
+    const [plugin] = await requireCatalogue(s.catalogue)
+    const probe = await probePlugin(plugin!, {
+      timeoutMs: 2_000,
+      backoffMs: 1,
+      testOnlyBaseUrl: s.fixture.url,
+    })
+    assert.equal(probe.result, 'ok')
+    assert.match(probe.reason, / \(endpoint redirects to \/mcp\/\)$/)
+  }
+})
 test("one plugin's failing upstream leaves the others listed", async (t) => {
   const s = await serve(t)
   await addPlugin(s.catalogue, 'second', 'Second')

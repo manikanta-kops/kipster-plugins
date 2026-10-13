@@ -94,10 +94,16 @@ A failed later probe clears `probe` verification, but preserves an earlier
 Each request has a 10-second timeout including its body, with up to three
 attempts for connection failures and HTTP 5xx, and 100/200 ms backoff. Permanent
 HTTP or malformed-document failures are not retried. At most four services run
-at once. Redirects are not followed, JSON bodies are bounded, and vendor body
-text is never copied into reasons. Reports name the probe and repository in
-its User-Agent. Service failures finish with exit 0; invalid catalogue files,
-unknown ids, invalid settings or probe bugs exit nonzero.
+at once. Redirects follow the server's rule (see
+[sign-in](sign-in-and-accounts.md#sign-in)): the initialize request stands in
+for the signed-in connection and follows only same-origin 307 and 308;
+discovery GETs follow any redirect to HTTPS. Resource and issuer checks still
+use the configured URL and the advertised issuer, and a followed redirect is
+named in the reason, such as `(endpoint redirects to /mcp/)`. JSON bodies are
+bounded, and vendor body text is never copied into reasons. Reports name the
+probe and repository in its User-Agent. Service failures finish with exit 0;
+invalid catalogue files, unknown ids, invalid settings or probe bugs exit
+nonzero.
 
 Tests use an explicit `testOnlyBaseUrl` option (CLI: `--test-only-base-url`) to
 replace endpoint origins with an HTTP `127.0.0.1` stub. Discovery cannot leave

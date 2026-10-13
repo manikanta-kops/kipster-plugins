@@ -13,6 +13,11 @@ import {
 import { secureUrl } from '../catalogue/validate.ts'
 import { writeJson } from '../json.ts'
 import { join } from 'node:path'
+import {
+  followRedirects,
+  RedirectError,
+  testOnlyOrigin,
+} from '../net/redirects.ts'
 
 export interface ProbeOptions {
   clientMetadataUrl?: string
@@ -20,6 +25,9 @@ export interface ProbeOptions {
   backoffMs?: number
   // Explicit isolation escape hatch: only HTTP 127.0.0.1, never arbitrary HTTP.
   testOnlyBaseUrl?: string
+  // Test only: replaces the global fetch, for example to route HTTPS hosts to
+  // loopback stubs. Every URL check still applies.
+  fetch?: typeof fetch
 }
 class CheckFailure extends Error {
   readonly result: 'unreachable' | 'error'
@@ -43,18 +51,7 @@ function allowedUrl(value: string, options: ProbeOptions): URL {
       'Discovery URL contains credentials or a fragment',
     )
   if (options.testOnlyBaseUrl) {
-    const base = new URL(options.testOnlyBaseUrl)
-    if (
-      base.protocol !== 'http:' ||
-      base.hostname !== '127.0.0.1' ||
-      base.username ||
-      base.password ||
-      base.pathname !== '/' ||
-      base.search ||
-      base.hash
-    )
-      throw new Error('Test-only base URL must be an HTTP 127.0.0.1 origin')
-    if (url.origin !== base.origin)
+    if (url.origin !== testOnlyOrigin(options.testOnlyBaseUrl))
       throw new CheckFailure(
         'error',
         'Test discovery attempted to leave its loopback origin',
@@ -63,16 +60,24 @@ function allowedUrl(value: string, options: ProbeOptions): URL {
     throw new CheckFailure('error', 'Discovery requires HTTPS')
   return url
 }
+interface Answer {
+  status: number
+  header: string | null
+  body?: Record<string, unknown>
+  // The URL that answered, and whether redirects led there.
+  url: URL
+  redirected: boolean
+}
+// One request with the server's redirect rule (src/net/redirects.ts). The MCP
+// endpoint request counts as carrying credentials, like the signed-in
+// connection that will follow it.
 async function request(
   url: string,
   init: RequestInit,
   json: boolean,
   options: ProbeOptions,
-): Promise<{
-  status: number
-  header: string | null
-  body?: Record<string, unknown>
-}> {
+  credentials = false,
+): Promise<Answer> {
   allowedUrl(url, options)
   for (let attempt = 0; attempt < 3; attempt++) {
     const controller = new AbortController()
@@ -81,12 +86,29 @@ async function request(
       options.timeoutMs ?? 10_000,
     )
     try {
-      const response = await fetch(url, {
-        ...init,
-        redirect: 'manual',
-        signal: controller.signal,
-        headers: { 'User-Agent': userAgent, ...init.headers },
-      })
+      let followed
+      try {
+        followed = await followRedirects(
+          url,
+          {
+            ...init,
+            signal: controller.signal,
+            headers: { 'User-Agent': userAgent, ...init.headers },
+          },
+          {
+            credentials,
+            fetch: options.fetch,
+            testOnlyOrigin: options.testOnlyBaseUrl
+              ? testOnlyOrigin(options.testOnlyBaseUrl)
+              : undefined,
+          },
+        )
+      } catch (error) {
+        if (error instanceof RedirectError)
+          throw new CheckFailure('error', error.message)
+        throw error
+      }
+      const { response } = followed
       if (response.status >= 500) {
         await response.body?.cancel()
         throw new CheckFailure(
@@ -94,13 +116,11 @@ async function request(
           'Service returned HTTP 5xx after three attempts',
         )
       }
-      const result: {
-        status: number
-        header: string | null
-        body?: Record<string, unknown>
-      } = {
+      const result: Answer = {
         status: response.status,
         header: response.headers.get('www-authenticate'),
+        url: followed.url,
+        redirected: followed.redirects > 0,
       }
       if (json && response.ok) {
         // Bound both body size and total request time; never include vendor text in reports.
@@ -155,9 +175,18 @@ async function request(
 function wellKnown(url: URL, kind: string): string {
   return `${url.origin}/.well-known/${kind}${url.pathname === '/' ? '' : url.pathname.replace(/\/$/, '')}`
 }
+// Where a redirect led: the path on the same origin, else origin and path.
+// Never the query, which may carry vendor state.
+function target(from: string, to: URL): string {
+  return new URL(from).origin === to.origin
+    ? to.pathname
+    : to.origin + to.pathname
+}
 async function metadata(
   urls: string[],
   options: ProbeOptions,
+  notes: string[],
+  label: string,
   missing = 'No discovery metadata was found',
 ): Promise<Record<string, unknown>> {
   for (const url of [...new Set(urls)]) {
@@ -167,7 +196,11 @@ async function metadata(
       true,
       options,
     )
-    if (result.body) return result.body
+    if (result.body) {
+      if (result.redirected)
+        notes.push(`${label} redirects to ${target(url, result.url)}`)
+      return result.body
+    }
     if (result.status !== 404)
       throw new CheckFailure(
         'error',
@@ -184,12 +217,14 @@ export async function probePlugin(
   options: ProbeOptions = {},
 ): Promise<Probe> {
   let observed: SignIn[] = []
+  // Redirects followed on the way, named in the reason.
+  const notes: string[] = []
   const checkedOn = new Date().toISOString().slice(0, 10)
   const result = (value: Probe['result'], reason: string): Probe => ({
     result: value,
     signIn: observed,
     checkedOn,
-    reason,
+    reason: notes.length ? `${reason} (${notes.join('; ')})` : reason,
   })
   if (data(plugin).needsAddress)
     return result(
@@ -227,7 +262,10 @@ export async function probePlugin(
           },
       false,
       options,
+      true,
     )
+    if (initial.redirected)
+      notes.push(`endpoint redirects to ${target(endpoint.href, initial.url)}`)
     // Like sign-in, a service may answer without a token and still offer OAuth.
     const anonymous = initial.status >= 200 && initial.status < 300
     if (initial.status !== 401 && !anonymous)
@@ -248,6 +286,8 @@ export async function probePlugin(
             `${endpoint.origin}/.well-known/oauth-protected-resource`,
           ],
       options,
+      notes,
+      'resource metadata',
       anonymous
         ? 'Service answered without sign-in and publishes no OAuth metadata'
         : undefined,
@@ -286,6 +326,8 @@ export async function probePlugin(
         `${issuer.href.replace(/\/$/, '')}/.well-known/openid-configuration`,
       ],
       options,
+      notes,
+      'authorization metadata',
     )
     if (
       typeof auth.issuer !== 'string' ||

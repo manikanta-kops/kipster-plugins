@@ -114,6 +114,6 @@ refreshed once and the request retried.
   `"reviewed"` from the plugin's `tools` when not connected) and
   `skippedTools`.
 
-Service connections use HTTPS only, never follow redirects and carry no
-credentials in URLs. They stay open for streams, and close when their account
+Service connections use HTTPS only, follow redirects only by the rule in
+[sign-in](sign-in-and-accounts.md#sign-in) and carry no credentials in URLs. They stay open for streams, and close when their account
 is removed, reconnected or changes status, or when the plugin changes.
