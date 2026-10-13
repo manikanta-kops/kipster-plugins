@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pitch",
+  "version": "0.1.0",
+  "description": "Connect to Pitch through its official MCP server.",
+  "homepage": "https://pitch.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "pitch",
+      "name": "Pitch",
+      "category": "docs-and-office",
+      "website": "https://pitch.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Pitch",
+          "rank": 1310,
+          "category": "docs-and-office",
+          "website": "https://pitch.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official Pitch MCP for building decks. Discovery 2026-10-08: DCR yes (auth.pitch.com), CIMD not advertised, S256.",
+            "sources": [
+              "https://claude.com/marketplace/connectors/pitch",
+              "https://mcp.pitch.com/.well-known/oauth-protected-resource",
+              "https://auth.pitch.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

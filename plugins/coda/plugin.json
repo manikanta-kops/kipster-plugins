@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "coda",
+  "version": "0.1.0",
+  "description": "Connect to Coda through its official MCP server.",
+  "homepage": "https://coda.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "coda",
+      "name": "Coda",
+      "category": "productivity",
+      "website": "https://coda.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Coda",
+          "rank": 1278,
+          "category": "productivity",
+          "website": "https://coda.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Coda (now branded Superhuman Docs) hosts its MCP at coda.io/apis/mcp, an open beta with no access request; the protected-resource metadata names it the Superhuman Docs MCP Server and its authorization server offers open registration. Discovery 2026-10-09: DCR yes, CIMD no, client_secret_post only, S256.",
+            "sources": [
+              "https://coda.io/.well-known/oauth-protected-resource/apis/mcp",
+              "https://coda.io/.well-known/oauth-authorization-server",
+              "https://help.coda.io/hc/en-us/articles/44722661982989-Connect-to-the-Coda-MCP"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

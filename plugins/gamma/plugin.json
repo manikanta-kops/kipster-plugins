@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gamma",
+  "version": "0.1.0",
+  "description": "Connect to Gamma through its official MCP server.",
+  "homepage": "https://gamma.app",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "gamma",
+      "name": "Gamma",
+      "category": "docs-and-office",
+      "website": "https://gamma.app",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Gamma",
+          "rank": 1272,
+          "category": "docs-and-office",
+          "website": "https://gamma.app",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Gamma's hosted MCP works with any MCP client, is available on all plans and uses OAuth with Dynamic Client Registration; generations spend the account's credits. Discovery 2026-10-09: DCR yes, CIMD no, public clients allowed, S256.",
+            "sources": [
+              "https://developers.gamma.app/docs/mcp",
+              "https://developers.gamma.app/docs/get-access",
+              "https://mcp.gamma.app/.well-known/oauth-protected-resource",
+              "https://auth.gamma.app/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

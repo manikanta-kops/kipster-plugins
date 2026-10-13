@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "savvycal",
+  "version": "0.1.0",
+  "description": "Connect to SavvyCal through its official MCP server.",
+  "homepage": "https://savvycal.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "savvycal",
+      "name": "SavvyCal",
+      "category": "scheduling",
+      "website": "https://savvycal.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "SavvyCal",
+          "rank": 1308,
+          "category": "scheduling",
+          "website": "https://savvycal.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "SavvyCal serves a live MCP endpoint (resource name SavvyCal MCP, scopes mcp:read and mcp:write) with open registration, but no public documentation was found and a feature request for an MCP server is still listed on its feedback board. Discovery 2026-10-09: DCR yes, CIMD no, public clients only, S256.",
+            "sources": [
+              "https://savvycal.com/.well-known/oauth-protected-resource/mcp",
+              "https://savvycal.com/.well-known/oauth-authorization-server",
+              "https://feedback.savvycal.com/feature-requests/p/add-a-model-context-protocol-mcp-server-for-savvycal"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

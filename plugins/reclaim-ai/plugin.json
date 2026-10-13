@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "reclaim-ai",
+  "version": "0.1.0",
+  "description": "Connect to Reclaim.ai through its official MCP server.",
+  "homepage": "https://reclaim.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "reclaim-ai",
+      "name": "Reclaim.ai",
+      "category": "scheduling",
+      "website": "https://reclaim.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Reclaim.ai",
+          "rank": 1276,
+          "category": "scheduling",
+          "website": "https://reclaim.ai",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official Reclaim MCP connected by URL through the Reclaim OAuth flow; Reclaim lists it for Starter, Business and Enterprise plans and documents only Claude clients. Discovery 2026-10-08: DCR yes, CIMD no, S256. Reclaim schedules on and writes back to the person's Google Calendar or Outlook calendar, so that calendar data reaches Kipster through Reclaim's cloud; kept because it is the person's own Reclaim account rather than an aggregator, and flagged as a third-party data flow.",
+            "sources": [
+              "https://reclaim.ai/integrations/claude",
+              "https://mcp.reclaim.ai/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.reclaim.ai/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=reclaim&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

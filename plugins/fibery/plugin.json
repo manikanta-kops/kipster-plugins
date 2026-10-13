@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fibery",
+  "version": "0.1.0",
+  "description": "Connect to Fibery through its official MCP server.",
+  "homepage": "https://fibery.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "fibery",
+      "name": "Fibery",
+      "category": "productivity",
+      "website": "https://fibery.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Fibery",
+          "rank": 1347,
+          "category": "productivity",
+          "website": "https://fibery.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Fibery hosts its MCP at mcp.fibery.io/mcp with OAuth 2.0 and no API token; the old local server is deprecated. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://developers.fibery.com/guides/mcp/connecting",
+              "https://mcp.fibery.io/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.fibery.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

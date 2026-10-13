@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "cal-com",
+  "version": "0.1.0",
+  "description": "Connect to Cal.com through its official MCP server.",
+  "homepage": "https://cal.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "cal-com",
+      "name": "Cal.com",
+      "category": "scheduling",
+      "website": "https://cal.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Cal.com",
+          "rank": 1286,
+          "category": "scheduling",
+          "website": "https://cal.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Cal.com hosts an MCP over its v2 API. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients (token auth none).",
+            "sources": [
+              "https://cal.com/llms.txt",
+              "https://cal.com/docs/mcp-server",
+              "https://mcp.cal.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.cal.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

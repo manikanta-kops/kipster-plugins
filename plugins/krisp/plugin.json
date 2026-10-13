@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "krisp",
+  "version": "0.1.0",
+  "description": "Connect to Krisp through its official MCP server.",
+  "homepage": "https://krisp.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "krisp",
+      "name": "Krisp",
+      "category": "productivity",
+      "website": "https://krisp.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Krisp",
+          "rank": 1322,
+          "category": "productivity",
+          "website": "https://krisp.ai",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Krisp documents a hosted MCP for meetings, transcripts and action items on its paid Core and Advanced plans, including a guide for integrating your own MCP client with OAuth and PKCE; no access request. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256; token auth client_secret only (DCR issues the secret).",
+            "sources": [
+              "https://mcp.krisp.ai/.well-known/oauth-protected-resource",
+              "https://mcp.krisp.ai/.well-known/oauth-authorization-server",
+              "https://help.krisp.ai/hc/en-us/articles/25396920405148-Krisp-MCP",
+              "https://help.krisp.ai/hc/en-us/articles/25416400191004-Krisp-MCP-Integrating-your-own-MCP-client"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

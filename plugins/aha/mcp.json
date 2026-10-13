@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "aha": {
+      "type": "streamable-http",
+      "url": "https://{domain}.aha.io/api/v1/mcp"
+    }
+  }
+}

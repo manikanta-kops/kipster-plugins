@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "superhuman",
+  "version": "0.1.0",
+  "description": "Connect to Superhuman through its official MCP server.",
+  "homepage": "https://superhuman.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "superhuman",
+      "name": "Superhuman",
+      "category": "email",
+      "website": "https://superhuman.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Superhuman",
+          "rank": 1279,
+          "category": "email",
+          "website": "https://superhuman.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Superhuman hosts an official Mail MCP server (mail and calendar) that needs a Business plan or higher (not Starter) and Ask AI; other MCP clients connect with the URL, and only some Enterprise or managed accounts need their admin to ask Superhuman to enable it. Discovery 2026-10-08: DCR yes, CIMD yes, S256, public clients allowed. Superhuman is a mail client over the person's Gmail or Outlook account, so mail and calendar data reach Kipster through Superhuman's cloud; kept because it is the person's own Superhuman account rather than an aggregator, and flagged as a third-party data flow.",
+            "sources": [
+              "https://mcp.mail.superhuman.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.auth.mail.superhuman.com/.well-known/oauth-authorization-server",
+              "https://help.superhuman.com/hc/en-us/articles/46005696690317-Superhuman-Mail-MCP-Server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

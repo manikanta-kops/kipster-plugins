@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "wispr-flow": {
+      "type": "streamable-http",
+      "url": "https://api.wisprflow.ai/connect/mcp"
+    }
+  }
+}

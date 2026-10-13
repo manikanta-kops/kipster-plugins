@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "trello",
+  "version": "0.1.0",
+  "description": "Connect to Trello through its official MCP server.",
+  "homepage": "https://trello.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "trello",
+      "name": "Trello",
+      "category": "project-management",
+      "website": "https://trello.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Trello",
+          "rank": 1263,
+          "category": "project-management",
+          "website": "https://trello.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Atlassian hosts the Trello MCP at mcp.trello.com/v1 with sign-in on auth.atlassian.com. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://support.atlassian.com/trello/docs/connect-trello-to-ai-assistants-with-trello-mcp/",
+              "https://mcp.trello.com/.well-known/oauth-protected-resource/v1",
+              "https://auth.atlassian.com/VCeDsk8ZHncYF1g234fKtc4lNipbBhu3/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

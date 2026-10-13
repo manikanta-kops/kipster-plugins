@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gitlab",
+  "version": "0.1.0",
+  "description": "Connect to GitLab through its official MCP server.",
+  "homepage": "https://gitlab.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "gitlab",
+      "name": "GitLab",
+      "category": "developer-tools",
+      "website": "https://gitlab.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "GitLab",
+          "rank": 1414,
+          "category": "developer-tools",
+          "website": "https://gitlab.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "GitLab's built-in MCP server (GA, Free, Premium and Ultimate tiers) uses OAuth Dynamic Client Registration; on GitLab.com MCP access must be allowed for the top-level group, and self-managed instances use https://<instance>/api/v4/mcp. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://docs.gitlab.com/user/model_context_protocol/mcp_server/",
+              "https://gitlab.com/.well-known/oauth-protected-resource/api/v4/mcp",
+              "https://gitlab.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

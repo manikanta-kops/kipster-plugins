@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "monday-com",
+  "version": "0.1.0",
+  "description": "Connect to monday.com through its official MCP server.",
+  "homepage": "https://monday.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "monday-com",
+      "name": "monday.com",
+      "category": "project-management",
+      "website": "https://monday.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "monday.com",
+          "rank": 1277,
+          "category": "project-management",
+          "website": "https://monday.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "monday.com's hosted MCP (registry com.monday/monday.com, repo github.com/mondaycom/mcp) signs in with OAuth on auth.monday.com; a local server with an API token is also offered. Discovery 2026-10-09: DCR yes, CIMD no, client secret methods only, S256.",
+            "sources": [
+              "https://raw.githubusercontent.com/mondaycom/mcp/master/README.md",
+              "https://developer.monday.com/apps/docs/mondaycom-mcp-integration",
+              "https://mcp.monday.com/.well-known/oauth-protected-resource/mcp",
+              "https://auth.monday.com/.well-known/oauth-authorization-server/mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

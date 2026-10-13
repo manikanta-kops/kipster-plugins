@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "miro",
+  "version": "0.1.0",
+  "description": "Connect to Miro through its official MCP server.",
+  "homepage": "https://miro.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "miro",
+      "name": "Miro",
+      "category": "productivity",
+      "website": "https://miro.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Miro",
+          "rank": 1265,
+          "category": "productivity",
+          "website": "https://miro.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Miro documents its server URL as mcp.miro.com with OAuth 2.1 DCR; on Enterprise plans an admin must enable the MCP server first. Discovery 2026-10-09: DCR yes, CIMD no, client secret methods only, S256.",
+            "sources": [
+              "https://developers.miro.com/docs/mcp-intro",
+              "https://mcp.miro.com/.well-known/oauth-protected-resource",
+              "https://mcp.miro.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

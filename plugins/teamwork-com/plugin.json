@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "teamwork-com",
+  "version": "0.1.0",
+  "description": "Connect to Teamwork.com through its official MCP server.",
+  "homepage": "https://www.teamwork.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "teamwork-com",
+      "name": "Teamwork.com",
+      "category": "project-management",
+      "website": "https://www.teamwork.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Teamwork.com",
+          "rank": 1305,
+          "category": "project-management",
+          "website": "https://www.teamwork.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Teamwork.com hosts its official MCP (registry entry com.teamwork/mcp) for all paid users. Discovery 2026-10-08: DCR yes (teamwork.com authorization server), CIMD no, S256.",
+            "sources": [
+              "https://www.teamwork.com/blog/mcp-server",
+              "https://github.com/Teamwork/mcp",
+              "https://mcp.ai.teamwork.com/.well-known/oauth-protected-resource",
+              "https://teamwork.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 200"
+      }
+    }
+  }
+}

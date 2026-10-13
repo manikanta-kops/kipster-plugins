@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "otter-ai",
+  "version": "0.1.0",
+  "description": "Connect to Otter.ai through its official MCP server.",
+  "homepage": "https://otter.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "otter-ai",
+      "name": "Otter.ai",
+      "category": "productivity",
+      "website": "https://otter.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Otter.ai",
+          "rank": 1273,
+          "category": "productivity",
+          "website": "https://otter.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Otter hosts an official MCP server (read-only scopes profile:read and conversations:read); discovery 2026-10-08: DCR yes, CIMD not advertised, S256, public clients allowed, sign-in on otter.ai.",
+            "sources": [
+              "https://mcp.otter.ai/.well-known/oauth-protected-resource",
+              "https://otter.ai/.well-known/oauth-authorization-server",
+              "https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

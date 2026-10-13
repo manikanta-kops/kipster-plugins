@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "mattermost": {
+      "type": "streamable-http",
+      "url": "https://your-mattermost-server/plugins/mattermost-ai/mcp-server/mcp"
+    }
+  }
+}
