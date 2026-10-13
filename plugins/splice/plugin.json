@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "splice",
+  "version": "0.1.0",
+  "description": "Connect to Splice through its official MCP server.",
+  "homepage": "https://splice.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "splice",
+      "name": "Splice",
+      "category": "design-and-creative",
+      "website": "https://splice.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Splice",
+          "rank": 1633,
+          "category": "design-and-creative",
+          "website": "https://splice.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official hosted MCP server (beta, open to all Splice accounts); discovery 2026-10-08: DCR yes, CIMD not advertised, S256. Searching is free; downloading samples needs a paid subscription and credits.",
+            "sources": [
+              "https://splice.com/tools/mcp-server",
+              "https://mcp.splice.com/.well-known/oauth-protected-resource",
+              "https://mcp.splice.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

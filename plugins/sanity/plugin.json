@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sanity",
+  "version": "0.1.0",
+  "description": "Connect to Sanity through its official MCP server.",
+  "homepage": "https://www.sanity.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "sanity",
+      "name": "Sanity",
+      "category": "website-and-cms",
+      "website": "https://www.sanity.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Sanity",
+          "rank": 1622,
+          "category": "website-and-cms",
+          "website": "https://www.sanity.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote server with OAuth; discovery 2026-10-08: DCR yes, CIMD not advertised, S256. An API token in the Authorization header also works; image tools use AI credits.",
+            "sources": [
+              "https://www.sanity.io/docs/ai/mcp-server",
+              "https://mcp.sanity.io/.well-known/oauth-protected-resource",
+              "https://mcp.sanity.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

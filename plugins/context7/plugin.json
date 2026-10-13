@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "context7",
+  "version": "0.1.0",
+  "description": "Connect to Context7 through its official MCP server.",
+  "homepage": "https://context7.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "context7",
+      "name": "Context7",
+      "category": "developer-tools",
+      "website": "https://context7.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Context7",
+          "rank": 1730,
+          "category": "developer-tools",
+          "website": "https://context7.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official Upstash server; discovery 2026-10-08: auth server clerk.context7.com advertises DCR and CIMD with S256. Works without sign-in at low rate limits; a free API key raises them.",
+            "sources": [
+              "https://github.com/upstash/context7",
+              "https://mcp.context7.com/.well-known/oauth-protected-resource/mcp",
+              "https://clerk.context7.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 200"
+      }
+    }
+  }
+}

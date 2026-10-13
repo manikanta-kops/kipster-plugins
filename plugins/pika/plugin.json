@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pika",
+  "version": "0.1.0",
+  "description": "Connect to Pika through its official MCP server.",
+  "homepage": "https://pika.art",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "pika",
+      "name": "Pika",
+      "category": "design-and-creative",
+      "website": "https://pika.art",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Pika",
+          "rank": 1684,
+          "category": "design-and-creative",
+          "website": "https://pika.art",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Pika's MCP page gives an experimental remote MCP with OAuth sign-in through Pika's Supabase auth server, plus a companion skill; generations draw on the person's Pika credits. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://pika.art/mcp",
+              "https://experiment-mcp.pika.art/.well-known/oauth-protected-resource/api/mcp",
+              "https://experiment-mcp.pika.art/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

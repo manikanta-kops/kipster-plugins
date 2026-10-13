@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tableau",
+  "version": "0.1.0",
+  "description": "Connect to Tableau through its official MCP server.",
+  "homepage": "https://www.tableau.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "tableau",
+      "name": "Tableau",
+      "category": "analytics-and-data",
+      "website": "https://www.tableau.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Tableau",
+          "rank": 1641,
+          "category": "analytics-and-data",
+          "website": "https://www.tableau.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Managed Tableau MCP for Tableau Cloud users with per-user OAuth; GET on the root returns 401 pointing to its metadata. Discovery 2026-10-08: DCR no, CIMD yes (sso.online.tableau.com), token auth none or client secret, S256.",
+            "sources": [
+              "https://github.com/tableau/tableau-mcp",
+              "https://mcp.tableau.com/.well-known/oauth-protected-resource",
+              "https://sso.online.tableau.com/.well-known/oauth-authorization-server",
+              "https://sso.online.tableau.com/.well-known/openid-configuration"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

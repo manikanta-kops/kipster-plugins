@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "brex",
+  "version": "0.1.0",
+  "description": "Connect to Brex through its official MCP server.",
+  "homepage": "https://www.brex.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "brex",
+      "name": "Brex",
+      "category": "accounting-and-invoicing",
+      "website": "https://www.brex.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Brex",
+          "rank": 1606,
+          "category": "accounting-and-invoicing",
+          "website": "https://www.brex.com",
+          "accounts": "business-only",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Brex documents a remote MCP (beta) with OAuth and dynamic client registration ('MCP clients don't need to be pre-registered') or an admin-created API token. The beta is self-service: an admin accepts the Developer API agreement and turns on 'Brex in AI assistants' in Settings, Beta features, with no Brex approval. Brex's self-serve Essentials plan is $0 per user and includes Brex API access. Brex is a business card and spend platform, so there is no personal account. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://developer.brex.com/docs/mcp",
+              "https://api.brex.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.brex.com/.well-known/oauth-authorization-server",
+              "https://www.brex.com/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

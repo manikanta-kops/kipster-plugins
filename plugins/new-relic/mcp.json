@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "new-relic": {
+      "type": "streamable-http",
+      "url": "https://mcp.newrelic.com/mcp"
+    }
+  }
+}

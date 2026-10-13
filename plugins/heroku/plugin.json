@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "heroku",
+  "version": "0.1.0",
+  "description": "Connect to Heroku through its official MCP server.",
+  "homepage": "https://www.heroku.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "heroku",
+      "name": "Heroku",
+      "category": "cloud-and-hosting",
+      "website": "https://www.heroku.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Heroku",
+          "rank": 1634,
+          "category": "cloud-and-hosting",
+          "website": "https://www.heroku.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote server with Heroku OAuth; discovery 2026-10-08: DCR yes, CIMD not advertised, S256. Running apps on Heroku is billed; plan details not checked here.",
+            "sources": [
+              "https://devcenter.heroku.com/articles/heroku-remote-mcp-server",
+              "https://mcp.heroku.com/.well-known/oauth-protected-resource",
+              "https://mcp.heroku.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

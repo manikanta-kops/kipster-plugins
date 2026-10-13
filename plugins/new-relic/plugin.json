@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "new-relic",
+  "version": "0.1.0",
+  "description": "Connect to New Relic through its official MCP server.",
+  "homepage": "https://newrelic.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "new-relic",
+      "name": "New Relic",
+      "category": "developer-tools",
+      "website": "https://newrelic.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "New Relic",
+          "rank": 1689,
+          "category": "developer-tools",
+          "website": "https://newrelic.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "New Relic MCP is on all accounts including free, but an administrator must enable it in feature control. Discovery 2026-10-08: DCR yes (dcr.service.newrelic.com), CIMD no, token auth includes none, S256 required; EU host mcp.eu.newrelic.com.",
+            "sources": [
+              "https://docs.newrelic.com/docs/agentic-ai/mcp/overview/",
+              "https://mcp.newrelic.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.newrelic.com/.well-known/oauth-authorization-server",
+              "https://oauth2.service.newrelic.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

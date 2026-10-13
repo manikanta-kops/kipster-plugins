@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "honeycomb",
+  "version": "0.1.0",
+  "description": "Connect to Honeycomb through its official MCP server.",
+  "homepage": "https://www.honeycomb.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "honeycomb",
+      "name": "Honeycomb",
+      "category": "developer-tools",
+      "website": "https://www.honeycomb.io",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Honeycomb",
+          "rank": 1697,
+          "category": "developer-tools",
+          "website": "https://www.honeycomb.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP with OAuth or API key; write tools need the mcp:write scope. Authorization server advertises both CIMD and DCR, S256.",
+            "sources": [
+              "https://docs.honeycomb.io/integrations/mcp/",
+              "https://ui.honeycomb.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

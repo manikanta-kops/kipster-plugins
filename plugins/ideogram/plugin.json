@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ideogram",
+  "version": "0.1.0",
+  "description": "Connect to Ideogram through its official MCP server.",
+  "homepage": "https://ideogram.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "ideogram",
+      "name": "Ideogram",
+      "category": "design-and-creative",
+      "website": "https://ideogram.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Ideogram",
+          "rank": 1672,
+          "category": "design-and-creative",
+          "website": "https://ideogram.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Ideogram documents a remote MCP signed in with OAuth through the person's Ideogram account; usage draws on the same plan credits as the web app. Its developer docs MCP only searches documentation. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://ideogram.ai/features/mcp/",
+              "https://mcp.ideogram.ai/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.ideogram.ai/.well-known/oauth-authorization-server",
+              "https://developer.ideogram.ai/llms.txt"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

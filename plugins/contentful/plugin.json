@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "contentful",
+  "version": "0.1.0",
+  "description": "Connect to Contentful through its official MCP server.",
+  "homepage": "https://www.contentful.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "contentful",
+      "name": "Contentful",
+      "category": "website-and-cms",
+      "website": "https://www.contentful.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Contentful",
+          "rank": 1597,
+          "category": "website-and-cms",
+          "website": "https://www.contentful.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official hosted MCP server; discovery 2026-10-08: DCR yes, CIMD no, S256. A space admin must install the Contentful MCP app in the space first; Contentful has a free plan.",
+            "sources": [
+              "https://mcp.contentful.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.contentful.com/.well-known/oauth-authorization-server",
+              "https://github.com/contentful/contentful-mcp-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

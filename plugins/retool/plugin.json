@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "retool",
+  "version": "0.1.0",
+  "description": "Connect to Retool through its official MCP server.",
+  "homepage": "https://retool.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "retool",
+      "name": "Retool",
+      "category": "developer-tools",
+      "website": "https://retool.com",
+      "signIn": ["dcr"],
+      "needsAddress": true,
+      "addressPrompt": "What is your Retool instance or account MCP address?",
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Retool",
+          "rank": 1667,
+          "category": "developer-tools",
+          "website": "https://retool.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Retool's MCP (org and user management, app building) is per instance (template URL) with OAuth 2.0; the mcp.retool.com metadata advertises DCR, token auth none, S256. The MCP manages the person's own Retool organization (apps, users, resources), but its retool_execute_resource_ts tool runs code through Retool against connected databases and APIs, so a plugin should leave that tool out rather than use Retool as a route to other services' data.",
+            "sources": [
+              "https://docs.retool.com/org-users/guides/mcp",
+              "https://mcp.retool.com/.well-known/oauth-authorization-server",
+              "https://retool.com/pricing",
+              "https://docs.retool.com/build/apps/reference/mcp-tools"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-address",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "An instance or account MCP address is required when connecting"
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "planoly",
+  "version": "0.1.0",
+  "description": "Connect to Planoly through its official MCP server.",
+  "homepage": "https://www.planoly.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "planoly",
+      "name": "Planoly",
+      "category": "social-media-management",
+      "website": "https://www.planoly.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Planoly",
+          "rank": 1629,
+          "category": "social-media-management",
+          "website": "https://www.planoly.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Planoly hosts a remote MCP that signs in with the person's Planoly account over OAuth and can list workspaces and channels, read and edit drafts and scheduled posts, schedule them, browse the media library and pull Instagram analytics. Discovery 2026-10-09: DCR yes, CIMD not advertised, S256, public clients (token auth none). Drafting and scheduling work on the free plan; the media library, analytics and report links need a paid plan.",
+            "sources": [
+              "https://www.planoly.com/help/getting-started/planoly-mcp-setup",
+              "https://www.planoly.com/ai/what-can-it-do",
+              "https://www.planoly.com/ai",
+              "https://mcp.planoly.com/.well-known/oauth-protected-resource/mcp",
+              "https://app.planoly.com/.well-known/oauth-authorization-server/api/auth"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

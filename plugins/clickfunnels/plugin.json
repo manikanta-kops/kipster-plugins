@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "clickfunnels",
+  "version": "0.1.0",
+  "description": "Connect to ClickFunnels through its official MCP server.",
+  "homepage": "https://www.clickfunnels.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "clickfunnels",
+      "name": "ClickFunnels",
+      "category": "marketing-and-email-marketing",
+      "website": "https://www.clickfunnels.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "ClickFunnels",
+          "rank": 1721,
+          "category": "marketing-and-email-marketing",
+          "website": "https://www.clickfunnels.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official app-native MCP (OAuth 2.1 with PKCE) listed in the developer docs; authorization server advertises DCR, token auth none or client secret, S256.",
+            "sources": [
+              "https://developers.myclickfunnels.com/docs/intro",
+              "https://agents.myclickfunnels.com/.well-known/oauth-protected-resource",
+              "https://accounts.myclickfunnels.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}
