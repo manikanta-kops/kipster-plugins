@@ -70,10 +70,13 @@ Use Node from `.nvmrc`, then `npm ci` to install locked dependencies.
 - `npm run import -- Linear Notion`: generate configurations from the research CSV.
 - `npm run probe -- linear notion`: read-only live discovery, without sign-in.
 - `npm run validate`: validate every catalogue folder.
+- `npm run fixture -- --port 8765`: start the local fixture service used by the tests.
 - `npm run format`: format repository files.
 
 See [the plugin format](docs/plugin-format.md) for batch imports and probe
-results, and [testing](.kipster/context/testing.md) for verification levels.
+results, [sign-in and accounts](docs/sign-in-and-accounts.md),
+[the fixture service](docs/fixture-service.md), and
+[testing](.kipster/context/testing.md) for verification levels.
 
 ## Status
 

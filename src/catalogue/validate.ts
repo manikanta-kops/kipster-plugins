@@ -68,6 +68,8 @@ export function validatePlugin(
     throw new Error('SSE transport must match a /sse URL')
   if (ext.verification === 'probe' && ext.probe?.result !== 'ok')
     throw new Error('Probe verification requires an ok probe')
+  if (ext.identity && ext.tools[ext.identity.tool] !== 'read')
+    throw new Error('The identity tool must be reviewed as read')
   for (const name of Object.keys(ext.tools))
     if (`${ext.id}__${name}`.length > 64)
       throw new Error('Reviewed tool name exceeds 64 characters')
