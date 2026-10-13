@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "replit",
+  "version": "0.1.0",
+  "description": "Connect to Replit through its official MCP server.",
+  "homepage": "https://replit.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "replit",
+      "name": "Replit",
+      "category": "developer-tools",
+      "website": "https://replit.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Replit",
+          "rank": 1474,
+          "category": "developer-tools",
+          "website": "https://replit.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Replit's MCP server creates, finds, updates and publishes the person's Replit Apps over OAuth with protected-resource discovery; Agent work draws on the person's Replit plan credits. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://docs.replit.com/platforms/mcp-server.md",
+              "https://mcp.replit.com/.well-known/oauth-protected-resource/server/mcp",
+              "https://replit.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

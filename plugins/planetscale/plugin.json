@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "planetscale",
+  "version": "0.1.0",
+  "description": "Connect to PlanetScale through its official MCP server.",
+  "homepage": "https://planetscale.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "planetscale",
+      "name": "PlanetScale",
+      "category": "databases",
+      "website": "https://planetscale.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "PlanetScale",
+          "rank": 1506,
+          "category": "databases",
+          "website": "https://planetscale.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official hosted MCP for the person's organizations, databases, branches, schema and Insights, with OAuth or a service token; PlanetScale has no free plan (from $5 a month). Discovery 2026-10-09: DCR yes, CIMD not advertised, S256 (also plain), client-secret token auth only.",
+            "sources": [
+              "https://planetscale.com/docs/mcp-server",
+              "https://mcp.pscale.dev/.well-known/oauth-protected-resource/mcp/planetscale",
+              "https://api.planetscale.com/.well-known/oauth-authorization-server",
+              "https://planetscale.com/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

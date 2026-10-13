@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "datadog",
+  "version": "0.1.0",
+  "description": "Connect to Datadog through its official MCP server.",
+  "homepage": "https://www.datadoghq.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "datadog",
+      "name": "Datadog",
+      "category": "developer-tools",
+      "website": "https://www.datadoghq.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Datadog",
+          "rank": 1435,
+          "category": "developer-tools",
+          "website": "https://www.datadoghq.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Datadog hosts an official remote MCP server (the host differs by Datadog site). Discovery 2026-10-08: DCR yes, CIMD not advertised, S256 required, public clients (token auth none).",
+            "sources": [
+              "https://docs.datadoghq.com/bits_ai/mcp_server/",
+              "https://mcp.datadoghq.com/.well-known/oauth-protected-resource/api/unstable/mcp-server/mcp",
+              "https://mcp.datadoghq.com/.well-known/oauth-authorization-server/v1/mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

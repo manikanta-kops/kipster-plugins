@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gumroad",
+  "version": "0.1.0",
+  "description": "Connect to Gumroad through its official MCP server.",
+  "homepage": "https://gumroad.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "gumroad",
+      "name": "Gumroad",
+      "category": "ecommerce-platforms",
+      "website": "https://gumroad.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Gumroad",
+          "rank": 1449,
+          "category": "ecommerce-platforms",
+          "website": "https://gumroad.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Gumroad's own MCP (per-client paths /muse, /claude, /chatgpt under gumroad.com) lists products and sales, drafts and publishes products. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256 and plain.",
+            "sources": [
+              "https://gumroad.com/.well-known/mcp.json",
+              "https://gumroad.com/.well-known/oauth-protected-resource",
+              "https://gumroad.com/.well-known/oauth-authorization-server",
+              "https://gumroad.com/claude"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "folk",
+  "version": "0.1.0",
+  "description": "Connect to folk through its official MCP server.",
+  "homepage": "https://www.folk.app",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "folk",
+      "name": "folk",
+      "category": "crm-and-sales",
+      "website": "https://www.folk.app",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "folk",
+          "rank": 1499,
+          "category": "crm-and-sales",
+          "website": "https://www.folk.app",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP documented in folk's developer portal, with sign-in on app.folk.app through a Stytch-hosted authorization server. Metadata advertises both CIMD and DCR, S256.",
+            "sources": [
+              "https://developer.folk.app/mcp/connect.md",
+              "https://mcp.folk.app/.well-known/oauth-protected-resource/mcp",
+              "https://api.stytch.folk.app/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

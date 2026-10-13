@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "livechat",
+  "version": "0.1.0",
+  "description": "Connect to LiveChat through its official MCP server.",
+  "homepage": "https://www.livechat.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "livechat",
+      "name": "LiveChat",
+      "category": "customer-support",
+      "website": "https://www.livechat.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "LiveChat",
+          "rank": 1584,
+          "category": "customer-support",
+          "website": "https://www.livechat.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Text (the LiveChat platform) runs an official remote MCP for chats, tickets, customers and reports, limited to the signed-in user's permissions; its OAuth on accounts.livechat.com offers dynamic client registration with S256, and local clients must call back on one of the documented ports (6274, 53531, 59123, 60222). LiveChat plans include the MCP server and 10,000 or more API calls a month.",
+            "sources": [
+              "https://www.text.com/docs/getting-started/mcp",
+              "https://mcp.text.com/.well-known/oauth-protected-resource",
+              "https://mcp.text.com/.well-known/oauth-authorization-server",
+              "https://www.livechat.com/pricing/",
+              "https://platform.text.com/docs/authorization"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

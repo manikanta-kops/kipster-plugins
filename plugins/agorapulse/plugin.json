@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agorapulse",
+  "version": "0.1.0",
+  "description": "Connect to Agorapulse through its official MCP server.",
+  "homepage": "https://www.agorapulse.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "agorapulse",
+      "name": "Agorapulse",
+      "category": "social-media-management",
+      "website": "https://www.agorapulse.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Agorapulse",
+          "rank": 1559,
+          "category": "social-media-management",
+          "website": "https://www.agorapulse.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official MCP connector (beta) for paid plans, excluding Legacy plans. Metadata advertises DCR, no CIMD, S256, public clients (none).",
+            "sources": [
+              "https://support.agorapulse.com/en/articles/12960496-chatgpt-claude-integration-explained",
+              "https://api.openmcp.agorapulse.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.openmcp.agorapulse.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

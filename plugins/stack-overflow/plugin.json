@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stack-overflow",
+  "version": "0.1.0",
+  "description": "Connect to Stack Overflow through its official MCP server.",
+  "homepage": "https://stackoverflow.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "stack-overflow",
+      "name": "Stack Overflow",
+      "category": "developer-tools",
+      "website": "https://stackoverflow.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Stack Overflow",
+          "rank": 1568,
+          "category": "developer-tools",
+          "website": "https://stackoverflow.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official beta remote server; the person signs in with a Stack Exchange account, 100 calls per day per user. Docs connect through mcp-remote (implies dynamic registration), but plain GET discovery returned 404 on 2026-10-08, so the sign-in route is unconfirmed.",
+            "sources": [
+              "https://api.stackexchange.com/docs/mcp-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=stackoverflow"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "No discovery metadata was found"
+      }
+    }
+  }
+}

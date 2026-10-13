@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wix",
+  "version": "0.1.0",
+  "description": "Connect to Wix through its official MCP server.",
+  "homepage": "https://www.wix.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "wix",
+      "name": "Wix",
+      "category": "website-and-cms",
+      "website": "https://www.wix.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Wix",
+          "rank": 1470,
+          "category": "website-and-cms",
+          "website": "https://www.wix.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Wix's official remote MCP (also /sse) works with the person's Wix sites and business solutions from any MCP client. Discovery 2026-10-09: DCR yes, CIMD not advertised, S256 (also plain), public clients allowed.",
+            "sources": [
+              "https://dev.wix.com/docs/sdk/articles/use-the-wix-mcp/about-the-wix-mcp",
+              "https://mcp.wix.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.wix.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/wix"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

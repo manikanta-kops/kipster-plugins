@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "synthesia",
+  "version": "0.1.0",
+  "description": "Connect to Synthesia through its official MCP server.",
+  "homepage": "https://www.synthesia.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "synthesia",
+      "name": "Synthesia",
+      "category": "design-and-creative",
+      "website": "https://www.synthesia.io",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Synthesia",
+          "rank": 1582,
+          "category": "design-and-creative",
+          "website": "https://www.synthesia.io",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Synthesia's remote MCP (public beta) needs a Starter or Pro plan or a WorkOS-login enterprise workspace. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://docs.synthesia.io/reference/synthesia-mcp.md",
+              "https://mcp.synthesia.io/.well-known/oauth-protected-resource/mcp",
+              "https://login.synthesia.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

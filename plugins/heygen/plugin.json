@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "heygen",
+  "version": "0.1.0",
+  "description": "Connect to HeyGen through its official MCP server.",
+  "homepage": "https://www.heygen.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "heygen",
+      "name": "HeyGen",
+      "category": "design-and-creative",
+      "website": "https://www.heygen.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "HeyGen",
+          "rank": 1570,
+          "category": "design-and-creative",
+          "website": "https://www.heygen.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "HeyGen documents a remote MCP with OAuth that bills generations to the person's HeyGen plan credits. HeyGen allowlists domains for custom agents ('you'll need to request access'), but its guides connect the local Codex CLI and Gemini CLI with only a browser sign-in, so a local loopback client should connect without a request (unconfirmed for Kipster). Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://developers.heygen.com/mcp/overview.md",
+              "https://mcp.heygen.com/.well-known/oauth-protected-resource/mcp",
+              "https://api2.heygen.com/.well-known/oauth-authorization-server",
+              "https://developers.heygen.com/mcp/codex-cli.md",
+              "https://developers.heygen.com/mcp/gemini-cli.md"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}
