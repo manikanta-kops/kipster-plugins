@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "shippo",
+  "version": "0.1.0",
+  "description": "Connect to Shippo through its official MCP server.",
+  "homepage": "https://goshippo.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "shippo",
+      "name": "Shippo",
+      "category": "ecommerce-platforms",
+      "website": "https://goshippo.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Shippo",
+          "rank": 1642,
+          "category": "ecommerce-platforms",
+          "website": "https://goshippo.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Shippo's hosted MCP signs in to the person's live Shippo account with OAuth (no API key); rates, address checks and tracking are free, label purchases charge the account. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://docs.goshippo.com/docs/Guides_general/MCPServer",
+              "https://mcp.shippo.com/.well-known/oauth-protected-resource",
+              "https://goshippo.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=shippo"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ahrefs",
+  "version": "0.1.0",
+  "description": "Connect to Ahrefs through its official MCP server.",
+  "homepage": "https://ahrefs.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "ahrefs",
+      "name": "Ahrefs",
+      "category": "marketing-and-email-marketing",
+      "website": "https://ahrefs.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Ahrefs",
+          "rank": 1682,
+          "category": "marketing-and-email-marketing",
+          "website": "https://ahrefs.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote server; discovery 2026-10-08: DCR yes, CIMD not advertised, S256. MCP needs a paid Ahrefs plan from Lite up; an MCP key as bearer also works.",
+            "sources": [
+              "https://docs.ahrefs.com/mcp/docs/introduction.md",
+              "https://api.ahrefs.com/.well-known/oauth-protected-resource/mcp/mcp",
+              "https://api.ahrefs.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

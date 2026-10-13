@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "softr",
+  "version": "0.1.0",
+  "description": "Connect to Softr through its official MCP server.",
+  "homepage": "https://www.softr.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "softr",
+      "name": "Softr",
+      "category": "developer-tools",
+      "website": "https://www.softr.io",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Softr",
+          "rank": 1686,
+          "category": "developer-tools",
+          "website": "https://www.softr.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Softr's MCP works with any MCP client with no API key; on Claude Team or Enterprise only an Owner can add it. Metadata: CIMD yes, DCR no, S256.",
+            "sources": [
+              "https://docs.softr.io/mcp/connect.md",
+              "https://mcp.softr.io/.well-known/oauth-protected-resource",
+              "https://studio-api.softr.io/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/softr"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

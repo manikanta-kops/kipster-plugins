@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "glide",
+  "version": "0.1.0",
+  "description": "Connect to Glide through its official MCP server.",
+  "homepage": "https://www.glideapps.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "glide",
+      "name": "Glide",
+      "category": "developer-tools",
+      "website": "https://www.glideapps.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Glide",
+          "rank": 1678,
+          "category": "developer-tools",
+          "website": "https://www.glideapps.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Glide documents a remote MCP for GlideOS organizations on Pro and Enterprise plans, signed in with OAuth; the endpoint is from Glide's registry entry (dev.glideapps/mcp) since the docs show it only in-app. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://www.glideapps.com/docs/os/mcp.md",
+              "https://mcp.glideapps.dev/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.glideapps.dev/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bubble",
+  "version": "0.1.0",
+  "description": "Connect to Bubble through its official MCP server.",
+  "homepage": "https://bubble.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "bubble",
+      "name": "Bubble",
+      "category": "developer-tools",
+      "website": "https://bubble.io",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Bubble",
+          "rank": 1670,
+          "category": "developer-tools",
+          "website": "https://bubble.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Bubble's official MCP lets the person's AI tool create and edit their Bubble apps after signing in with their Bubble account; it needs CIMD client support, the app's plan limits apply, and new apps start on the Free plan. Discovery 2026-10-08: DCR no, CIMD yes, S256 yes.",
+            "sources": [
+              "https://manual.bubble.io/help-guides/ai/bubble-mcp.md",
+              "https://mcp.bubble.io/.well-known/oauth-protected-resource",
+              "https://bubble.io/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=bubble",
+              "https://manual.bubble.io/core-resources/api/the-bubble-api/the-data-api/authentication/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

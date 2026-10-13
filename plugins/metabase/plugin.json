@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "metabase",
+  "version": "0.1.0",
+  "description": "Connect to Metabase through its official MCP server.",
+  "homepage": "https://www.metabase.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "metabase",
+      "name": "Metabase",
+      "category": "analytics-and-data",
+      "website": "https://www.metabase.com",
+      "signIn": ["dcr"],
+      "needsAddress": true,
+      "addressPrompt": "What is your Metabase instance or account MCP address?",
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Metabase",
+          "rank": 1668,
+          "category": "analytics-and-data",
+          "website": "https://www.metabase.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Metabase serves an MCP on each instance at /api/metabase-mcp once an admin turns it on; the MCP Registry entry io.github.metabase/mcp still lists the older template path /api/mcp. Its embedded OAuth server supports dynamic client registration but not client ID metadata documents or a pre-registered client ID; the docs set no plan limit on the server itself (only MCP analytics need Pro or Enterprise).",
+            "sources": [
+              "https://www.metabase.com/docs/latest/ai/mcp",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=metabase"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-address",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "An instance or account MCP address is required when connecting"
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "resend",
+  "version": "0.1.0",
+  "description": "Connect to Resend through its official MCP server.",
+  "homepage": "https://resend.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "resend",
+      "name": "Resend",
+      "category": "developer-tools",
+      "website": "https://resend.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Resend",
+          "rank": 1616,
+          "category": "developer-tools",
+          "website": "https://resend.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote server; discovery 2026-10-08: auth server api.resend.com advertises DCR and CIMD with S256. An API key as bearer also works; free plan has a sending quota.",
+            "sources": [
+              "https://resend.com/changelog/remote-mcp-server",
+              "https://mcp.resend.com/.well-known/oauth-protected-resource",
+              "https://api.resend.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "relay",
+  "version": "0.1.0",
+  "description": "Connect to Relay through its official MCP server.",
+  "homepage": "https://relayfi.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "relay",
+      "name": "Relay",
+      "category": "accounting-and-invoicing",
+      "website": "https://relayfi.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Relay",
+          "rank": 1643,
+          "category": "accounting-and-invoicing",
+          "website": "https://relayfi.com",
+          "accounts": "business-only",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Relay (small-business banking) runs a remote MCP with read scopes for accounts, transactions, cards and statements plus invoice and contact writes; authorization server advertises CIMD (no DCR), token auth none or private_key_jwt, S256. No vendor documentation page found.",
+            "sources": [
+              "https://mcp.relayfi.com/.well-known/oauth-protected-resource/mcp",
+              "https://app.relayfi.com/.well-known/oauth-authorization-server/oauth"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

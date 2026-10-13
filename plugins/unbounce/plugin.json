@@ -1,0 +1,54 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "unbounce",
+  "version": "0.1.0",
+  "description": "Connect to Unbounce through its official MCP server.",
+  "homepage": "https://unbounce.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "unbounce",
+      "name": "Unbounce",
+      "category": "marketing-and-email-marketing",
+      "website": "https://unbounce.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Unbounce",
+          "rank": 1713,
+          "category": "marketing-and-email-marketing",
+          "website": "https://unbounce.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Unbounce hosts a remote MCP (builds, publishes and A/B tests landing pages and reports leads and conversions) that signs in with the person's Unbounce account; Unbounce says any account works, and the self-serve plans from Starter ($29/month, one user) list the MCP server, with a 14-day free trial needing no credit card, so no separate API purchase is needed. Discovery 2026-10-09: DCR yes, CIMD yes, S256, public clients (token auth none). The REST API v0.4 is the fallback: keys on all plans after a support-confirmed access request, while OAuth apps are granted case by case.",
+            "sources": [
+              "https://unbounce.com/product/mcp-server/",
+              "https://documentation.unbounce.com/hc/en-us/articles/52207464102804-The-Unbounce-MCP-Server",
+              "https://github.com/unbounce/agent-plugins",
+              "https://mcp.unbounce.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.unbounce.com/.well-known/oauth-authorization-server",
+              "https://developer.unbounce.com/",
+              "https://developer.unbounce.com/getting_started/",
+              "https://unbounce.com/pricing/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

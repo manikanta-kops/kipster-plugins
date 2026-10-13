@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "navan",
+  "version": "0.1.0",
+  "description": "Connect to Navan through its official MCP server.",
+  "homepage": "https://navan.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "navan",
+      "name": "Navan",
+      "category": "accounting-and-invoicing",
+      "website": "https://navan.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Navan",
+          "rank": 1677,
+          "category": "accounting-and-invoicing",
+          "website": "https://navan.com",
+          "accounts": "business-only",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Navan's hosted MCP signs each user in with their own permissions; SSO companies need an admin to enable MCP first. Navan Business (companies up to 300 employees) is free with a self-serve sign-up by work email, Navan Expense is free for the first 5 users, and the MCP docs set no plan limit; only Navan Enterprise is quote-based. Navan Edge, a free product for solo business travellers, is not documented as working with the MCP. Discovery 2026-10-08: DCR yes (login.navan.com), CIMD no, token auth includes none, S256.",
+            "sources": [
+              "https://developer.navan.com/mcp/",
+              "https://navan.com/anywhere",
+              "https://mcp.navan.com/.well-known/oauth-protected-resource/mcp",
+              "https://login.navan.com/.well-known/oauth-authorization-server",
+              "https://navan.com/pricing",
+              "https://navan.com/get-started"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}
