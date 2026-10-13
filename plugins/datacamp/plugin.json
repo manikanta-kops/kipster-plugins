@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "datacamp",
+  "version": "0.1.0",
+  "description": "Connect to DataCamp through its official MCP server.",
+  "homepage": "https://www.datacamp.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "datacamp",
+      "name": "DataCamp",
+      "category": "learning",
+      "website": "https://www.datacamp.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "DataCamp",
+          "rank": 1202,
+          "category": "learning",
+          "website": "https://www.datacamp.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official DataCamp MCP for catalog search and learning content. Discovery 2026-10-08: DCR yes, CIMD yes, S256 (Keycloak realm auth.datacamp.com).",
+            "sources": [
+              "https://claude.com/marketplace/connectors/datacamp",
+              "https://mcp.datacamp.com/.well-known/oauth-protected-resource/v1/mcp",
+              "https://auth.datacamp.com/realms/datacamp-users/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 200"
+      }
+    }
+  }
+}

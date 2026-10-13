@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "upwork",
+  "version": "0.1.0",
+  "description": "Connect to Upwork through its official MCP server.",
+  "homepage": "https://www.upwork.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "upwork",
+      "name": "Upwork",
+      "category": "jobs-and-careers",
+      "website": "https://www.upwork.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Upwork",
+          "rank": 342,
+          "category": "jobs-and-careers",
+          "website": "https://www.upwork.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Upwork's official remote MCP (registry com.upwork.mcp/upwork-mcp, listed in Anthropic's directory) covers job search, proposals, messages, contracts and dashboards for freelancers and clients; upwork.com docs and help pages were blocked by a Cloudflare challenge, so the client list and pricing come from the directory and registry. Discovery 2026-10-09: authorization server mcp.upwork.com advertises CIMD yes and a registration_endpoint that points at the www.upwork.com/register sign-up page (DCR unconfirmed), S256.",
+            "sources": [
+              "https://claude.com/marketplace/connectors/upwork",
+              "https://mcp.upwork.com/.well-known/oauth-protected-resource",
+              "https://mcp.upwork.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.upwork.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

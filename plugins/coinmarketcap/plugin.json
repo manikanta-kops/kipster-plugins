@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "coinmarketcap",
+  "version": "0.1.0",
+  "description": "Connect to CoinMarketCap through its official MCP server.",
+  "homepage": "https://coinmarketcap.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "coinmarketcap",
+      "name": "CoinMarketCap",
+      "category": "investing-and-crypto",
+      "website": "https://coinmarketcap.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "CoinMarketCap",
+          "rank": 1212,
+          "category": "investing-and-crypto",
+          "website": "https://coinmarketcap.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "CoinMarketCap's official MCP (registry com.coinmarketcap/coinmarketcap) serves market data with 12 tools, not portfolio or watchlist data; the browser sign-in asks for the person's API key, and the free Basic plan works. Metadata: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://coinmarketcap.com/api/mcp/",
+              "https://mcp.coinmarketcap.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.coinmarketcap.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

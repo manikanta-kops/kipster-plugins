@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "any-do",
+  "version": "0.1.0",
+  "description": "Connect to Any.do through its official MCP server.",
+  "homepage": "https://www.any.do",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "any-do",
+      "name": "Any.do",
+      "category": "tasks-and-reminders",
+      "website": "https://www.any.do",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Any.do",
+          "rank": 235,
+          "category": "tasks-and-reminders",
+          "website": "https://www.any.do",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Any.do's own help centre documents a free remote MCP server at https://mcp.any.do/sse (beta, all users) for tasks, reminders, workspaces and calendar; it is not in the MCP Registry. Discovery 2026-10-08: DCR yes, CIMD yes, S256, token auth none allowed; the protected resource metadata sits at the /sse-suffixed path.",
+            "sources": [
+              "https://support.any.do/en/articles/15505097-any-do-mcp",
+              "https://mcp.any.do/.well-known/oauth-protected-resource/sse",
+              "https://mcp.any.do/.well-known/oauth-authorization-server",
+              "https://support.any.do/en/collections/15237642-integrations",
+              "https://support.any.do/en/articles/8634346-any-do-siri-apple-reminders",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=any.do"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

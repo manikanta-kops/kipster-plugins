@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mapquest",
+  "version": "0.1.0",
+  "description": "Connect to MapQuest through its official MCP server.",
+  "homepage": "https://www.mapquest.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "mapquest",
+      "name": "MapQuest",
+      "category": "maps-and-rides",
+      "website": "https://www.mapquest.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "MapQuest",
+          "rank": 1032,
+          "category": "maps-and-rides",
+          "website": "https://www.mapquest.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "MapQuest's remote MCP (geocoding, routing, place search, traffic, static maps) needs a free MapQuest Developer account and key, then OAuth from the agent; it covers location services, not saved places in the consumer app. Discovery 2026-10-09: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://developer.mapquest.com/mcp/",
+              "https://developer.mapquest.com",
+              "https://www.mapquestapi.com/.well-known/oauth-protected-resource/mcp",
+              "https://login.mapquest.com/lcldlj0lldfsad927172oi259/.well-known/openid-configuration",
+              "https://itunes.apple.com/lookup?id=316126557&country=us"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

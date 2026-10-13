@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "habitify",
+  "version": "0.1.0",
+  "description": "Connect to Habitify through its official MCP server.",
+  "homepage": "https://www.habitify.me",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "habitify",
+      "name": "Habitify",
+      "category": "tasks-and-reminders",
+      "website": "https://www.habitify.me",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Habitify",
+          "rank": 810,
+          "category": "tasks-and-reminders",
+          "website": "https://www.habitify.me",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official Habitify MCP documented for Claude, ChatGPT and any client by URL; reads habits and logs completions. Discovery 2026-10-09: DCR yes, CIMD no, S256 (also plain).",
+            "sources": [
+              "https://docs.habitify.me/habitify-mcp",
+              "https://mcp.habitify.me/.well-known/oauth-protected-resource",
+              "https://account.habitify.me/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Protected resource metadata does not match the MCP endpoint"
+      }
+    }
+  }
+}

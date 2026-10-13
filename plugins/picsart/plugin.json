@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "picsart",
+  "version": "0.1.0",
+  "description": "Connect to Picsart through its official MCP server.",
+  "homepage": "https://picsart.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "picsart",
+      "name": "Picsart",
+      "category": "design-and-creative",
+      "website": "https://picsart.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Picsart",
+          "rank": 525,
+          "category": "design-and-creative",
+          "website": "https://picsart.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Picsart's own MCP (registry com.picsart.api/gen-ai) signs in with the person's Picsart account and spends its credits on 140+ generation models; it does not reach other account content. Discovery 2026-10-08: CIMD yes, DCR yes, S256, auth server auth.picsart.com/api.",
+            "sources": [
+              "https://picsart.com/blog/mcp-server-for-ai-agents-in-picsart/",
+              "https://api.picsart.com/.well-known/oauth-protected-resource/gen-ai/mcp",
+              "https://auth.picsart.com/api/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Picsart"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

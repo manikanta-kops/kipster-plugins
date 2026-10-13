@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "camscanner",
+  "version": "0.1.0",
+  "description": "Connect to CamScanner through its official MCP server.",
+  "homepage": "https://www.camscanner.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "camscanner",
+      "name": "CamScanner",
+      "category": "docs-and-office",
+      "website": "https://www.camscanner.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "CamScanner",
+          "rank": 393,
+          "category": "docs-and-office",
+          "website": "https://www.camscanner.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote MCP (Streamable HTTP) signs in to the person's CamScanner account with browser OAuth, scope mcp:tools, and includes cloud document tools; not listed in the MCP Registry. Discovery 2026-10-08: DCR yes, CIMD no, S256, public client (token auth none); pricing or premium limits per tool are not documented.",
+            "sources": [
+              "https://www.camscanner.com/agent-docs/platforms/for-agents/mcp/",
+              "https://www.camscanner.com/agent-docs/",
+              "https://ai-tools.camscanner.com/.well-known/oauth-protected-resource",
+              "https://ai-tools.camscanner.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

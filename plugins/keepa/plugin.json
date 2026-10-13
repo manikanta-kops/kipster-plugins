@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "keepa",
+  "version": "0.1.0",
+  "description": "Connect to Keepa through its official MCP server.",
+  "homepage": "https://keepa.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "keepa",
+      "name": "Keepa",
+      "category": "shopping",
+      "website": "https://keepa.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Keepa",
+          "rank": 1175,
+          "category": "shopping",
+          "website": "https://keepa.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Keepa hosts an official MCP for Amazon price history, deals and products, signed in with the Keepa account or an API key; it needs an active Keepa API subscription and tool calls use its tokens. Metadata: DCR yes, CIMD yes, S256, token auth none.",
+            "sources": [
+              "https://keepa.com/api-docs/mcp.html",
+              "https://keepa.com/.well-known/oauth-protected-resource/mcp",
+              "https://keepa.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

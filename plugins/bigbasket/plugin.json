@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bigbasket",
+  "version": "0.1.0",
+  "description": "Connect to BigBasket through its official MCP server.",
+  "homepage": "https://www.bigbasket.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "bigbasket",
+      "name": "BigBasket",
+      "category": "groceries",
+      "website": "https://www.bigbasket.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "BigBasket",
+          "rank": 1022,
+          "category": "groceries",
+          "website": "https://www.bigbasket.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "bigbasket hosts an OAuth MCP (scopes read, write, cart, products), likely behind its ChatGPT shopping pilot; it is not publicly documented, so tool coverage and acceptance of clients other than ChatGPT are unconfirmed. Discovery 2026-10-08: DCR yes, CIMD no, S256 yes. Registry 2026-10-08: no entry.",
+            "sources": [
+              "https://mcp.bigbasket.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.bigbasket.com/.well-known/oauth-authorization-server",
+              "https://www.afaqs.com/news/mktg/bigbasket-brings-grocery-shopping-to-chatgpt-with-upi-payments-10548511",
+              "https://apps.apple.com/us/app/bigbasket-groceries-and-more/id660683603",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=bigbasket&limit=50"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

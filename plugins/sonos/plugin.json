@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sonos",
+  "version": "0.1.0",
+  "description": "Connect to Sonos through its official MCP server.",
+  "homepage": "https://www.sonos.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "sonos",
+      "name": "Sonos",
+      "category": "music-and-audio",
+      "website": "https://www.sonos.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Sonos",
+          "rank": 449,
+          "category": "music-and-audio",
+          "website": "https://www.sonos.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Sonos 27mcp is Sonos's official remote MCP server (34 playback, volume, grouping and favorites tools, US English); Sonos says any MCP client can register it by URL. Registry entry dev.zonefoundry/sonos is a third-party relay, not Sonos. Discovery 2026-10-09: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://support.sonos.com/en/article/control-your-sonos-system-with-ai-using-sonos-27mcp",
+              "https://mcp.ws.sonos.com/.well-known/oauth-protected-resource",
+              "https://mcp.ws.sonos.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

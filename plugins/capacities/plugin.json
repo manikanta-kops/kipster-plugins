@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "capacities",
+  "version": "0.1.0",
+  "description": "Connect to Capacities through its official MCP server.",
+  "homepage": "https://capacities.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "capacities",
+      "name": "Capacities",
+      "category": "notes",
+      "website": "https://capacities.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Capacities",
+          "rank": 904,
+          "category": "notes",
+          "website": "https://capacities.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Capacities documents its own remote MCP (Streamable HTTP, OAuth with mcp:read and mcp:write). Discovery 2026-10-08: DCR yes, CIMD no, S256. Whether a paid plan is required for MCP is not stated (the older API Beta page is marked Capacities Pro).",
+            "sources": [
+              "https://docs.capacities.io/developer/model-context-protocol",
+              "https://docs.capacities.io/developer/api",
+              "https://api.capacities.io/.well-known/oauth-protected-resource/mcp",
+              "https://api.capacities.io/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Capacities"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

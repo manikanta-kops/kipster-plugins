@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "manus",
+  "version": "0.1.0",
+  "description": "Connect to Manus through its official MCP server.",
+  "homepage": "https://manus.im",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "manus",
+      "name": "Manus",
+      "category": "ai-assistants",
+      "website": "https://manus.im",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Manus",
+          "rank": 980,
+          "category": "ai-assistants",
+          "website": "https://manus.im",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Manus hosts an OAuth MCP (server name manus-chatgpt-app, sign-in on manus.im) built for its ChatGPT app and not in its public docs, so use by other clients is unconfirmed; tasks spend the person's Manus credits. The documented API with self-serve keys is the fallback. Discovery 2026-10-08: DCR yes, CIMD no, S256 yes.",
+            "sources": [
+              "https://mcp.manus.im/.well-known/oauth-protected-resource",
+              "https://mcp.manus.im/.well-known/oauth-authorization-server",
+              "https://open.manus.ai/docs/v2/authentication.md",
+              "https://open.manus.im/docs/llms.txt",
+              "https://manus.im/docs/llms.txt",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=manus&limit=50"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 404"
+      }
+    }
+  }
+}

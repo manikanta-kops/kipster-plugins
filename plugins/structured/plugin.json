@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "structured",
+  "version": "0.1.0",
+  "description": "Connect to Structured through its official MCP server.",
+  "homepage": "https://structured.app",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "structured",
+      "name": "Structured",
+      "category": "tasks-and-reminders",
+      "website": "https://structured.app",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Structured",
+          "rank": 425,
+          "category": "tasks-and-reminders",
+          "website": "https://structured.app",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Structured runs an official remote MCP server (announced June 2026) for its daily planner, listing ChatGPT, Claude and other MCP clients; sign-in runs on Structured's Supabase auth server. Recurring tasks need Structured Pro. Discovery 2026-10-09: DCR yes, CIMD no, S256 (also plain).",
+            "sources": [
+              "https://structured.app/blog/structured-mcp",
+              "https://mcp.structured.app/.well-known/oauth-protected-resource",
+              "https://zgfbpcdjhiakkczmfldk.supabase.co/auth/v1/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

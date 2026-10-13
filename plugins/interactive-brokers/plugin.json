@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "interactive-brokers",
+  "version": "0.1.0",
+  "description": "Connect to Interactive Brokers through its official MCP server.",
+  "homepage": "https://www.interactivebrokers.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "interactive-brokers",
+      "name": "Interactive Brokers",
+      "category": "investing-and-crypto",
+      "website": "https://www.interactivebrokers.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Interactive Brokers",
+          "rank": 506,
+          "category": "investing-and-crypto",
+          "website": "https://www.interactivebrokers.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Interactive Brokers documents a public MCP URL for any MCP client; one account per authorization, and the AI drafts trade instructions the client confirms on an IBKR platform. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://interactivebrokers.ie/en/general/about/mediaRelations/7-28-26.php",
+              "https://api.ibkr.com/v1/api/mcp-public/.well-known/oauth-protected-resource",
+              "https://api.ibkr.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}
