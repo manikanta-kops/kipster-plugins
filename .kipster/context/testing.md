@@ -46,10 +46,13 @@ exist.
 The probe checks that every catalogue entry's MCP server is alive and still
 signs in the way the catalogue says. For each entry it:
 
-1. sends an MCP `initialize` request with no token and expects `401` with a
-   `WWW-Authenticate` header that points to resource metadata;
+1. sends an MCP `initialize` request with no token. A `401` usually points to
+   resource metadata in its `WWW-Authenticate` header. A service may instead
+   answer without sign-in (2xx); the probe then looks for metadata at the
+   well-known paths;
 2. reads the protected resource metadata and its authorization server's
-   metadata;
+   metadata. The resource may be the endpoint itself, its origin or a path
+   prefix on that origin, as the MCP SDK accepts;
 3. confirms the sign-in method: a `registration_endpoint` for DCR, or
    `client_id_metadata_document_supported` for CIMD, and S256 PKCE.
 
@@ -86,16 +89,15 @@ all their tools count as write until reviewed.
   store, never the macOS keychain.
 - Bind servers to `127.0.0.1` on free ports, never fixed ports.
 
-## Factory instance (added with the plugin server)
+## Factory instance
 
-The kit has no `verify` block yet, so testers check changes in a disposable
-checkout. The task that adds the plugin server's `serve` command also adds:
-
-- a `verify` block that starts the fixture service on `{port2}` and the plugin
-  server on `{port}` with a fixture catalogue pointing at it. It uses a home
-  inside the checkout, no database, and a known bearer token. Readiness is
-  `http://127.0.0.1:{port}/health`;
-- `.kipster/verify/README.md` and feature maps for sign-in, accounts, tools,
-  discovery and catalogue reload.
+The kit's `verify` block runs `npm run instance`: the fixture service on
+`{port2}` and the plugin server on `{port}`, with a copy of the fixture
+catalogue (`test/fixtures/catalogue/`) pointing at it. Each start wipes its
+home and catalogue under `.local/verify/` in the checkout. It uses the file key
+backend, no database and the documented bearer token. Readiness is
+`http://127.0.0.1:{port}/health`. [The verify guide](../verify/README.md) and its
+feature maps for sign-in, accounts, tools, discovery and catalogue reload
+explain how to drive it.
 
 Kit changes always go to the owner for approval.

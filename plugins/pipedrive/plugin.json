@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pipedrive",
+  "version": "0.1.0",
+  "description": "Connect to Pipedrive through its official MCP server.",
+  "homepage": "https://www.pipedrive.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "pipedrive",
+      "name": "Pipedrive",
+      "category": "crm-and-sales",
+      "website": "https://www.pipedrive.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Pipedrive",
+          "rank": 1439,
+          "category": "crm-and-sales",
+          "website": "https://www.pipedrive.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Pipedrive's own remote MCP (beta) at mcp.pipedrive.ai is documented for Claude and other MCP clients with Pipedrive sign-in; all Pipedrive plans are paid. Discovery 2026-10-09: protected-resource metadata names oauth.pipedrive.com, DCR yes, CIMD no, client secret token auth, S256 (also plain).",
+            "sources": [
+              "https://support.pipedrive.com/en/article/mcp-claude",
+              "https://mcp.pipedrive.ai/.well-known/oauth-protected-resource",
+              "https://oauth.pipedrive.com/.well-known/oauth-authorization-server",
+              "https://pipedrive.readme.io/docs/how-to-find-the-api-token"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

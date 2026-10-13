@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "slab",
+  "version": "0.1.0",
+  "description": "Connect to Slab through its official MCP server.",
+  "homepage": "https://slab.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "slab",
+      "name": "Slab",
+      "category": "knowledge-base",
+      "website": "https://slab.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Slab",
+          "rank": 1330,
+          "category": "knowledge-base",
+          "website": "https://slab.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Slab runs a vendor MCP labelled beta (\"Slab MCP (Beta)\") whose protected-resource metadata names https://mcp.slab.com as the resource; Slab's help centre has no MCP page, so the exact endpoint path is unconfirmed. Metadata: DCR yes, CIMD not advertised, S256 (also plain).",
+            "sources": [
+              "https://mcp.slab.com/.well-known/oauth-protected-resource",
+              "https://mcp.slab.com/.well-known/oauth-authorization-server",
+              "https://help.slab.com/en/collections/3258173-integrations-embeds"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Expected HTTP 401; received HTTP 400"
+      }
+    }
+  }
+}

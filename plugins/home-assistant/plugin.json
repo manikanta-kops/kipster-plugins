@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "home-assistant",
+  "version": "0.1.0",
+  "description": "Connect to Home Assistant through its official MCP server.",
+  "homepage": "https://www.home-assistant.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "home-assistant",
+      "name": "Home Assistant",
+      "category": "smart-home",
+      "website": "https://www.home-assistant.io",
+      "signIn": ["cimd"],
+      "needsAddress": true,
+      "addressPrompt": "What is your Home Assistant instance or account MCP address?",
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Home Assistant",
+          "rank": 390,
+          "category": "smart-home",
+          "website": "https://www.home-assistant.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Home Assistant's built-in Model Context Protocol Server integration serves Streamable HTTP at /api/mcp on the person's own instance (template URL), exposing the Assist API and only the entities the person exposes; an administrator account is required by default. Its IndieAuth OAuth uses the client's base URL as client ID, and the docs state client_id_metadata_document_supported true and no RFC 7591 registration endpoint; remote access needs Home Assistant Cloud (paid) or a tunnel, while Kipster on the same network can reach it directly. Discovery 2026-10-09: per-instance metadata not readable without an instance; docs state CIMD yes, DCR no. Registry servers (e.g. io.github.homeassistant-ai/ha-mcp) are community projects.",
+            "sources": [
+              "https://www.home-assistant.io/integrations/mcp_server/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-address",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "An instance or account MCP address is required when connecting"
+      }
+    }
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "const": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "version": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "homepage": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "properties": {
+        "app.kipster": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "category": {
+              "type": "string",
+              "minLength": 1
+            },
+            "website": {
+              "type": "string",
+              "minLength": 1,
+              "format": "uri"
+            },
+            "signIn": {
+              "type": "array",
+              "items": {
+                "enum": ["dcr", "cimd"]
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            },
+            "needsAddress": {
+              "type": "boolean"
+            },
+            "addressPrompt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "accountTypes": {
+              "type": "array",
+              "items": {
+                "enum": ["personal", "business", "business-only", "unknown"]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "cost": {
+              "enum": ["free", "user-paid-plan"]
+            },
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rank": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "category": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "website": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "uri"
+                  },
+                  "accounts": {
+                    "enum": [
+                      "yes",
+                      "personal",
+                      "business",
+                      "business-only",
+                      "unknown"
+                    ]
+                  },
+                  "cost": {
+                    "enum": ["free", "user-paid-plan"]
+                  },
+                  "signIn": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "research": {
+                    "type": "object",
+                    "properties": {
+                      "verified": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "checkedOn": {
+                        "type": "string",
+                        "minLength": 1,
+                        "format": "date"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "sources": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "format": "uri"
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": ["verified", "checkedOn", "notes", "sources"],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "name",
+                  "rank",
+                  "category",
+                  "website",
+                  "accounts",
+                  "cost",
+                  "signIn",
+                  "research"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "verification": {
+              "enum": ["probe", "account"]
+            },
+            "probe": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "enum": [
+                    "ok",
+                    "sign-in-changed",
+                    "needs-address",
+                    "needs-client-metadata-document",
+                    "unreachable",
+                    "error"
+                  ]
+                },
+                "signIn": {
+                  "type": "array",
+                  "items": {
+                    "enum": ["dcr", "cimd"]
+                  },
+                  "uniqueItems": true
+                },
+                "checkedOn": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]+$"
+                }
+              },
+              "required": ["result", "signIn", "checkedOn", "reason"],
+              "additionalProperties": false
+            },
+            "tools": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-zA-Z0-9_-]+$"
+              },
+              "additionalProperties": {
+                "enum": ["read", "write"]
+              }
+            },
+            "identity": {
+              "type": "object",
+              "properties": {
+                "tool": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "arguments": {
+                  "type": "object"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": ["tool", "id"],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "category",
+            "website",
+            "signIn",
+            "needsAddress",
+            "accountTypes",
+            "cost",
+            "products",
+            "tools"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": ["app.kipster"],
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  },
+  "required": ["$schema", "name", "description", "extensions"],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Kipster class A Agent Plugin manifest"
+}

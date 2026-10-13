@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "justworks",
+  "version": "0.1.0",
+  "description": "Connect to Justworks through its official MCP server.",
+  "homepage": "https://www.justworks.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "justworks",
+      "name": "Justworks",
+      "category": "hr-and-recruiting",
+      "website": "https://www.justworks.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Justworks",
+          "rank": 1554,
+          "category": "hr-and-recruiting",
+          "website": "https://www.justworks.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Justworks' official remote MCP (beta) gives account administrators read access to headcount, payroll, paystubs, time off and deductions, signed in with Justworks credentials; any MCP client can add the URL, with no access request. Discovery 2026-10-09: DCR no, CIMD yes, S256, public clients allowed.",
+            "sources": [
+              "https://mcp.justworks.com/.well-known/oauth-protected-resource",
+              "https://public-api.justworks.com/.well-known/oauth-authorization-server",
+              "https://help.justworks.com/hc/en-us/articles/52048072257819-Justworks-Model-Context-Protocol-MCP"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "readwise",
+  "version": "0.1.0",
+  "description": "Connect to Readwise through its official MCP server.",
+  "homepage": "https://readwise.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "readwise",
+      "name": "Readwise",
+      "category": "news-and-reading",
+      "website": "https://readwise.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Readwise",
+          "rank": 398,
+          "category": "news-and-reading",
+          "website": "https://readwise.io",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Readwise hosts a remote MCP server signed in with the person's Readwise account; Readwise itself is a paid subscription after a 30-day trial (Reader needs the Full plan). Discovery 2026-10-08: DCR yes (https://readwise.io/o/register/), CIMD not advertised, S256, token auth none allowed. Registry 2026-10-08: no entry.",
+            "sources": [
+              "https://readwise.io/mcp",
+              "https://readwise.io/pricing",
+              "https://mcp2.readwise.io/.well-known/oauth-protected-resource/mcp",
+              "https://readwise.io/.well-known/oauth-authorization-server/o",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=readwise"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

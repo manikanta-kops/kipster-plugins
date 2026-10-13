@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "todoist",
+  "version": "0.1.0",
+  "description": "Connect to Todoist through its official MCP server.",
+  "homepage": "https://www.todoist.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "todoist",
+      "name": "Todoist",
+      "category": "tasks-and-reminders",
+      "website": "https://www.todoist.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Todoist",
+          "rank": 55,
+          "category": "tasks-and-reminders",
+          "website": "https://www.todoist.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Doist hosts the official Todoist MCP server, listed in the registry as net.todoist/mcp; sign-in runs on todoist.com and the API is free, with some features limited by the person's plan. Discovery 2026-10-08: DCR yes, CIMD yes, S256, token auth none or client secret.",
+            "sources": [
+              "https://github.com/Doist/todoist-mcp",
+              "https://developer.todoist.com/api/v1/",
+              "https://ai.todoist.net/.well-known/oauth-protected-resource/mcp",
+              "https://ai.todoist.net/.well-known/oauth-protected-resource",
+              "https://todoist.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=todoist"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

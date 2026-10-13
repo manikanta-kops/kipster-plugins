@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fastmail",
+  "version": "0.1.0",
+  "description": "Connect to Fastmail through its official MCP server.",
+  "homepage": "https://www.fastmail.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "fastmail",
+      "name": "Fastmail",
+      "category": "email",
+      "website": "https://www.fastmail.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Fastmail",
+          "rank": 366,
+          "category": "email",
+          "website": "https://www.fastmail.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Fastmail's MCP server works with any MCP client that supports remote servers and covers mail, contacts and calendars with read, write and send levels chosen at sign-in (no attachments yet); API tokens also work. OAuth clients for Fastmail's other APIs are registered manually, but the MCP authorization server takes dynamic registration. Discovery 2026-10-09: DCR yes, CIMD no, S256, public clients (token auth none).",
+            "sources": [
+              "https://www.fastmail.help/hc/en-us/articles/15869557281295-Connecting-AI-tools-via-Fastmail-s-MCP-server",
+              "https://www.fastmail.com/dev/",
+              "https://claude.com/marketplace/connectors/fastmail",
+              "https://api.fastmail.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.fastmail.com/.well-known/oauth-authorization-server",
+              "https://api.fastmail.com/.well-known/openid-configuration"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

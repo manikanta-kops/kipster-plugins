@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "idrive",
+  "version": "0.1.0",
+  "description": "Connect to IDrive through its official MCP server.",
+  "homepage": "https://www.idrive.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "idrive",
+      "name": "IDrive",
+      "category": "files-and-storage",
+      "website": "https://www.idrive.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "IDrive",
+          "rank": 850,
+          "category": "files-and-storage",
+          "website": "https://www.idrive.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "IDrive runs its own remote MCP with OAuth scopes for drive, backup and sharing; a free basic IDrive plan exists. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256.",
+            "sources": [
+              "https://mcp.idrive.com/.well-known/oauth-protected-resource/mcp",
+              "https://www.idrive.com/.well-known/oauth-authorization-server",
+              "https://www.idrive.com/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

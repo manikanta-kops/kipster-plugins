@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "nimble",
+  "version": "0.1.0",
+  "description": "Connect to Nimble through its official MCP server.",
+  "homepage": "https://www.nimble.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "nimble",
+      "name": "Nimble",
+      "category": "crm-and-sales",
+      "website": "https://www.nimble.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Nimble",
+          "rank": 1552,
+          "category": "crm-and-sales",
+          "website": "https://www.nimble.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Nimble runs a beta remote MCP included in every Nimble plan, signed in with OAuth; the registry entry is in Nimble's namespace. Discovery 2026-10-08: DCR no, CIMD yes, S256.",
+            "sources": [
+              "https://mcp.nimble.com/mcp",
+              "https://app.nimble.com/.well-known/oauth-protected-resource/mcp",
+              "https://app.nimble.com/.well-known/oauth-authorization-server/oauth2",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Nimble&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

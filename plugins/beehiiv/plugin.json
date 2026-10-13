@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "beehiiv",
+  "version": "0.1.0",
+  "description": "Connect to beehiiv through its official MCP server.",
+  "homepage": "https://www.beehiiv.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "beehiiv",
+      "name": "beehiiv",
+      "category": "marketing-and-email-marketing",
+      "website": "https://www.beehiiv.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "beehiiv",
+          "rank": 1495,
+          "category": "marketing-and-email-marketing",
+          "website": "https://www.beehiiv.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "beehiiv hosts an official MCP server open to all beehiiv users with no paid plan required; v1 is read-only. Discovery 2026-10-08: DCR yes, no CIMD, S256.",
+            "sources": [
+              "https://www.beehiiv.com/features/mcp/getting-started",
+              "https://mcp.beehiiv.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.beehiiv.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=beehiiv"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

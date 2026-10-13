@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "turso",
+  "version": "0.1.0",
+  "description": "Connect to Turso through its official MCP server.",
+  "homepage": "https://turso.tech",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "turso",
+      "name": "Turso",
+      "category": "databases",
+      "website": "https://turso.tech",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Turso",
+          "rank": 1638,
+          "category": "databases",
+          "website": "https://turso.tech",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Turso Cloud's hosted MCP manages databases and runs SQL with OAuth sign-in. Metadata on api.turso.tech: CIMD yes and DCR yes, S256, public clients (none).",
+            "sources": [
+              "https://docs.turso.tech/integrations/mcp.md",
+              "https://mcp.turso.ai/.well-known/oauth-protected-resource/mcp",
+              "https://api.turso.tech/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

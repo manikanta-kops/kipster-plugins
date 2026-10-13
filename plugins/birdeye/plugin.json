@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "birdeye",
+  "version": "0.1.0",
+  "description": "Connect to Birdeye through its official MCP server.",
+  "homepage": "https://birdeye.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "birdeye",
+      "name": "Birdeye",
+      "category": "customer-support",
+      "website": "https://birdeye.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Birdeye",
+          "rank": 1727,
+          "category": "customer-support",
+          "website": "https://birdeye.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP (EU at mcp-eu.birdeye.com) for reviews, listings, surveys and ticketing; authorization server advertises both CIMD and DCR, S256, client-secret methods only.",
+            "sources": [
+              "https://docs.birdeye.com/mcp/quickstart.md",
+              "https://mcp.birdeye.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

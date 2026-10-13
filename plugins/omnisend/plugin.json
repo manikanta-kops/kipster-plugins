@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "omnisend",
+  "version": "0.1.0",
+  "description": "Connect to Omnisend through its official MCP server.",
+  "homepage": "https://www.omnisend.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "omnisend",
+      "name": "Omnisend",
+      "category": "marketing-and-email-marketing",
+      "website": "https://www.omnisend.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Omnisend",
+          "rank": 1533,
+          "category": "marketing-and-email-marketing",
+          "website": "https://www.omnisend.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP for the store's contacts, campaigns and automations; also accepts an X-Api-Key header. It needs an Owner, Admin, Manager or Partner role, which a merchant has in their own store account; Omnisend has a self-serve Free plan with no credit card, and the MCP docs set no plan requirement. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://api-docs.omnisend.com/reference/mcp-server",
+              "https://mcp.omnisend.com/.well-known/oauth-protected-resource",
+              "https://mcp.omnisend.com/.well-known/oauth-authorization-server",
+              "https://www.omnisend.com/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "error",
+        "signIn": [],
+        "checkedOn": "2026-10-13",
+        "reason": "Authorization metadata issuer does not match"
+      }
+    }
+  }
+}

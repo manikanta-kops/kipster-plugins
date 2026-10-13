@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "moz",
+  "version": "0.1.0",
+  "description": "Connect to Moz through its official MCP server.",
+  "homepage": "https://moz.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "moz",
+      "name": "Moz",
+      "category": "marketing-and-email-marketing",
+      "website": "https://moz.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Moz",
+          "rank": 1690,
+          "category": "marketing-and-email-marketing",
+          "website": "https://moz.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Moz documents remote MCP servers for Moz Data (and https://api.moz.com/mcp/v1/local for Moz Local) with OAuth or an API token; the API has a free tier of 50 rows a month (card required), paid tiers above. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://moz.com/api/docs/guides/mcp-servers",
+              "https://api.moz.com/.well-known/oauth-protected-resource/mcp/v1/data",
+              "https://api.moz.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

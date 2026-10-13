@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mural",
+  "version": "0.1.0",
+  "description": "Connect to Mural through its official MCP server.",
+  "homepage": "https://www.mural.co",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "mural",
+      "name": "Mural",
+      "category": "productivity",
+      "website": "https://www.mural.co",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Mural",
+          "rank": 1307,
+          "category": "productivity",
+          "website": "https://www.mural.co",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Mural's own MCP server (registry co.mural/mural) creates and edits boards; it is in Public Preview on all paid plans (Team+ from $9.99 per member per month, bought self-serve; not the Free plan), and enterprise admins can restrict it with client allowlisting. Discovery 2026-10-09: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://www.mural.co/ai/mcp",
+              "https://mcp-canvas.mural.co/.well-known/oauth-protected-resource/mcp",
+              "https://mcp-canvas.mural.co/.well-known/oauth-authorization-server",
+              "https://www.mural.co/pricing"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

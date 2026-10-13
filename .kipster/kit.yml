@@ -1,3 +1,9 @@
 version: 1
 setup: npm ci
 check: npm run check
+verify:
+  start: npm run instance -- --port {port} --fixture-port {port2}
+  ready: http://127.0.0.1:{port}/health
+  ports: 2
+  database: none
+  timeoutSeconds: 60

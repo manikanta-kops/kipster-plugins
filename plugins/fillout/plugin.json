@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fillout",
+  "version": "0.1.0",
+  "description": "Connect to Fillout through its official MCP server.",
+  "homepage": "https://www.fillout.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "fillout",
+      "name": "Fillout",
+      "category": "forms-and-surveys",
+      "website": "https://www.fillout.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Fillout",
+          "rank": 1340,
+          "category": "forms-and-surveys",
+          "website": "https://www.fillout.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Discovery 2026-10-08: auth server server.fillout.com, DCR yes, CIMD not advertised, S256, public clients allowed; no Fillout page documenting the MCP was found. Community server also exists: registry io.usefulapi/fillout, not official.",
+            "sources": [
+              "https://mcp.fillout.com/.well-known/oauth-protected-resource/mcp",
+              "https://server.fillout.com/.well-known/oauth-authorization-server",
+              "https://www.fillout.com/help/fillout-rest-api",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=fillout"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

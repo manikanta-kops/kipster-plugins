@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hibob",
+  "version": "0.1.0",
+  "description": "Connect to HiBob through its official MCP server.",
+  "homepage": "https://www.hibob.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "hibob",
+      "name": "HiBob",
+      "category": "hr-and-recruiting",
+      "website": "https://www.hibob.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "HiBob",
+          "rank": 1637,
+          "category": "hr-and-recruiting",
+          "website": "https://www.hibob.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Hosted Bob MCP moved to OAuth with employee-level access in June 2026 (gradual rollout); metadata advertises DCR, token auth none, S256.",
+            "sources": [
+              "https://apidocs.hibob.com/docs/hibob-mcp-server",
+              "https://mcp.hibob.com/.well-known/oauth-protected-resource",
+              "https://mcp.hibob.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

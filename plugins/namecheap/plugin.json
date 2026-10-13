@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "namecheap",
+  "version": "0.1.0",
+  "description": "Connect to Namecheap through its official MCP server.",
+  "homepage": "https://www.namecheap.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "namecheap",
+      "name": "Namecheap",
+      "category": "website-and-cms",
+      "website": "https://www.namecheap.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Namecheap",
+          "rank": 1547,
+          "category": "website-and-cms",
+          "website": "https://www.namecheap.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "mcp.namecheap.com publishes OAuth metadata (resource https://mcp.namecheap.com/, sign-in on www.namecheap.com) and /mcp answers as a POST-only endpoint; Namecheap's pages returned 403, so the exact path is not confirmed from docs. Metadata advertises DCR, no CIMD, S256 (also plain).",
+            "sources": [
+              "https://mcp.namecheap.com/.well-known/oauth-protected-resource",
+              "https://www.namecheap.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

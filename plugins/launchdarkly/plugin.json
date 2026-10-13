@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "launchdarkly",
+  "version": "0.1.0",
+  "description": "Connect to LaunchDarkly through its official MCP server.",
+  "homepage": "https://launchdarkly.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "launchdarkly",
+      "name": "LaunchDarkly",
+      "category": "developer-tools",
+      "website": "https://launchdarkly.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "LaunchDarkly",
+          "rank": 1720,
+          "category": "developer-tools",
+          "website": "https://launchdarkly.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "LaunchDarkly documents a hosted MCP for feature flags, AgentControl and observability (not in its federal or EU instances, which use the local server); a free Developer plan exists. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://launchdarkly.com/docs/home/getting-started/mcp",
+              "https://launchdarkly.com/pricing/",
+              "https://mcp.launchdarkly.com/.well-known/oauth-protected-resource/mcp/launchdarkly",
+              "https://mcp.launchdarkly.com/.well-known/oauth-authorization-server/mcp/launchdarkly"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

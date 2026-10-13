@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mercury",
+  "version": "0.1.0",
+  "description": "Connect to Mercury through its official MCP server.",
+  "homepage": "https://mercury.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "mercury",
+      "name": "Mercury",
+      "category": "accounting-and-invoicing",
+      "website": "https://mercury.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Mercury",
+          "rank": 1624,
+          "category": "accounting-and-invoicing",
+          "website": "https://mercury.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Mercury runs a remote MCP (beta) with OAuth for reading transactions and balances, money movement held for approval in Mercury; personal accounts are a paid self-serve plan, and tools depend on account type. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://docs.mercury.com/docs/what-is-mercury-mcp",
+              "https://mcp.mercury.com/.well-known/oauth-protected-resource",
+              "https://mcp.mercury.com/.well-known/oauth-authorization-server",
+              "https://mercury.com/personal-banking"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "robinhood",
+  "version": "0.1.0",
+  "description": "Connect to Robinhood through its official MCP server.",
+  "homepage": "https://robinhood.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "robinhood",
+      "name": "Robinhood",
+      "category": "investing-and-crypto",
+      "website": "https://robinhood.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Robinhood",
+          "rank": 79,
+          "category": "investing-and-crypto",
+          "website": "https://robinhood.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Robinhood's own Trading MCP (US only) lets an agent read the person's Robinhood accounts and trade only in a separate Agentic account the person opens and funds; Robinhood names \"any localhost platform\" as a supported client and charges no extra fee. Discovery 2026-10-08: DCR yes, CIMD not advertised, S256, token auth none; registry entries named Robinhood are community (e.g. io.github.verygoodplugins/robinhood-mcp).",
+            "sources": [
+              "https://robinhood.com/us/en/support/articles/agentic-trading-overview/",
+              "https://robinhood.com/us/en/support/articles/setting-up-an-agent/",
+              "https://agent.robinhood.com/.well-known/oauth-protected-resource/mcp/trading",
+              "https://agent.robinhood.com/.well-known/oauth-authorization-server/mcp/trading",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=robinhood"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

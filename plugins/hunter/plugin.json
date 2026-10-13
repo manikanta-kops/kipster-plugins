@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hunter",
+  "version": "0.1.0",
+  "description": "Connect to Hunter through its official MCP server.",
+  "homepage": "https://hunter.io",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "hunter",
+      "name": "Hunter",
+      "category": "crm-and-sales",
+      "website": "https://hunter.io",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Hunter",
+          "rank": 1714,
+          "category": "crm-and-sales",
+          "website": "https://hunter.io",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Hunter runs a remote MCP on all plans including the free account, with one-click OAuth or the person's API key. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://hunter.io/mcp",
+              "https://mcp.hunter.io/.well-known/oauth-protected-resource",
+              "https://hunter.io/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

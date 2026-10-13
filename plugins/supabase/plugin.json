@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "supabase",
+  "version": "0.1.0",
+  "description": "Connect to Supabase through its official MCP server.",
+  "homepage": "https://supabase.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "supabase",
+      "name": "Supabase",
+      "category": "databases",
+      "website": "https://supabase.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Supabase",
+          "rank": 1415,
+          "category": "databases",
+          "website": "https://supabase.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP (beta) with feature groups, project scoping and a read-only mode; Supabase advises using those before connecting a production project. Discovery 2026-10-09: DCR yes, CIMD no, S256 (also plain), client-secret token auth methods only.",
+            "sources": [
+              "https://supabase.com/docs/guides/getting-started/mcp",
+              "https://mcp.supabase.com/.well-known/oauth-protected-resource/mcp",
+              "https://api.supabase.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/supabase"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

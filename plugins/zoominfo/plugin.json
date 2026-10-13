@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "zoominfo",
+  "version": "0.1.0",
+  "description": "Connect to ZoomInfo through its official MCP server.",
+  "homepage": "https://www.zoominfo.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "zoominfo",
+      "name": "ZoomInfo",
+      "category": "crm-and-sales",
+      "website": "https://www.zoominfo.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "ZoomInfo",
+          "rank": 1632,
+          "category": "crm-and-sales",
+          "website": "https://www.zoominfo.com",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "ZoomInfo's official MCP (registry io.github.Zoominfo/zoominfo-mcp) needs a paid ZoomInfo subscription. Metadata: DCR yes, CIMD no, S256, client-secret token auth only.",
+            "sources": [
+              "https://github.com/Zoominfo/zoominfo-mcp-plugin",
+              "https://mcp.zoominfo.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.zoominfo.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

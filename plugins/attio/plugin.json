@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "attio",
+  "version": "0.1.0",
+  "description": "Connect to Attio through its official MCP server.",
+  "homepage": "https://attio.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "attio",
+      "name": "Attio",
+      "category": "crm-and-sales",
+      "website": "https://attio.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Attio",
+          "rank": 1492,
+          "category": "crm-and-sales",
+          "website": "https://attio.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Attio's hosted MCP signs in as the person's Attio user with OAuth and reads and writes CRM records, notes, tasks and call recordings. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://docs.attio.com/mcp/overview.md",
+              "https://mcp.attio.com/.well-known/oauth-protected-resource/mcp",
+              "https://app.attio.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

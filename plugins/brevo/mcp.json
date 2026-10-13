@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "brevo": {
+      "type": "streamable-http",
+      "url": "https://mcp.brevo.com/v1/brevo/mcp"
+    }
+  }
+}

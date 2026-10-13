@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fathom",
+  "version": "0.1.0",
+  "description": "Connect to Fathom through its official MCP server.",
+  "homepage": "https://www.fathom.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "fathom",
+      "name": "Fathom",
+      "category": "productivity",
+      "website": "https://www.fathom.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Fathom",
+          "rank": 1318,
+          "category": "productivity",
+          "website": "https://www.fathom.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Fathom documents an official remote MCP for the person's meeting data (also listed in the MCP Registry as ai.fathom.api/mcp). Discovery 2026-10-08: DCR yes, CIMD not advertised, S256; public clients (auth method none).",
+            "sources": [
+              "https://developers.fathom.ai/mcp-docs/index.md",
+              "https://api.fathom.ai/.well-known/oauth-protected-resource/mcp",
+              "https://api.fathom.ai/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=Fathom"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

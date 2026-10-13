@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "paypal",
+  "version": "0.1.0",
+  "description": "Connect to PayPal through its official MCP server.",
+  "homepage": "https://www.paypal.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "paypal",
+      "name": "PayPal",
+      "category": "payments",
+      "website": "https://www.paypal.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "PayPal",
+          "rank": 22,
+          "category": "payments",
+          "website": "https://www.paypal.com",
+          "accounts": "business-only",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "PayPal's hosted MCP is built for merchants (invoices, orders, disputes, subscriptions, shipment tracking, transaction reporting) and, like the REST API, needs a PayPal Business account in production, so a personal account cannot use it. For a personal account the route is the account's activity download (transaction history) in PayPal's settings. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://developer.paypal.com/tools/mcp-server/",
+              "https://github.com/paypal/paypal-mcp-server",
+              "https://mcp.paypal.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.paypal.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=paypal&limit=100",
+              "https://developer.paypal.com/api/rest/",
+              "https://developer.paypal.com/api/rest/production/"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

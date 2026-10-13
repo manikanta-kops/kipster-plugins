@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tana",
+  "version": "0.1.0",
+  "description": "Connect to Tana through its official MCP server.",
+  "homepage": "https://tana.inc",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "tana",
+      "name": "Tana",
+      "category": "notes",
+      "website": "https://tana.inc",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Tana",
+          "rank": 1043,
+          "category": "notes",
+          "website": "https://tana.inc",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Tana's own MCP (tanainc/tana-plugin) reads meetings, tasks and docs and proposes writes the person approves in Tana; full MCP is in the Pro plan. Tana Outliner has separate MCPs (app.tana.inc/mcp, paid beta; free local server). Discovery 2026-10-09: CIMD yes, DCR yes, S256.",
+            "sources": [
+              "https://github.com/tanainc/tana-plugin",
+              "https://tana.inc/learn/guides/use-tana-with-claude",
+              "https://tana.inc/pricing",
+              "https://home.tana.inc/.well-known/oauth-protected-resource",
+              "https://home.tana.inc/.well-known/oauth-authorization-server",
+              "https://outliner.tana.inc/learn/features/local-api-mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

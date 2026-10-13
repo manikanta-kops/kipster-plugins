@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mailerlite",
+  "version": "0.1.0",
+  "description": "Connect to MailerLite through its official MCP server.",
+  "homepage": "https://www.mailerlite.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "mailerlite",
+      "name": "MailerLite",
+      "category": "marketing-and-email-marketing",
+      "website": "https://www.mailerlite.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "MailerLite",
+          "rank": 1504,
+          "category": "marketing-and-email-marketing",
+          "website": "https://www.mailerlite.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "MailerLite's hosted MCP connects with OAuth authorization (no API key) on free and paid accounts, keeping campaigns as drafts until approved. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://www.mailerlite.com/features/mcp",
+              "https://mcp.mailerlite.com/.well-known/oauth-protected-resource/mcp",
+              "https://mcp.mailerlite.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

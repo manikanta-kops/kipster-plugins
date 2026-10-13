@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "seeking-alpha",
+  "version": "0.1.0",
+  "description": "Connect to Seeking Alpha through its official MCP server.",
+  "homepage": "https://seekingalpha.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "seeking-alpha",
+      "name": "Seeking Alpha",
+      "category": "investing-and-crypto",
+      "website": "https://seekingalpha.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Seeking Alpha",
+          "rank": 1148,
+          "category": "investing-and-crypto",
+          "website": "https://seekingalpha.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Seeking Alpha hosts an OAuth MCP on its own domain whose only scope is mcp:pro_mcp, which suggests a paid PRO subscription; no public docs were found. Third-party Seeking Alpha APIs are unofficial and the terms forbid scraping. Discovery 2026-10-08: DCR no, CIMD yes, S256 yes (plain also allowed).",
+            "sources": [
+              "https://seekingalpha.com/.well-known/oauth-protected-resource/mcp",
+              "https://seekingalpha.com/.well-known/oauth-authorization-server/mcp",
+              "https://about.seekingalpha.com/terms",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=seekingalpha"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

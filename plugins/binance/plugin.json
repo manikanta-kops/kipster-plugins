@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "binance",
+  "version": "0.1.0",
+  "description": "Connect to Binance through its official MCP server.",
+  "homepage": "https://www.binance.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "binance",
+      "name": "Binance",
+      "category": "investing-and-crypto",
+      "website": "https://www.binance.com",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Binance",
+          "rank": 357,
+          "category": "investing-and-crypto",
+          "website": "https://www.binance.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-08",
+            "notes": "Binance's official remote MCP (Agent OS) signs the person in on binance.com and trades only in a dedicated Agentic sub-account with no withdrawal scope; its docs list named clients, so acceptance of other CIMD clients is unverified. Discovery 2026-10-08: DCR no, CIMD yes, S256 (protected-resource metadata only at the root path; token auth none). Not in the MCP Registry under a Binance namespace.",
+            "sources": [
+              "https://developers.binance.com/en/docs/agent-native/mcp-server/agentic",
+              "https://agent.binance.com/.well-known/oauth-protected-resource",
+              "https://agent.binance.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=binance&limit=100"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "jotform",
+  "version": "0.1.0",
+  "description": "Connect to Jotform through its official MCP server.",
+  "homepage": "https://www.jotform.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "jotform",
+      "name": "Jotform",
+      "category": "forms-and-surveys",
+      "website": "https://www.jotform.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Jotform",
+          "rank": 1266,
+          "category": "forms-and-surveys",
+          "website": "https://www.jotform.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Jotform's official remote MCP (registry com.jotform/mcp, repo github.com/jotform/mcp-server) works with any MCP client at no additional charge; existing plan limits apply. Discovery 2026-10-09: DCR yes (register-public-client), CIMD no, public clients allowed, S256.",
+            "sources": [
+              "https://www.jotform.com/developers/mcp/",
+              "https://mcp.jotform.com/.well-known/oauth-protected-resource/mcp",
+              "https://oauth2.jotform.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

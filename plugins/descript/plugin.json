@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "descript",
+  "version": "0.1.0",
+  "description": "Connect to Descript through its official MCP server.",
+  "homepage": "https://www.descript.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "descript",
+      "name": "Descript",
+      "category": "design-and-creative",
+      "website": "https://www.descript.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Descript",
+          "rank": 1592,
+          "category": "design-and-creative",
+          "website": "https://www.descript.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Official remote server with Descript login; discovery 2026-10-08: auth.descript.com advertises DCR and CIMD with S256. Imports and edits use the plan's media minutes and AI credits.",
+            "sources": [
+              "https://help.descript.com/api-and-mcp/mcp-custom",
+              "https://api.descript.com/.well-known/oauth-protected-resource",
+              "https://auth.descript.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

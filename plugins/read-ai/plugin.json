@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "read-ai",
+  "version": "0.1.0",
+  "description": "Connect to Read AI through its official MCP server.",
+  "homepage": "https://www.read.ai",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "read-ai",
+      "name": "Read AI",
+      "category": "productivity",
+      "website": "https://www.read.ai",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Read AI",
+          "rank": 1314,
+          "category": "productivity",
+          "website": "https://www.read.ai",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Read AI runs a remote MCP server for meeting reports and transcripts, in an open beta 'accessible to all users' regardless of plan (a workspace must allow Downloads). Read AI notes some external clients have had sign-in problems. Discovery 2026-10-09: DCR yes (api.read.ai/oauth/register), CIMD no, public clients allowed, no code_challenge_methods advertised.",
+            "sources": [
+              "https://api.read.ai/.well-known/oauth-protected-resource/mcp",
+              "https://authn.read.ai/.well-known/oauth-authorization-server",
+              "https://authn.read.ai/.well-known/openid-configuration",
+              "https://support.read.ai/hc/en-us/articles/49379985941523-Read-AI-API-and-MCP-Overview",
+              "https://support.read.ai/hc/en-us/articles/49381158409491-MCP-Server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

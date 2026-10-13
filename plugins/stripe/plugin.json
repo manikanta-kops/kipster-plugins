@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stripe",
+  "version": "0.1.0",
+  "description": "Connect to Stripe through its official MCP server.",
+  "homepage": "https://stripe.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "stripe",
+      "name": "Stripe",
+      "category": "payments",
+      "website": "https://stripe.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Stripe",
+          "rank": 1426,
+          "category": "payments",
+          "website": "https://stripe.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Stripe's remote MCP signs in with OAuth (or an agent API key the person creates) and covers reads and writes on the account, with human confirmation for refunds and payouts. Discovery 2026-10-08: DCR yes, CIMD no, S256.",
+            "sources": [
+              "https://docs.stripe.com/mcp",
+              "https://mcp.stripe.com/.well-known/oauth-protected-resource",
+              "https://access.stripe.com/.well-known/oauth-authorization-server/mcp"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

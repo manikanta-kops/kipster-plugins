@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "brevo",
+  "version": "0.1.0",
+  "description": "Connect to Brevo through its official MCP server.",
+  "homepage": "https://www.brevo.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "brevo",
+      "name": "Brevo",
+      "category": "marketing-and-email-marketing",
+      "website": "https://www.brevo.com",
+      "signIn": ["dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "free",
+      "products": [
+        {
+          "name": "Brevo",
+          "rank": 1475,
+          "category": "marketing-and-email-marketing",
+          "website": "https://www.brevo.com",
+          "accounts": "yes",
+          "cost": "free",
+          "signIn": "oauth-dcr",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-09",
+            "notes": "Official remote MCP with a combined server and per-module servers (contacts, campaigns and others); the Claude directory listing uses a separate /v1/anthropic/mcp path. Metadata advertises DCR, no CIMD, S256, public clients (none).",
+            "sources": [
+              "https://developers.brevo.com/docs/mcp-protocol",
+              "https://mcp.brevo.com/.well-known/oauth-protected-resource/v1/brevo/mcp",
+              "https://mcp.brevo.com/.well-known/oauth-authorization-server",
+              "https://claude.com/marketplace/connectors/brevo"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

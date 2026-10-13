@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "freepik",
+  "version": "0.1.0",
+  "description": "Connect to Freepik through its official MCP server.",
+  "homepage": "https://www.freepik.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "freepik",
+      "name": "Freepik",
+      "category": "design-and-creative",
+      "website": "https://www.freepik.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Freepik",
+          "rank": 1541,
+          "category": "design-and-creative",
+          "website": "https://www.freepik.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Freepik's API docs (docs.freepik.com) now present the Magnific MCP, which signs in with the person's Magnific account and spends its credits. Metadata advertises both CIMD and DCR, S256 (also plain).",
+            "sources": [
+              "https://docs.freepik.com/modelcontextprotocol",
+              "https://mcp.magnific.com/.well-known/oauth-protected-resource",
+              "https://mcp.magnific.com/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "railway",
+  "version": "0.1.0",
+  "description": "Connect to Railway through its official MCP server.",
+  "homepage": "https://railway.com",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "railway",
+      "name": "Railway",
+      "category": "cloud-and-hosting",
+      "website": "https://railway.com",
+      "signIn": ["cimd", "dcr"],
+      "needsAddress": false,
+      "accountTypes": ["personal", "business"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Railway",
+          "rank": 1693,
+          "category": "cloud-and-hosting",
+          "website": "https://railway.com",
+          "accounts": "yes",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "yes",
+            "checkedOn": "2026-10-08",
+            "notes": "Railway hosts an official MCP server for projects, deployments, environments and variables; Railway bills usage after its trial. Discovery 2026-10-08: DCR yes, CIMD yes, S256.",
+            "sources": [
+              "https://docs.railway.com/ai/mcp-server",
+              "https://mcp.railway.com/.well-known/oauth-protected-resource/mcp",
+              "https://backboard.railway.com/.well-known/oauth-authorization-server",
+              "https://registry.modelcontextprotocol.io/v0/servers?search=railway"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "ok",
+        "signIn": ["dcr", "cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
+    }
+  }
+}

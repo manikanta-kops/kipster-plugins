@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "affinity-crm",
+  "version": "0.1.0",
+  "description": "Connect to Affinity (CRM) through its official MCP server.",
+  "homepage": "https://www.affinity.co",
+  "license": "Apache-2.0",
+  "extensions": {
+    "app.kipster": {
+      "id": "affinity-crm",
+      "name": "Affinity (CRM)",
+      "category": "crm-and-sales",
+      "website": "https://www.affinity.co",
+      "signIn": ["cimd"],
+      "needsAddress": false,
+      "accountTypes": ["business-only"],
+      "cost": "user-paid-plan",
+      "products": [
+        {
+          "name": "Affinity (CRM)",
+          "rank": 1613,
+          "category": "crm-and-sales",
+          "website": "https://www.affinity.co",
+          "accounts": "business-only",
+          "cost": "user-paid-plan",
+          "signIn": "oauth-cimd",
+          "research": {
+            "verified": "partly",
+            "checkedOn": "2026-10-09",
+            "notes": "Hosted MCP supports OAuth or an API key; authorization server advertises CIMD (no DCR), token auth none, S256. Affinity documents OAuth for named clients and API keys for other clients, so CIMD sign-in for Kipster needs a test.",
+            "sources": [
+              "https://developer.affinity.co/pages/mcp/authentication.md",
+              "https://developer.affinity.co/pages/mcp/other-clients.md",
+              "https://login.affinity.co/.well-known/oauth-authorization-server"
+            ]
+          }
+        }
+      ],
+      "tools": {},
+      "probe": {
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
+        "checkedOn": "2026-10-13",
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
+      }
+    }
+  }
+}
