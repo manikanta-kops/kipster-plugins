@@ -1,6 +1,6 @@
 {
   "name": "@kipster/plugins",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Plugins that connect Kipster's kips to the services people use.",
   "license": "Apache-2.0",
@@ -12,6 +12,7 @@
     "dist",
     "plugins",
     "schemas",
+    "test/fixtures/catalogue",
     ".prettierrc.json",
     "README.md",
     "LICENSE",
@@ -22,6 +23,7 @@
   },
   "exports": {
     ".": "./dist/server/server.js",
+    "./fixture": "./dist/fixture/service.js",
     "./package.json": "./package.json"
   },
   "scripts": {

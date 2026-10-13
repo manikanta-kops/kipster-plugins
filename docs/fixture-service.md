@@ -41,3 +41,16 @@ npm run fixture -- --no-dcr --client-metadata-document /tmp/client.json
 The command prints `{"url":...,"mcpUrl":...}` and runs until interrupted. Other
 flags: `--no-cimd` and `--identity <mode>`. The document file's `client_id`
 names the HTTPS URL it stands for.
+
+## Using it from another project
+
+The package exports the fixture for other projects' tests, such as Kipster's,
+with a matching catalogue at `test/fixtures/catalogue`:
+
+```js
+import { startServer } from '@kipster/plugins'
+import { startFixture } from '@kipster/plugins/fixture'
+```
+
+Pass the fixture's URL as `testOnlyBaseUrl` to `startServer`. Never use it
+outside tests.
