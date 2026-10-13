@@ -132,6 +132,7 @@ test('health is open, everything else needs the bearer token, bad Host is refuse
     'sign-in',
     'accounts',
     'mcp',
+    'return-address',
   ])
 })
 
@@ -805,4 +806,58 @@ test('removing an account revokes it at the service and removes the tools of its
     (call._meta?.['app.kipster/resolution'] as { result: string }).result,
     'no-account',
   )
+})
+
+test('a sign-in can return to another address, which forwards the query to /callback', async (t) => {
+  const s = await serve(t)
+  const v1 = await s.api('GET', '/v1')
+  assert.ok(v1.body.capabilities.includes('return-address'))
+  const returnAddress = 'http://localhost:4242/plugins/callback'
+  const started = await s.api('POST', '/v1/plugins/fixture/sign-in', {
+    returnAddress,
+  })
+  assert.equal(started.status, 200, JSON.stringify(started.body))
+  assert.equal(
+    new URL(started.body.authorizationUrl).searchParams.get('redirect_uri'),
+    returnAddress,
+  )
+  const response = await fetch(`${started.body.authorizationUrl}&user=alice`, {
+    redirect: 'manual',
+  })
+  const back = new URL(response.headers.get('location')!)
+  assert.equal(`${back.origin}${back.pathname}`, returnAddress)
+  // What Kipster does at its own address: pass the query to the plugin server.
+  const forwarded = await fetch(`${s.server.url}/callback${back.search}`)
+  assert.equal(forwarded.status, 200, await forwarded.text())
+  const done = await s.api('GET', `/v1/sign-ins/${started.body.id}`)
+  assert.equal(done.body.status, 'completed')
+  assert.equal(done.body.account.label, 'alice@fixture.test')
+
+  for (const bad of [
+    'http://mac-studio.example.ts.net/plugins/callback',
+    'https://mac-studio.example.ts.net/plugins/callback?x=1',
+    'not a url',
+  ]) {
+    const refused = await s.api('POST', '/v1/plugins/fixture/sign-in', {
+      returnAddress: bad,
+    })
+    assert.equal(refused.status, 400, bad)
+    assert.equal(refused.body.error.code, 'invalid-return-address')
+  }
+})
+
+test('CIMD sign-in refuses a return address that is not on this computer', async (t) => {
+  const s = await serve(t, {
+    fixture: {
+      dcr: false,
+      clientMetadata: async (url) =>
+        url === cimdUrl ? clientMetadataDocument(cimdUrl) : undefined,
+    },
+    settings: { clientMetadataUrl: cimdUrl },
+  })
+  const refused = await s.api('POST', '/v1/plugins/fixture/sign-in', {
+    returnAddress: 'https://mac-studio.example.ts.net/plugins/callback',
+  })
+  assert.equal(refused.status, 422)
+  assert.equal(refused.body.error.code, 'loopback-only')
 })

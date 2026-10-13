@@ -24,21 +24,21 @@ JSON in and out. Changes are additive only: new fields, routes and
 `{ "error": { "code", "message" } }`. No response holds a token, client secret
 or other secret value.
 
-| Method and path                           | Body                    | Result                                                                         |
-| ----------------------------------------- | ----------------------- | ------------------------------------------------------------------------------ |
-| `GET /v1`                                 |                         | `{ version: "v1", server: { name, version }, capabilities }`                   |
-| `GET /v1/plugins`                         |                         | `{ plugins: [summary] }`                                                       |
-| `GET /v1/plugins/{id}`                    |                         | `{ plugin: summary + accounts }`                                               |
-| `POST /v1/plugins/{id}/sign-in`           | `{ address? }`          | Sign-in start result                                                           |
-| `GET /v1/sign-ins/{id}`                   |                         | `pending`, `completed` (with `account`, `duplicate`) or `failed` (with `code`) |
-| `PUT /v1/plugins/{id}/default-account`    | `{ account: id\|null }` | `{ plugin, defaultAccount }`                                                   |
-| `DELETE /v1/plugins/{id}/default-account` |                         | Clears the default                                                             |
-| `GET /v1/accounts[?plugin={id}]`          |                         | `{ accounts: [account] }`                                                      |
-| `GET /v1/accounts/{id}`                   |                         | `{ account }`                                                                  |
-| `PATCH /v1/accounts/{id}`                 | `{ label }`             | `{ account }` with the new label                                               |
-| `DELETE /v1/accounts/{id}`                |                         | `{ removed: true, revoked }`; revokes at the service                           |
+| Method and path                           | Body                           | Result                                                                         |
+| ----------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------ |
+| `GET /v1`                                 |                                | `{ version: "v1", server: { name, version }, capabilities }`                   |
+| `GET /v1/plugins`                         |                                | `{ plugins: [summary] }`                                                       |
+| `GET /v1/plugins/{id}`                    |                                | `{ plugin: summary + accounts }`                                               |
+| `POST /v1/plugins/{id}/sign-in`           | `{ address?, returnAddress? }` | Sign-in start result                                                           |
+| `GET /v1/sign-ins/{id}`                   |                                | `pending`, `completed` (with `account`, `duplicate`) or `failed` (with `code`) |
+| `PUT /v1/plugins/{id}/default-account`    | `{ account: id\|null }`        | `{ plugin, defaultAccount }`                                                   |
+| `DELETE /v1/plugins/{id}/default-account` |                                | Clears the default                                                             |
+| `GET /v1/accounts[?plugin={id}]`          |                                | `{ accounts: [account] }`                                                      |
+| `GET /v1/accounts/{id}`                   |                                | `{ account }`                                                                  |
+| `PATCH /v1/accounts/{id}`                 | `{ label }`                    | `{ account }` with the new label                                               |
+| `DELETE /v1/accounts/{id}`                |                                | `{ removed: true, revoked }`; revokes at the service                           |
 
-Capabilities in v1: `plugins`, `sign-in`, `accounts`, `mcp`.
+Capabilities in v1: `plugins`, `sign-in`, `accounts`, `mcp`, `return-address`.
 
 A plugin **summary** has `id`, `name`, `description`, `category`, `website`,
 `signIn`, `available` and `unavailableReason`, `probe` (or `null`),
@@ -49,24 +49,32 @@ A plugin **summary** has `id`, `name`, `description`, `category`, `website`,
 
 Signing in returns `{ status: "redirect", id, method, authorizationUrl,
 serverUrl, expiresAt }`: open `authorizationUrl` in the person's browser, which
-comes back to `/callback`; then read `GET /v1/sign-ins/{id}`. A CIMD-only
+comes back to `/callback`; then read `GET /v1/sign-ins/{id}`.
+
+`returnAddress` replaces the plugin server's own `/callback` for one sign-in.
+Use it when the person's browser reaches the plugin server through another
+address, such as Kipster's own URL on a phone. It must be HTTPS, or HTTP on
+`127.0.0.1` or `localhost`, with no query or fragment. Whatever serves it
+forwards the request's query unchanged to the plugin server's `GET /callback`.
+CIMD sign-ins accept only loopback return addresses, because the published
+client metadata document lists only those (`loopback-only`). A CIMD-only
 service without `KIPSTER_PLUGINS_CLIENT_METADATA_URL` returns
 `{ status: "needs-client-metadata-document" }`. Signing in to a known account
 again is a `duplicate` and reconnects it. See
 [sign-in and accounts](sign-in-and-accounts.md).
 
-| Status | Codes                                                 |
-| ------ | ----------------------------------------------------- |
-| 400    | `invalid-request`, `invalid-label`, `invalid-address` |
-| 401    | `unauthorized`                                        |
-| 403    | `forbidden-host`, `forbidden-origin`                  |
-| 404    | `not-found`, `unknown-plugin`, `unknown-sign-in`      |
-| 405    | `method-not-allowed`                                  |
-| 409    | `plugin-unavailable`                                  |
-| 413    | `too-large`                                           |
-| 422    | `no-sign-in-method`                                   |
-| 500    | `internal`                                            |
-| 502    | `failed` (sign-in discovery or start failed)          |
+| Status | Codes                                                                           |
+| ------ | ------------------------------------------------------------------------------- |
+| 400    | `invalid-request`, `invalid-label`, `invalid-address`, `invalid-return-address` |
+| 401    | `unauthorized`                                                                  |
+| 403    | `forbidden-host`, `forbidden-origin`                                            |
+| 404    | `not-found`, `unknown-plugin`, `unknown-sign-in`                                |
+| 405    | `method-not-allowed`                                                            |
+| 409    | `plugin-unavailable`                                                            |
+| 413    | `too-large`                                                                     |
+| 422    | `no-sign-in-method`, `loopback-only`                                            |
+| 500    | `internal`                                                                      |
+| 502    | `failed` (sign-in discovery or start failed)                                    |
 
 ## MCP endpoint
 
