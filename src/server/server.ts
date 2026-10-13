@@ -100,16 +100,21 @@ export async function startServer(
     50,
     options.catalogueReconcileMs ?? 1000,
   )
-  // The catalogue rescans every second; report each invalid folder once.
+  // The catalogue rescans every second; report each invalid folder once,
+  // until a rescan finds it valid again.
   const reported = new Map<string, string>()
-  catalogue.on('change', (plugins) => {
-    for (const plugin of plugins.values()) reported.delete(plugin.folder)
-    gateway.setPlugins(plugins)
-  })
+  const invalid = new Set<string>()
   catalogue.on('invalid', ({ folder, reason }) => {
+    invalid.add(folder)
     if (reported.get(folder) === reason) return
     reported.set(folder, reason)
     options.log?.(`Catalogue: ${folder}: ${reason}`)
+  })
+  catalogue.on('change', (plugins) => {
+    for (const folder of reported.keys())
+      if (!invalid.has(folder)) reported.delete(folder)
+    invalid.clear()
+    gateway.setPlugins(plugins)
   })
   await catalogue.start()
   const mcp = mcpEndpoint(gateway)

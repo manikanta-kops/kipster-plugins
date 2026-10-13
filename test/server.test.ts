@@ -668,6 +668,8 @@ test('live reload: an added plugin appears, a broken edit keeps the last good ve
   assert.ok(
     (await client.listTools()).tools.some((x) => x.name === 'second__whoami'),
   )
+  // Rescans every 200 ms here; the invalid folder is reported once.
+  assert.equal(s.logs.filter((line) => line.includes(folder)).length, 1)
 
   await rm(folder, { recursive: true })
   await eventually(

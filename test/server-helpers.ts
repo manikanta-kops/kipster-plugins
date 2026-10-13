@@ -35,6 +35,7 @@ export async function serve(
   const catalogue = join(dir, 'catalogue')
   await cp(fixtureCatalogue, catalogue, { recursive: true })
   const home = join(dir, 'home')
+  const logs: string[] = []
   const server = await startServer({
     port: 0,
     home,
@@ -45,6 +46,7 @@ export async function serve(
     env: options.env ?? {},
     listTimeoutMs: options.listTimeoutMs,
     catalogueReconcileMs: 200,
+    log: (line) => logs.push(line),
   })
   t.after(() => server.close())
 
@@ -120,7 +122,7 @@ export async function serve(
     t.after(() => client.close())
     return client
   }
-  return { fixture, server, catalogue, home, api, consent, signInAs, mcp }
+  return { fixture, server, catalogue, home, logs, api, consent, signInAs, mcp }
 }
 // The text of a tool result's content items.
 export const texts = (result: { content?: unknown }) =>
