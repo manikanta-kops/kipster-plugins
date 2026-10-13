@@ -41,6 +41,15 @@ export interface KipsterData {
   verification?: 'probe' | 'account'
   probe?: Probe
   tools: Record<string, 'read' | 'write'>
+  identity?: IdentityTool
+}
+// Optional tool that reports who is signed in. id and label are dotted paths
+// into the tool's structured result (or its JSON text content).
+export interface IdentityTool {
+  tool: string
+  arguments?: Record<string, unknown>
+  id: string
+  label?: string
 }
 export interface Manifest {
   $schema: string

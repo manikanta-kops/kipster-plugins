@@ -9,17 +9,18 @@ and the semantic checks in `src/catalogue/validate.ts`; loading never fetches sc
 `plugin.json` declares the canonical Agent Plugins `$schema`, `name` (the id),
 `description`, and `extensions["app.kipster"]`. The extension contains:
 
-| Field                           | Meaning                                                                                                                                                              |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`, `name`                    | Stable id and display name. Both must be unique in a catalogue; display names are compared case-insensitively.                                                       |
-| `category`, `website`           | Service category and HTTPS website.                                                                                                                                  |
-| `signIn`                        | Supported methods: `dcr`, `cimd`, or both.                                                                                                                           |
-| `needsAddress`, `addressPrompt` | A templated host needs the person's address and a short prompt. Concrete URLs have no prompt.                                                                        |
-| `accountTypes`, `cost`          | `personal`, `business`, `business-only`, or `unknown`; `free` or `user-paid-plan`. Research `yes` maps to personal and business; original values remain in products. |
-| `products`                      | Every covered CSV row: name, rank, category, website, original accounts/cost/sign-in, and `research` with verified, checkedOn, notes and sources.                    |
-| `tools`                         | Reviewed tool names mapped to `read` or `write`. Empty by default; every unreviewed tool counts as write.                                                            |
-| `verification`                  | Absent until an `ok` probe, then `probe`; `account` is reserved for an owner-run account test. Anything below account means not yet tested with a real account.      |
-| `probe`                         | Latest result, observed `signIn` array, `checkedOn` date, and a one-line reason without secrets.                                                                     |
+| Field                           | Meaning                                                                                                                                                                      |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`, `name`                    | Stable id and display name. Both must be unique in a catalogue; display names are compared case-insensitively.                                                               |
+| `category`, `website`           | Service category and HTTPS website.                                                                                                                                          |
+| `signIn`                        | Supported methods: `dcr`, `cimd`, or both.                                                                                                                                   |
+| `needsAddress`, `addressPrompt` | A templated host needs the person's address and a short prompt. Concrete URLs have no prompt.                                                                                |
+| `accountTypes`, `cost`          | `personal`, `business`, `business-only`, or `unknown`; `free` or `user-paid-plan`. Research `yes` maps to personal and business; original values remain in products.         |
+| `products`                      | Every covered CSV row: name, rank, category, website, original accounts/cost/sign-in, and `research` with verified, checkedOn, notes and sources.                            |
+| `tools`                         | Reviewed tool names mapped to `read` or `write`. Empty by default; every unreviewed tool counts as write.                                                                    |
+| `verification`                  | Absent until an `ok` probe, then `probe`; `account` is reserved for an owner-run account test. Anything below account means not yet tested with a real account.              |
+| `probe`                         | Latest result, observed `signIn` array, `checkedOn` date, and a one-line reason without secrets.                                                                             |
+| `identity`                      | Optional `{ tool, arguments?, id, label? }`: a tool reporting who is signed in; `id` and `label` are dotted paths into its result. It must be reviewed as `read` in `tools`. |
 
 Ids contain lowercase letters, digits and single hyphens, with at most 32
 characters, and match the folder, manifest name and MCP server key.

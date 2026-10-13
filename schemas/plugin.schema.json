@@ -225,6 +225,28 @@
               "additionalProperties": {
                 "enum": ["read", "write"]
               }
+            },
+            "identity": {
+              "type": "object",
+              "properties": {
+                "tool": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "arguments": {
+                  "type": "object"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": ["tool", "id"],
+              "additionalProperties": false
             }
           },
           "required": [
