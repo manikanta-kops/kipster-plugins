@@ -39,10 +39,10 @@
       ],
       "tools": {},
       "probe": {
-        "result": "error",
-        "signIn": [],
+        "result": "needs-client-metadata-document",
+        "signIn": ["cimd"],
         "checkedOn": "2026-10-13",
-        "reason": "Protected resource metadata does not match the MCP endpoint"
+        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
       }
     }
   }

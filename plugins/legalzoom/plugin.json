@@ -42,7 +42,7 @@
         "result": "error",
         "signIn": [],
         "checkedOn": "2026-10-13",
-        "reason": "Expected HTTP 401; received HTTP 200"
+        "reason": "Authorization metadata issuer does not match"
       }
     }
   }

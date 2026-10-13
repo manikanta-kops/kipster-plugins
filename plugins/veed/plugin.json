@@ -38,11 +38,12 @@
       ],
       "tools": {},
       "probe": {
-        "result": "error",
-        "signIn": [],
+        "result": "ok",
+        "signIn": ["dcr"],
         "checkedOn": "2026-10-13",
-        "reason": "Discovery returned HTTP 301"
-      }
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested (authorization metadata redirects to https://www.veed.io/.well-known/oauth-authorization-server)"
+      },
+      "verification": "probe"
     }
   }
 }
