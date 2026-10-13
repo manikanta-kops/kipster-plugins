@@ -61,6 +61,20 @@ plan is in [docs/plan.md](docs/plan.md).
 3. A regular check that every listed service's MCP server still answers.
 4. Later: GitHub, listeners, and services that need more setup.
 
+## Development
+
+Use Node from `.nvmrc`, then `npm ci` to install locked dependencies.
+
+- `npm run check`: formatting, TypeScript, all tests, then catalogue validation.
+- `npm test`: deterministic tests on temporary folders and loopback stubs.
+- `npm run import -- Linear Notion`: generate configurations from the research CSV.
+- `npm run probe -- linear notion`: read-only live discovery, without sign-in.
+- `npm run validate`: validate every catalogue folder.
+- `npm run format`: format repository files.
+
+See [the plugin format](docs/plugin-format.md) for batch imports and probe
+results, and [testing](.kipster/context/testing.md) for verification levels.
+
 ## Status
 
 Under construction. Not yet a release.
