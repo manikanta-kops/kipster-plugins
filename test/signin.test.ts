@@ -47,6 +47,31 @@ test('sign-in through DCR uses PKCE S256, a 127.0.0.1 return address and one reg
   assert.equal(s.fixture.stats.authorizationCodeGrants, 2)
 })
 
+test('a sign-in stays pending while its code is exchanged', async (t) => {
+  const s = await setup(t)
+  let release!: () => void
+  let reached!: () => void
+  const gate = new Promise<void>((resolve) => (release = resolve))
+  const exchanging = new Promise<void>((resolve) => (reached = resolve))
+  const save = s.accounts.save.bind(s.accounts)
+  s.accounts.save = async (input) => {
+    reached()
+    await gate
+    return save(input)
+  }
+  const started = await s.signIn.start(s.plugin)
+  if (started.status !== 'redirect') throw new Error('expected a redirect')
+  const completing = s.signIn.complete(
+    await s.authorize(started.authorizationUrl, 'alice'),
+  )
+  await exchanging
+  const during = s.signIn.status(started.id)
+  release()
+  await completing
+  assert.deepEqual(during, { status: 'pending', plugin: 'linear' })
+  assert.equal(s.signIn.status(started.id).status, 'completed')
+})
+
 test('sign-in through CIMD with DCR switched off at the fixture', async (t) => {
   const s = await setup(t, {
     fixture: {
