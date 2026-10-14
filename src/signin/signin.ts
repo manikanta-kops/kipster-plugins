@@ -80,7 +80,13 @@ interface Pending {
   serverUrl: string
   connectUrl: string
   provider: SessionProvider
-  expiresAt: number
+}
+interface Entry {
+  status: SignInStatus
+  // Kept until the browser returns with this sign-in's state.
+  pending?: Pending
+  // When a waiting sign-in expires, or when a settled one is forgotten.
+  until: number
 }
 // One OAuthClientProvider per pending sign-in; the SDK runs discovery, DCR or
 // CIMD, PKCE S256, the code exchange and RFC 9207 issuer checks through it.
@@ -204,11 +210,7 @@ export class SignInManager {
   readonly #options: SignInOptions
   readonly #fetch: FetchLike
   readonly #now: () => number
-  readonly #pending = new Map<string, Pending>()
-  readonly #finished = new Map<
-    string,
-    { status: SignInStatus; until: number }
-  >()
+  readonly #signIns = new Map<string, Entry>()
   readonly redirectUrl: string
   constructor(options: SignInOptions) {
     this.#options = options
@@ -220,21 +222,20 @@ export class SignInManager {
     return this.#options.pendingTtlMs ?? 10 * 60_000
   }
   #sweep() {
-    const now = this.#now()
-    for (const [state, pending] of this.#pending)
-      if (pending.expiresAt <= now) {
-        this.#pending.delete(state)
-        this.#finish(pending.id, {
-          status: 'failed',
-          plugin: data(pending.plugin).id,
-          code: 'expired',
-        })
-      }
-    for (const [id, entry] of this.#finished)
-      if (entry.until <= now) this.#finished.delete(id)
+    for (const [id, entry] of this.#signIns) {
+      if (entry.until > this.#now()) continue
+      if (entry.pending) this.#expire(entry, entry.pending)
+      else this.#signIns.delete(id)
+    }
   }
-  #finish(id: string, status: SignInStatus) {
-    this.#finished.set(id, { status, until: this.#now() + this.#ttl })
+  #settle(entry: Entry, status: SignInStatus) {
+    entry.pending = undefined
+    entry.status = status
+    entry.until = this.#now() + this.#ttl
+  }
+  #expire(entry: Entry, pending: Pending) {
+    const plugin = data(pending.plugin).id
+    this.#settle(entry, { status: 'failed', plugin, code: 'expired' })
   }
   // Starts a sign-in: discovery, then DCR when offered, otherwise CIMD when
   // the client metadata URL is set. Returns the URL to open in the browser.
@@ -328,14 +329,10 @@ export class SignInManager {
       )
     const id = randomUUID()
     const expiresAt = this.#now() + this.#ttl
-    this.#pending.set(state, {
-      id,
-      plugin,
-      state,
-      serverUrl,
-      connectUrl,
-      provider,
-      expiresAt,
+    this.#signIns.set(id, {
+      status: { status: 'pending', plugin: ext.id },
+      pending: { id, plugin, state, serverUrl, connectUrl, provider },
+      until: expiresAt,
     })
     return {
       status: 'redirect',
@@ -348,42 +345,38 @@ export class SignInManager {
   }
   status(id: string): SignInStatus {
     this.#sweep()
-    for (const pending of this.#pending.values())
-      if (pending.id === id)
-        return { status: 'pending', plugin: data(pending.plugin).id }
-    return this.#finished.get(id)?.status ?? { status: 'unknown' }
+    return this.#signIns.get(id)?.status ?? { status: 'unknown' }
   }
   // Completes a sign-in from the URL the browser was sent back to.
   async complete(callbackUrl: string | URL): Promise<Completed> {
     const url = new URL(callbackUrl, this.redirectUrl)
-    const state = url.searchParams.get('state') ?? ''
-    const pending = this.#pending.get(state)
-    this.#pending.delete(state)
-    const plugin = pending && data(pending.plugin).id
-    if (pending && pending.expiresAt <= this.#now()) {
-      this.#finish(pending.id, {
-        status: 'failed',
-        plugin: plugin!,
-        code: 'expired',
-      })
-      throw new SignInError('expired', 'This sign-in has expired')
-    }
-    this.#sweep()
-    if (!pending || !plugin)
+    const state = url.searchParams.get('state')
+    const entry = [...this.#signIns.values()].find(
+      (candidate) => candidate.pending?.state === state,
+    )
+    const pending = entry?.pending
+    if (!entry || !pending)
       throw new SignInError(
         'unknown-sign-in',
         'This sign-in is unknown or has expired',
       )
+    if (entry.until <= this.#now()) {
+      this.#expire(entry, pending)
+      throw new SignInError('expired', 'This sign-in has expired')
+    }
+    // Single use. The status stays pending while the code is exchanged.
+    this.#settle(entry, entry.status)
     try {
       const result = await this.#exchange(pending, url)
-      this.#finish(pending.id, { status: 'completed', result })
+      this.#settle(entry, { status: 'completed', result })
       return result
     } catch (error) {
       const failure =
         error instanceof SignInError
           ? error
           : new SignInError('failed', 'Sign-in failed')
-      this.#finish(pending.id, { status: 'failed', plugin, code: failure.code })
+      const plugin = data(pending.plugin).id
+      this.#settle(entry, { status: 'failed', plugin, code: failure.code })
       throw failure
     }
   }
