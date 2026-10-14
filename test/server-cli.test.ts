@@ -16,7 +16,6 @@ function start(
     env: {
       ...process.env,
       KIPSTER_PLUGINS_TOKEN: '',
-      KIPSTER_PLUGINS_CLIENT_METADATA_URL: '',
     },
   })
   t.after(() => {

@@ -42,7 +42,7 @@ export async function serve(
     catalogue,
     keyBackend: fileKeyBackend(home),
     testOnlyBaseUrl: fixture.url,
-    settings: options.settings ?? {},
+    settings: options.settings,
     env: options.env ?? {},
     listTimeoutMs: options.listTimeoutMs,
     catalogueReconcileMs: 200,

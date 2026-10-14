@@ -4,6 +4,10 @@ import { parseArgs } from 'node:util'
 import { KeychainKeyBackend } from '../secrets/store.ts'
 import { fileKeyBackend } from '../state/home.ts'
 import { startServer } from './server.ts'
+import {
+  clientMetadataUrl,
+  defaultClientMetadataUrl,
+} from '../state/settings.ts'
 
 try {
   const { values } = parseArgs({
@@ -12,6 +16,7 @@ try {
       home: { type: 'string' },
       catalogue: { type: 'string' },
       'key-backend': { type: 'string' },
+      'client-metadata-url': { type: 'string' },
       'test-only-base-url': { type: 'string' },
     },
   })
@@ -34,6 +39,11 @@ try {
       backend === 'file'
         ? fileKeyBackend(values.home)
         : new KeychainKeyBackend(),
+    settings: {
+      clientMetadataUrl: clientMetadataUrl(
+        values['client-metadata-url'] ?? defaultClientMetadataUrl,
+      ),
+    },
     testOnlyBaseUrl: values['test-only-base-url'],
     log: (line) => console.error(line),
   })

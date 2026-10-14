@@ -6,21 +6,17 @@ Every plugin in `plugins/` was probed on 2026-10-13 with the read-only live prob
 npm run probe -- --report /tmp/probe.md
 ```
 
-Vendors change, so a later run can differ. No plugin has been tested with a real account.
+Vendors change, so a later run can differ. Only `todoist` has been tested with a real account.
 
 ## Counts
 
-| Result                           | Plugins |
-| -------------------------------- | ------: |
-| `ok`                             |     230 |
-| `needs-address`                  |       6 |
-| `needs-client-metadata-document` |      17 |
-| `sign-in-changed`                |       2 |
-| `unreachable`                    |       1 |
-| `error`                          |      15 |
-| Total                            |     271 |
+| Result          | Plugins |
+| --------------- | ------: |
+| `ok`            |     247 |
+| `needs-address` |       6 |
+| Total           |     253 |
 
-236 plugins are available: `ok` and `needs-address`. The other 35 stay in the catalogue, unavailable with their reason.
+All 253 plugins are available. Probed on 2026-10-14 for the 20 changed below.
 
 ## Plugins that are not ok
 
@@ -37,66 +33,30 @@ Available. The person enters their own server address when connecting.
 | `metabase`       | Metabase       | An instance or account MCP address is required when connecting |
 | `retool`         | Retool         | An instance or account MCP address is required when connecting |
 
-### `needs-client-metadata-document` (17)
+## Sign-in with Kipster's client metadata document
 
-These services sign in only with a client ID metadata document. Setting `KIPSTER_PLUGINS_CLIENT_METADATA_URL` to a public HTTPS client metadata document unblocks them.
+These services sign in only with a client ID metadata document (CIMD), so they read Kipster's at `https://kipster.app/oauth/client-metadata.json`. It lists only loopback return addresses, so they connect only on the computer running Kipster: `affinity-crm`, `aircall`, `binance`, `bubble`, `elevenlabs`, `hubstaff`, `justworks`, `luma`, `nimble`, `relay`, `seeking-alpha`, `shop`, `softr`, `tableau`.
 
-| Id              | Name           | Reason                                            |
-| --------------- | -------------- | ------------------------------------------------- |
-| `affinity-crm`  | Affinity (CRM) | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `aircall`       | Aircall        | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `binance`       | Binance        | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `bubble`        | Bubble         | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `crowdstrike`   | CrowdStrike    | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `hubstaff`      | Hubstaff       | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `ironclad`      | Ironclad       | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `justworks`     | Justworks      | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `luma`          | Luma           | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `nimble`        | Nimble         | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `public`        | Public         | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `relay`         | Relay          | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `seeking-alpha` | Seeking Alpha  | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `shop`          | Shop           | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `softr`         | Softr          | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `tableau`       | Tableau        | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
-| `unsplash`      | Unsplash       | CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL |
+## Addresses that moved
 
-### `sign-in-changed` (2)
+`manus` (`https://mcp.manus.im/mcp`), `tl-dv` (`https://mcp.tldv.io/mcp`), `new-relic` (`https://mcp.newrelic.com/mcp/`) and `elevenlabs` (`https://api.us.elevenlabs.io/v1/mcp`).
 
-The authorization server does not advertise S256 PKCE, which sign-in requires. They stay unavailable until it does.
+## Removed
 
-| Id      | Name  | Reason                                            |
-| ------- | ----- | ------------------------------------------------- |
-| `homey` | Homey | Authorization server does not advertise S256 PKCE |
-| `paytm` | Paytm | Authorization server does not advertise S256 PKCE |
+Removed on 2026-10-14 because sign-in cannot work today. Their research rows stay in `docs/research/class-a-services.csv`.
 
-### `unreachable` (1)
-
-The service failed on the first run and again on a retry a few minutes later. A later probe may succeed.
-
-| Id          | Name      | Reason                                         |
-| ----------- | --------- | ---------------------------------------------- |
-| `plausible` | Plausible | Service returned HTTP 5xx after three attempts |
-
-### `error` (15)
-
-| Id               | Name           | Reason                                                      |
-| ---------------- | -------------- | ----------------------------------------------------------- |
-| `adobe-creative` | Adobe Creative | Expected HTTP 401; received HTTP 403                        |
-| `base`           | Base           | No discovery metadata was found                             |
-| `coros`          | COROS          | Protected resource metadata does not match the MCP endpoint |
-| `elevenlabs`     | ElevenLabs     | Protected resource metadata does not match the MCP endpoint |
-| `genspark`       | Genspark       | Expected HTTP 401; received HTTP 403                        |
-| `keap`           | Keap           | Authorization metadata issuer does not match                |
-| `legalzoom`      | LegalZoom      | Authorization metadata issuer does not match                |
-| `manus`          | Manus          | Expected HTTP 401; received HTTP 404                        |
-| `new-relic`      | New Relic      | Protected resource metadata does not match the MCP endpoint |
-| `omnisend`       | Omnisend       | Authorization metadata issuer does not match                |
-| `rappi`          | Rappi          | Discovery returned HTTP 403                                 |
-| `slab`           | Slab           | Expected HTTP 401; received HTTP 400                        |
-| `sprout-social`  | Sprout Social  | Authorization metadata issuer does not match                |
-| `stack-overflow` | Stack Overflow | No discovery metadata was found                             |
-| `tl-dv`          | tl;dv          | Expected HTTP 401; received HTTP 404                        |
+| Id                                                 | Reason                                                                        |
+| -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `crowdstrike`, `ironclad`, `public`                | Refuse Kipster's client metadata document (not a trusted client)              |
+| `unsplash`                                         | Its authorization endpoint rejects client metadata documents (unknown client) |
+| `homey`                                            | Authorization server does not advertise S256 PKCE                             |
+| `base`, `paytm`, `sprout-social`, `stack-overflow` | No protected resource metadata                                                |
+| `keap`, `omnisend`, `rappi`                        | Authorization metadata issuer does not match                                  |
+| `adobe-creative`, `genspark`                       | MCP endpoint refuses requests (HTTP 403, bot check)                           |
+| `legalzoom`                                        | No sign-in at all                                                             |
+| `plausible`                                        | MCP endpoint answers HTTP 501                                                 |
+| `slab`                                             | MCP endpoint answers HTTP 400 without a client                                |
+| `coros`                                            | One address per region; its metadata names the regional server                |
 
 ## Sign-in methods that differ from research
 
@@ -106,7 +66,7 @@ The service failed on the first run and again on a retry a few minutes later. A 
 | ------------ | --------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `oauth-cimd` | `cimd`, `dcr`   | `dcr`, `cimd`  | `airtable`, `any-do`, `apify`, `atlassian`, `basecamp`, `birdeye`, `classdojo`, `clerk`, `cloudflare`, `context7`, `datacamp`, `deepl`, `descript`, `etoro`, `exa`, `expo`, `firecrawl`, `fireflies-ai`, `float`, `folk`, `freepik`, `glide`, `grafana`, `granola`, `have-i-been-pwned`, `heygen`, `honeycomb`, `hugging-face`, `keepa`, `klaviyo`, `linear`, `linktree`, `lovable`, `lucid`, `midjourney`, `mural`, `notion`, `nuclino`, `ourgroceries`, `pcloud`, `photoroom`, `picsart`, `posthog`, `railway`, `recurly`, `remote`, `resend`, `roam-research`, `sentry`, `slite`, `smartsuite`, `sonos`, `suno`, `sunsama`, `superhuman`, `synthesia`, `tana`, `tavily`, `todoist`, `trello`, `turkish-airlines`, `turso`, `typeform`, `typefully`, `unbounce`, `upwork`, `wispr-flow` |
 | `oauth-dcr`  | `cimd`, `dcr`   | `dcr`, `cimd`  | `monday-com`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `oauth-cimd` | `cimd`, `dcr`   | none           | `tl-dv`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `oauth-cimd` | `cimd`, `dcr`   | `dcr`, `cimd`  | `tl-dv`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ## Needs an owner account test
 

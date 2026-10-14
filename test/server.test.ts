@@ -10,7 +10,10 @@ import { startServer } from '../src/server/server.ts'
 import { requireCatalogue } from '../src/catalogue/validate.ts'
 import { probePlugin } from '../src/probe/probe.ts'
 import { fileKeyBackend } from '../src/state/home.ts'
-import { clientMetadataDocument } from '../src/state/settings.ts'
+import {
+  clientMetadataDocument,
+  defaultClientMetadataUrl,
+} from '../src/state/settings.ts'
 import { cimdUrl } from './signin-helpers.ts'
 import { eventually, fixtureCatalogue, serve, texts } from './server-helpers.ts'
 import { temporary } from './helpers.ts'
@@ -274,7 +277,7 @@ test('sign-in through the control API with DCR, two accounts, a duplicate, a lab
   )
 })
 
-test('sign-in through the control API with CIMD; without the URL it needs a client metadata document', async (t) => {
+test("sign-in through the control API with CIMD: Kipster's document by default, another URL when set, none when unset", async (t) => {
   const s = await serve(t, {
     fixture: {
       dcr: false,
@@ -295,7 +298,14 @@ test('sign-in through the control API with CIMD; without the URL it needs a clie
   assert.equal(s.fixture.stats.registrations, 0)
   assert.ok(s.fixture.stats.clientMetadataFetches >= 1)
 
-  const plain = await serve(t, { fixture: { dcr: false } })
+  const builtIn = await serve(t, { fixture: { dcr: false } })
+  const kipster = await builtIn.api('POST', '/v1/plugins/fixture/sign-in', {})
+  assert.equal(
+    new URL(kipster.body.authorizationUrl).searchParams.get('client_id'),
+    defaultClientMetadataUrl,
+  )
+
+  const plain = await serve(t, { fixture: { dcr: false }, settings: {} })
   const needs = await plain.api('POST', '/v1/plugins/fixture/sign-in', {})
   assert.equal(needs.status, 200)
   assert.deepEqual(needs.body, { status: 'needs-client-metadata-document' })

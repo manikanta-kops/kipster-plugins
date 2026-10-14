@@ -6,7 +6,11 @@ import type { KeyBackend } from '../secrets/store.ts'
 import { SignInManager } from '../signin/signin.ts'
 import { guardedFetch, testOnlyOrigin } from '../signin/fetch.ts'
 import { openHome } from '../state/home.ts'
-import { callbackPath, loadSettings, type Settings } from '../state/settings.ts'
+import {
+  callbackPath,
+  defaultClientMetadataUrl,
+  type Settings,
+} from '../state/settings.ts'
 import { ApiError, control, sendError, sendJson } from './control.ts'
 import { Gateway } from './gateway.ts'
 import { mcpEndpoint } from './mcp.ts'
@@ -56,7 +60,9 @@ export async function startServer(
   options: ServeOptions,
 ): Promise<PluginServer> {
   if (options.testOnlyBaseUrl) testOnlyOrigin(options.testOnlyBaseUrl)
-  const settings = options.settings ?? loadSettings(options.env)
+  const settings = options.settings ?? {
+    clientMetadataUrl: defaultClientMetadataUrl,
+  }
   const home = await openHome(options.home, { keyBackend: options.keyBackend })
   let token: string
   try {

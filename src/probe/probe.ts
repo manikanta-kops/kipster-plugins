@@ -362,7 +362,7 @@ export async function probePlugin(
     )
       return result(
         'needs-client-metadata-document',
-        'CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL',
+        'CIMD requires a client metadata document URL',
       )
     return result(
       'ok',

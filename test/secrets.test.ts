@@ -12,7 +12,8 @@ import {
 } from '../src/state/home.ts'
 import {
   clientMetadataDocument,
-  loadSettings,
+  clientMetadataUrl,
+  defaultClientMetadataUrl,
   returnAddress,
 } from '../src/state/settings.ts'
 import { temporary } from './helpers.ts'
@@ -149,13 +150,10 @@ test('keychain failures never echo command output and can be retried', async () 
   assert.throws(() => new KeychainKeyBackend({ service: 'a b' }))
 })
 
-test('settings: client metadata URL is HTTPS only and unset by default', () => {
-  assert.deepEqual(loadSettings({}), {})
-  assert.deepEqual(
-    loadSettings({
-      KIPSTER_PLUGINS_CLIENT_METADATA_URL: 'https://k.example/c.json',
-    }),
-    { clientMetadataUrl: 'https://k.example/c.json' },
+test('settings: client metadata URL is HTTPS only; the default document is the one kipster.app publishes', () => {
+  assert.equal(
+    clientMetadataUrl('https://k.example/c.json'),
+    'https://k.example/c.json',
   )
   for (const bad of [
     'http://k.example/c.json',
@@ -164,13 +162,26 @@ test('settings: client metadata URL is HTTPS only and unset by default', () => {
     'https://k.example/c.json#x',
     'not a url',
   ])
-    assert.throws(() =>
-      loadSettings({ KIPSTER_PLUGINS_CLIENT_METADATA_URL: bad }),
-    )
+    assert.throws(() => clientMetadataUrl(bad))
   assert.equal(returnAddress(8123), 'http://127.0.0.1:8123/callback')
   assert.throws(() => returnAddress(0))
-  const doc = clientMetadataDocument('https://k.example/c.json')
-  assert.equal(doc.client_id, 'https://k.example/c.json')
-  assert.deepEqual(doc.redirect_uris, ['http://127.0.0.1/callback'])
-  assert.equal(doc.token_endpoint_auth_method, 'none')
+  // https://kipster.app/oauth/client-metadata.json must stay equal to this.
+  assert.deepEqual(clientMetadataDocument(defaultClientMetadataUrl), {
+    client_id: 'https://kipster.app/oauth/client-metadata.json',
+    client_name: 'Kipster',
+    client_uri: 'https://kipster.app',
+    logo_uri: 'https://kipster.app/oauth/logo.png',
+    redirect_uris: [
+      'http://127.0.0.1/plugins/callback',
+      'http://localhost/plugins/callback',
+      'http://127.0.0.1:43120/plugins/callback',
+      'http://localhost:43120/plugins/callback',
+      'http://127.0.0.1/callback',
+      'http://localhost/callback',
+    ],
+    grant_types: ['authorization_code', 'refresh_token'],
+    response_types: ['code'],
+    token_endpoint_auth_method: 'none',
+    application_type: 'native',
+  })
 })

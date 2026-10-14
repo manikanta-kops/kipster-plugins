@@ -38,11 +38,12 @@
       ],
       "tools": {},
       "probe": {
-        "result": "needs-client-metadata-document",
+        "result": "ok",
         "signIn": ["cimd"],
-        "checkedOn": "2026-10-13",
-        "reason": "CIMD requires KIPSTER_PLUGINS_CLIENT_METADATA_URL"
-      }
+        "checkedOn": "2026-10-14",
+        "reason": "HTTP 401, sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
     }
   }
 }

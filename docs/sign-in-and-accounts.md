@@ -12,14 +12,16 @@ folder is always passed explicitly; nothing defaults to a real home. Migrations
 are an append-only list applied in order through `PRAGMA user_version`; a
 database from a newer server is refused.
 
-`loadSettings(env)` in `src/state/settings.ts` reads
-`KIPSTER_PLUGINS_CLIENT_METADATA_URL`: unset by default, otherwise an HTTPS URL
-with a path and no credentials or fragment. `returnAddress(port)` is
+`Settings` in `src/state/settings.ts` holds the client metadata document URL:
+`defaultClientMetadataUrl`, `https://kipster.app/oauth/client-metadata.json`,
+unless `serve --client-metadata-url` names another HTTPS URL with a path and no
+credentials or fragment. `returnAddress(port)` is
 `http://127.0.0.1:<port>/callback`, the default return address; a sign-in can
-use another one (see the control API's `returnAddress`). `clientMetadataDocument(url)` returns the
-JSON to publish at that URL. It lists `http://127.0.0.1/callback`, so CIMD
-works only where the service matches loopback redirect URIs on any port, as
-RFC 8252 requires; services without that need DCR.
+use another one (see the control API's `returnAddress`).
+`clientMetadataDocument(url)` returns the JSON to publish at that URL; kipster.app
+publishes it for the default. It lists only loopback return addresses: this
+server's `/callback` and Kipster Core's `/plugins/callback`, on any port as RFC
+8252 requires, and on Core's default port 43120 for services that match exactly.
 
 ## Secret store
 

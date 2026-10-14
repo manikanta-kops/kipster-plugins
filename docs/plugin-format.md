@@ -77,14 +77,14 @@ well-known paths, never reads the body and applies the same checks. Like the MCP
 SDK sign-in, it accepts a resource on the endpoint's origin whose path is a
 prefix of the endpoint path, such as the origin itself.
 
-| Result                           | Meaning                                                                                                                                       |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ok`                             | 401 (or anonymous 2xx), recorded methods and S256 confirmed. Sets verification to probe.                                                      |
-| `sign-in-changed`                | Methods differ, or S256 is absent. Review the observed methods before updating signIn; original research remains intact.                      |
-| `needs-address`                  | Template URL; sends nothing. Available, because connecting will ask for the address.                                                          |
-| `needs-client-metadata-document` | CIMD only, with matching recorded methods; set `KIPSTER_PLUGINS_CLIENT_METADATA_URL` to an HTTPS client metadata document URL. Default unset. |
-| `unreachable`                    | Connection, DNS, TLS, timeout or HTTP 5xx after three attempts.                                                                               |
-| `error`                          | Unexpected HTTP response, missing/invalid metadata (also after anonymous 2xx), identity mismatch or unsafe discovery URL.                     |
+| Result                           | Meaning                                                                                                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ok`                             | 401 (or anonymous 2xx), recorded methods and S256 confirmed. Sets verification to probe.                                                                             |
+| `sign-in-changed`                | Methods differ, or S256 is absent. Review the observed methods before updating signIn; original research remains intact.                                             |
+| `needs-address`                  | Template URL; sends nothing. Available, because connecting will ask for the address.                                                                                 |
+| `needs-client-metadata-document` | CIMD only, with matching recorded methods, and the probe ran without a client metadata document URL. It uses Kipster's unless `--client-metadata-url` names another. |
+| `unreachable`                    | Connection, DNS, TLS, timeout or HTTP 5xx after three attempts.                                                                                                      |
+| `error`                          | Unexpected HTTP response, missing/invalid metadata (also after anonymous 2xx), identity mismatch or unsafe discovery URL.                                            |
 
 Availability is derived: unprobed, `ok` and `needs-address` entries are available;
 all other probe results stay in the catalogue, unavailable with their reason.

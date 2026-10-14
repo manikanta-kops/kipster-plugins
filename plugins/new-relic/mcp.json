@@ -3,7 +3,7 @@
   "mcpServers": {
     "new-relic": {
       "type": "streamable-http",
-      "url": "https://mcp.newrelic.com/mcp"
+      "url": "https://mcp.newrelic.com/mcp/"
     }
   }
 }
