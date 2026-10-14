@@ -3,12 +3,14 @@ import { writeFile } from 'node:fs/promises'
 import { requireCatalogue, secureUrl } from '../catalogue/validate.ts'
 import { probeCatalogue, report } from './probe.ts'
 import { data } from '../catalogue/types.ts'
+import { defaultClientMetadataUrl } from '../state/settings.ts'
 try {
   const { values, positionals } = parseArgs({
     allowPositionals: true,
     options: {
       catalogue: { type: 'string' },
       report: { type: 'string' },
+      'client-metadata-url': { type: 'string' },
       'test-only-base-url': { type: 'string' },
     },
   })
@@ -17,8 +19,8 @@ try {
     if (!plugins.some((p) => data(p).id === id))
       throw new Error(`Unknown plugin id: ${id}`)
   const clientMetadataUrl =
-    process.env.KIPSTER_PLUGINS_CLIENT_METADATA_URL || undefined
-  if (clientMetadataUrl) secureUrl(clientMetadataUrl)
+    values['client-metadata-url'] ?? defaultClientMetadataUrl
+  secureUrl(clientMetadataUrl)
   const results = await probeCatalogue(
     positionals.length
       ? plugins.filter((p) => positionals.includes(data(p).id))

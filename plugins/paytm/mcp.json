@@ -1,9 +1,0 @@
-{
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
-  "mcpServers": {
-    "paytm": {
-      "type": "streamable-http",
-      "url": "https://mcp.paytmpayments.com/mcp"
-    }
-  }
-}

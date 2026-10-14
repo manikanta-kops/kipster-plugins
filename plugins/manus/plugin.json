@@ -41,11 +41,12 @@
       ],
       "tools": {},
       "probe": {
-        "result": "error",
-        "signIn": [],
-        "checkedOn": "2026-10-13",
-        "reason": "Expected HTTP 401; received HTTP 404"
-      }
+        "result": "ok",
+        "signIn": ["dcr"],
+        "checkedOn": "2026-10-14",
+        "reason": "Anonymous access allowed; OAuth sign-in methods and S256 PKCE confirmed; no account tested"
+      },
+      "verification": "probe"
     }
   }
 }

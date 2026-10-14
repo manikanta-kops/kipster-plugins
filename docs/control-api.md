@@ -57,9 +57,9 @@ address, such as Kipster's own URL on a phone. It must be HTTPS, or HTTP on
 `127.0.0.1` or `localhost`, with no query or fragment. Whatever serves it
 forwards the request's query unchanged to the plugin server's `GET /callback`.
 CIMD sign-ins accept only loopback return addresses, because the published
-client metadata document lists only those (`loopback-only`). A CIMD-only
-service without `KIPSTER_PLUGINS_CLIENT_METADATA_URL` returns
-`{ status: "needs-client-metadata-document" }`. Signing in to a known account
+client metadata document lists only those (`loopback-only`). A server started
+without a client metadata document URL answers a CIMD-only service with
+`{ status: "needs-client-metadata-document" }`; `serve` always has one. Signing in to a known account
 again is a `duplicate` and reconnects it. See
 [sign-in and accounts](sign-in-and-accounts.md).
 

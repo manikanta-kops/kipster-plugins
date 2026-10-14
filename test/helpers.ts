@@ -26,7 +26,7 @@ export async function cli(
 ): Promise<{ code: number | null; output: string }> {
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [script, ...args], {
-      env: { ...process.env, KIPSTER_PLUGINS_CLIENT_METADATA_URL: '', ...env },
+      env: { ...process.env, ...env },
     })
     let output = ''
     child.stdout.on('data', (chunk) => {

@@ -71,9 +71,11 @@ The server listens on `127.0.0.1` only and prints its URL as one JSON line.
 `--home` is required and holds the state, encrypted secrets and the bearer
 token (`<home>/token`, or `KIPSTER_PLUGINS_TOKEN`). The catalogue defaults to
 `plugins/` (`--catalogue <dir>`); the secret store key is in the macOS keychain
-or, elsewhere, a file in the home (`--key-backend keychain|file`). Connect an
-MCP client to `<url>/mcp` with the token; plugins, sign-in and accounts use the
-[control API](docs/control-api.md).
+or, elsewhere, a file in the home (`--key-backend keychain|file`). Services
+that sign in only with a client metadata document read Kipster's, at
+`https://kipster.app/oauth/client-metadata.json`; `--client-metadata-url <url>`
+names your own. Connect an MCP client to `<url>/mcp` with the token; plugins,
+sign-in and accounts use the [control API](docs/control-api.md).
 
 ## Development
 
