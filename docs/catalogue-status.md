@@ -12,11 +12,11 @@ Vendors change, so a later run can differ. Only `todoist` has been tested with a
 
 | Result          | Plugins |
 | --------------- | ------: |
-| `ok`            |     248 |
+| `ok`            |     247 |
 | `needs-address` |       6 |
-| Total           |     254 |
+| Total           |     253 |
 
-All 254 plugins are available. Probed on 2026-10-14 for the 21 changed below.
+All 253 plugins are available. Probed on 2026-10-14 for the 20 changed below.
 
 ## Plugins that are not ok
 
@@ -35,7 +35,7 @@ Available. The person enters their own server address when connecting.
 
 ## Sign-in with Kipster's client metadata document
 
-These services sign in only with a client ID metadata document (CIMD), so they read Kipster's at `https://kipster.app/oauth/client-metadata.json`. It lists only loopback return addresses, so they connect only on the computer running Kipster: `affinity-crm`, `aircall`, `binance`, `bubble`, `elevenlabs`, `hubstaff`, `justworks`, `luma`, `nimble`, `relay`, `seeking-alpha`, `shop`, `softr`, `tableau`, `unsplash`.
+These services sign in only with a client ID metadata document (CIMD), so they read Kipster's at `https://kipster.app/oauth/client-metadata.json`. It lists only loopback return addresses, so they connect only on the computer running Kipster: `affinity-crm`, `aircall`, `binance`, `bubble`, `elevenlabs`, `hubstaff`, `justworks`, `luma`, `nimble`, `relay`, `seeking-alpha`, `shop`, `softr`, `tableau`.
 
 ## Addresses that moved
 
@@ -45,17 +45,18 @@ These services sign in only with a client ID metadata document (CIMD), so they r
 
 Removed on 2026-10-14 because sign-in cannot work today. Their research rows stay in `docs/research/class-a-services.csv`.
 
-| Id                                                 | Reason                                                           |
-| -------------------------------------------------- | ---------------------------------------------------------------- |
-| `crowdstrike`, `ironclad`, `public`                | Refuse Kipster's client metadata document (not a trusted client) |
-| `homey`                                            | Authorization server does not advertise S256 PKCE                |
-| `base`, `paytm`, `sprout-social`, `stack-overflow` | No protected resource metadata                                   |
-| `keap`, `omnisend`, `rappi`                        | Authorization metadata issuer does not match                     |
-| `adobe-creative`, `genspark`                       | MCP endpoint refuses requests (HTTP 403, bot check)              |
-| `legalzoom`                                        | No sign-in at all                                                |
-| `plausible`                                        | MCP endpoint answers HTTP 501                                    |
-| `slab`                                             | MCP endpoint answers HTTP 400 without a client                   |
-| `coros`                                            | One address per region; its metadata names the regional server   |
+| Id                                                 | Reason                                                                        |
+| -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `crowdstrike`, `ironclad`, `public`                | Refuse Kipster's client metadata document (not a trusted client)              |
+| `unsplash`                                         | Its authorization endpoint rejects client metadata documents (unknown client) |
+| `homey`                                            | Authorization server does not advertise S256 PKCE                             |
+| `base`, `paytm`, `sprout-social`, `stack-overflow` | No protected resource metadata                                                |
+| `keap`, `omnisend`, `rappi`                        | Authorization metadata issuer does not match                                  |
+| `adobe-creative`, `genspark`                       | MCP endpoint refuses requests (HTTP 403, bot check)                           |
+| `legalzoom`                                        | No sign-in at all                                                             |
+| `plausible`                                        | MCP endpoint answers HTTP 501                                                 |
+| `slab`                                             | MCP endpoint answers HTTP 400 without a client                                |
+| `coros`                                            | One address per region; its metadata names the regional server                |
 
 ## Sign-in methods that differ from research
 
